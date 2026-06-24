@@ -409,12 +409,15 @@ function setupGlossary() {
   const tip = document.createElement('div');
   tip.className = 'hcl-tip';
   document.body.appendChild(tip);
-  let hideTimer;
+  let hideTimer, currentG = null;
   const byId = Object.fromEntries(H.glossary.map(g => [g.id, g]));
+  const goTo = (g) => { if (g) location.href = 'glossary.html#term-' + g.id; };
+  tip.addEventListener('click', () => goTo(currentG));
   function show(el) {
     clearTimeout(hideTimer);
     const g = byId[el.dataset.term];
     if (!g) return;
+    currentG = g;
     tip.innerHTML = `<b>${g.term}<span class="cat">${g.cat}</span></b><p>${g.def}</p><span class="more">点击查看术语表 →</span>`;
     tip.classList.add('show');
     const r = el.getBoundingClientRect();
