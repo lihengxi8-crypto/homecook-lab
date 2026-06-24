@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <script>(function(){try{var t=localStorage.getItem('hcl-theme');if(t==='dark')document.documentElement.setAttribute('data-theme','dark');}catch(e){}})();</script>
+  <title>案例菜库 | 家常菜实验室</title>
+  <meta name="description" content="经典家常菜案例库：每道菜标注用到的原理、预处理、技法与味型，并双向链接到对应篇章。学完原理，立刻看它怎么落地。" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@500;700;900&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="assets/css/style.css" />
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Ctext y='20' font-size='20'%3E%F0%9F%8D%B2%3C/text%3E%3C/svg%3E" />
+</head>
+<body data-page="dishes">
+
+  <header class="page-head" style="--accent:#C0492B">
+    <div class="container">
+      <div class="crumbs"><a href="index.html">首页</a> / 工具箱 / 案例菜库</div>
+      <span class="num-chip">🍲 菜库</span>
+      <h1>案例菜库</h1>
+      <div class="en">Recipes · Principle-linked</div>
+      <p class="intro">
+        每道菜都拆成<strong>原理 / 预处理 / 技法 / 味型</strong>四类标签，点标签就能跳回对应篇章。
+        这里不是菜谱大全，而是把“学到的原理”落到具体一锅菜的<strong>对照练习场</strong>。
+      </p>
+    </div>
+  </header>
+
+  <div class="container section-tight">
+    <div class="filter-bar" data-filter></div>
+    <div class="dish-grid" data-dishes></div>
+  </div>
+
+  <script src="assets/js/data.js"></script>
+  <script src="assets/js/main.js"></script>
+  <script>
+  (function () {
+    const D = window.HCL.dishes;
+    function catOf(d) {
+      const t = d.tech.map(x => x[0]).join('');
+      if (/炸/.test(t)) return '油炸类';
+      if (/蒸|煮|羹/.test(t)) return '蒸/煮';
+      if (/烧|炖|焖|糖色/.test(t)) return '烧炖类';
+      if (/炒|爆|煸/.test(t)) return '快炒类';
+      return '其他';
+    }
+    const cats = ['全部', '快炒类', '烧炖类', '蒸/煮', '油炸类'];
+    const filterEl = document.querySelector('[data-filter]');
+    const gridEl = document.querySelector('[data-dishes]');
+    let active = '全部';
+
+    filterEl.innerHTML = cats.map((c, i) =>
+      `<button class="chip${i === 0 ? ' active' : ''}" data-cat="${c}">${c}</button>`).join('');
+
+    function xref(arr) {
+      return `<div class="xref">${arr.map(([label, href]) =>
+        `<a href="${href}">${label}</a>`).join('')}</div>`;
+    }
+    function render() {
+      const list = D.filter(d => active === '全部' || catOf(d) === active);
+      gridEl.innerHTML = list.map(d => `
+        <article class="card dish-card reveal" id="dish-${d.id}">
+          <div class="dh">
+            <span class="demoji">${d.emoji}</span>
+            <h3>${d.name}</h3>
+            <span class="lvl ${d.level}">${d.level}</span>
+          </div>
+          <p class="dsum">${d.summary}</p>
+          <div class="dish-meta">
+            <div class="row"><span class="k">原理</span>${xref(d.principles)}</div>
+            <div class="row"><span class="k">预处理</span>${xref(d.prep)}</div>
+            <div class="row"><span class="k">技法</span>${xref(d.tech)}</div>
+            <div class="row"><span class="k">味型</span>${xref(d.taste)}</div>
+          </div>
+          <details>
+            <summary>查看做法（${d.steps.length} 步）</summary>
+            <ol>${d.steps.map(s => `<li>${s}</li>`).join('')}</ol>
+          </details>
+        </article>`).join('');
+      if (window.setupReveal) window.setupReveal();
+      const hash = location.hash;
+      if (hash) { const t = document.querySelector(hash); if (t) { t.scrollIntoView({ behavior: 'smooth', block: 'center' }); t.querySelector('details')?.setAttribute('open', ''); } }
+    }
+    filterEl.addEventListener('click', e => {
+      const b = e.target.closest('.chip'); if (!b) return;
+      active = b.dataset.cat;
+      filterEl.querySelectorAll('.chip').forEach(c => c.classList.toggle('active', c === b));
+      render();
+    });
+    render();
+  })();
+  </script>
+</body>
+</html>

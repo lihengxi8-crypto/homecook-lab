@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <script>(function(){try{var t=localStorage.getItem('hcl-theme');if(t==='dark')document.documentElement.setAttribute('data-theme','dark');}catch(e){}})();</script>
+  <title>食材档案 | 家常菜实验室</title>
+  <meta name="description" content="常见食材特性档案：蛋白、胶原、含水、淀粉等关键属性，决定它适合哪种技法。懂约束，才能放心替换变量、做创新。" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@500;700;900&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="assets/css/style.css" />
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Ctext y='20' font-size='20'%3E%F0%9F%8D%B2%3C/text%3E%3C/svg%3E" />
+</head>
+<body data-page="ingredients">
+
+  <header class="page-head" style="--accent:#8B5E3C">
+    <div class="container">
+      <div class="crumbs"><a href="index.html">首页</a> / 工具箱 / 食材档案</div>
+      <span class="num-chip">🥩 食材</span>
+      <h1>食材特性档案</h1>
+      <div class="en">Ingredients</div>
+      <p class="intro">
+        为什么牛腩要炖、里脊要快炒？因为食材的<strong>蛋白、胶原、含水、淀粉</strong>决定了它适合哪种热处理。
+        先认识约束，创新时才知道哪些变量能换、怎么换。
+      </p>
+    </div>
+  </header>
+
+  <div class="container section-tight">
+    <div class="filter-bar" data-filter></div>
+    <div class="ing-grid" data-ingredients></div>
+  </div>
+
+  <script src="assets/js/data.js"></script>
+  <script src="assets/js/main.js"></script>
+  <script>
+  (function () {
+    const I = window.HCL.ingredients;
+    const G = Object.fromEntries(window.HCL.glossary.map(g => [g.id, g]));
+    const types = ['全部', ...[...new Set(I.map(i => i.type))]];
+    const filterEl = document.querySelector('[data-filter]');
+    const gridEl = document.querySelector('[data-ingredients]');
+    let active = '全部';
+
+    filterEl.innerHTML = types.map((t, i) =>
+      `<button class="chip${i === 0 ? ' active' : ''}" data-type="${t}">${t}</button>`).join('');
+
+    function render() {
+      const list = I.filter(i => active === '全部' || i.type === active);
+      gridEl.innerHTML = list.map(i => `
+        <article class="card ing-card reveal" id="ing-${i.id}">
+          <div class="ih">
+            <span class="iemoji">${i.emoji}</span>
+            <h3>${i.name}</h3>
+            <span class="itype">${i.type}</span>
+          </div>
+          <div class="props">${i.props.map(p => `<span>${p}</span>`).join('')}</div>
+          <p class="inote">${i.note}</p>
+          <div class="best">适合：${i.best.join(' · ')}</div>
+          ${i.terms && i.terms.length ? `<div class="xref" style="margin-top:10px">${i.terms.map(id => G[id] ? `<a href="glossary.html#term-${id}">${G[id].term}</a>` : '').join('')}</div>` : ''}
+        </article>`).join('');
+      if (window.setupReveal) window.setupReveal();
+    }
+    filterEl.addEventListener('click', e => {
+      const b = e.target.closest('.chip'); if (!b) return;
+      active = b.dataset.type;
+      filterEl.querySelectorAll('.chip').forEach(c => c.classList.toggle('active', c === b));
+      render();
+    });
+    render();
+  })();
+  </script>
+</body>
+</html>

@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <script>(function(){try{var t=localStorage.getItem('hcl-theme');if(t==='dark')document.documentElement.setAttribute('data-theme','dark');}catch(e){}})();</script>
+  <title>第一篇 · 底层原理 | 家常菜实验室</title>
+  <meta name="description" content="厨房里的物理化学：热传递、美拉德反应、蛋白质变性、淀粉糊化、乳化勾芡、鲜味协同、盐糖酸碱醇的作用。" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@500;700;900&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="assets/css/style.css" />
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Ctext y='20' font-size='20'%3E%F0%9F%8D%B2%3C/text%3E%3C/svg%3E" />
+</head>
+<body data-page="principles">
+
+  <!-- 章节头 -->
+  <header class="page-head" style="--accent:#C0492B">
+    <div class="container">
+      <div class="crumbs"><a href="index.html">首页</a> / 第一篇</div>
+      <span class="num-chip">01</span>
+      <h1>底层原理</h1>
+      <div class="en">The Science of the Kitchen</div>
+      <p class="intro">
+        做菜的本质，是用<strong>热</strong>和<strong>水</strong>，在有限的时间里改变食材的分子结构，并叠加<strong>风味</strong>。
+        这一篇把厨房里最常用的几条物理化学规律讲清楚——它们是后面所有技法的"物理引擎"。
+        看懂了，你就能预判"火大一点 / 盐早一点"会发生什么。
+      </p>
+      <div class="tag-row">
+        <span class="pill">热传递</span><span class="pill">美拉德反应</span><span class="pill">蛋白质变性</span>
+        <span class="pill">淀粉糊化</span><span class="pill">乳化勾芡</span><span class="pill">鲜味协同</span><span class="pill">盐糖酸碱醇</span>
+      </div>
+    </div>
+  </header>
+
+  <div class="container section-tight">
+    <div class="doc-layout">
+      <!-- 侧栏目录（JS 自动生成） -->
+      <aside class="toc" data-toc></aside>
+
+      <!-- 正文 -->
+      <article class="prose">
+
+        <!-- 1. 热传递 -->
+        <h2 data-toc="热怎么传"><span class="idx">1</span>热从哪来，又怎么传进食材</h2>
+        <p>
+          所有烹饪都是"加热"，但热的传递方式不同，结果天差地别。厨房里主要有三种方式：
+        </p>
+        <ul>
+          <li><strong>传导（Conduction）</strong>：热从锅底直接"摸"到食材。煎牛排、铁锅贴着食材的那一面，靠的就是传导。</li>
+          <li><strong>对流（Convection）</strong>：靠流动的介质带热——水（煮/汆）、油（炸/滑炒）、热空气（烤箱）、蒸汽（蒸）。</li>
+          <li><strong>辐射（Radiation）</strong>：不需要接触，靠红外线直接传能。炭火烤串、明火燎、烤箱上火都有它。</li>
+        </ul>
+
+        <figure>
+          <svg viewBox="0 0 640 262" role="img" aria-label="三种热传递方式示意图">
+            <rect x="0" y="0" width="640" height="262" rx="14" fill="#FFFDF8" stroke="#E7D8C2"/>
+            <!-- 锅 -->
+            <path d="M250 140 q70 56 140 0" fill="none" stroke="#8B5E3C" stroke-width="8" stroke-linecap="round"/>
+            <!-- 火焰（在锅下方） -->
+            <g>
+              <path d="M300 210 q-14 -22 0 -40 q10 16 22 4 q8 24 -22 36 Z" fill="#E2A03F"/>
+              <path d="M318 210 q-10 -16 0 -28 q7 11 16 2 q6 17 -16 26 Z" fill="#C0492B"/>
+            </g>
+            <!-- 传导箭头（热向上进入食材） -->
+            <g stroke="#C0492B" stroke-width="3" fill="#C0492B">
+              <line x1="320" y1="158" x2="320" y2="128" marker-end="url(#ah)"/>
+            </g>
+            <text x="320" y="240" text-anchor="middle" font-size="14" fill="#5A3A2A" font-weight="700">① 传导 · 锅底接触</text>
+
+            <!-- 对流：水/油里的循环箭头 -->
+            <ellipse cx="150" cy="120" rx="78" ry="40" fill="#EAF1EC" stroke="#6F9A4C" stroke-dasharray="4 4"/>
+            <g stroke="#6F9A4C" stroke-width="2.5" fill="none">
+              <path d="M120 132 q-18 -24 16 -36" marker-end="url(#ag)"/>
+              <path d="M180 108 q18 24 -16 36" marker-end="url(#ag)"/>
+            </g>
+            <text x="150" y="124" text-anchor="middle" font-size="14" fill="#4E7235" font-weight="700">② 对流</text>
+            <text x="150" y="186" text-anchor="middle" font-size="13" fill="#9A8775">水 / 油 / 热气流动</text>
+
+            <!-- 辐射：从右上发散 -->
+            <g stroke="#E2A03F" stroke-width="3" stroke-linecap="round">
+              <line x1="520" y1="60" x2="500" y2="92"/>
+              <line x1="548" y1="78" x2="520" y2="104"/>
+              <line x1="560" y1="110" x2="528" y2="120"/>
+            </g>
+            <circle cx="540" cy="70" r="16" fill="#E2A03F"/>
+            <text x="500" y="166" text-anchor="middle" font-size="14" fill="#9C3A22" font-weight="700">③ 辐射</text>
+            <text x="500" y="188" text-anchor="middle" font-size="13" fill="#9A8775">红外线隔空加热</text>
+
+            <defs>
+              <marker id="ah" markerWidth="8" markerHeight="8" refX="4" refY="4" orient="auto"><path d="M0 0 L8 4 L0 8 z" fill="#C0492B"/></marker>
+              <marker id="ag" markerWidth="8" markerHeight="8" refX="4" refY="4" orient="auto"><path d="M0 0 L8 4 L0 8 z" fill="#6F9A4C"/></marker>
+            </defs>
+          </svg>
+          <figcaption>图 1 · 厨房里的三种热传递方式：传导、对流、辐射</figcaption>
+        </figure>
+
+        <h3>关键差别：油能比水热得多</h3>
+        <p>
+          水在常压下烧到 <strong>100°C 就封顶</strong>了——再加热只是更快变成蒸汽，温度不再升高。
+          而油可以轻松到 <strong>160–220°C</strong>。这一个事实，解释了厨房里的一大半现象：
+        </p>
+
+        <figure>
+          <svg viewBox="0 0 640 400" role="img" aria-label="水温与油温温度对比">
+            <rect x="0" y="0" width="640" height="400" rx="14" fill="#FFFDF8" stroke="#E7D8C2"/>
+            <!-- 参考横线 + 刻度 -->
+            <g font-size="12" fill="#9A8775" stroke="#E7D8C2" stroke-dasharray="3 4">
+              <line x1="70" y1="340" x2="600" y2="340"/><text x="40" y="344" stroke="none">0°</text>
+              <line x1="70" y1="290" x2="600" y2="290"/><text x="34" y="294" stroke="none">50°</text>
+              <line x1="70" y1="240" x2="600" y2="240"/><text x="28" y="244" stroke="none">100°</text>
+              <line x1="70" y1="190" x2="600" y2="190"/><text x="28" y="194" stroke="none">150°</text>
+              <line x1="70" y1="140" x2="600" y2="140"/><text x="28" y="144" stroke="none">200°</text>
+            </g>
+            <!-- 水柱 -->
+            <rect x="170" y="240" width="70" height="100" rx="8" fill="#5A8C8B"/>
+            <circle cx="205" cy="350" r="26" fill="#5A8C8B"/>
+            <text x="205" y="356" text-anchor="middle" font-size="13" fill="#fff" font-weight="700">水</text>
+            <text x="205" y="225" text-anchor="middle" font-size="13" fill="#3F6463" font-weight="700">100° 封顶</text>
+            <text x="205" y="384" text-anchor="middle" font-size="11" fill="#9A8775">煮 · 汆 · 蒸的上限</text>
+
+            <!-- 油柱 -->
+            <defs>
+              <linearGradient id="oilg" x1="0" y1="1" x2="0" y2="0">
+                <stop offset="0" stop-color="#E2A03F"/><stop offset="1" stop-color="#C0492B"/>
+              </linearGradient>
+            </defs>
+            <rect x="430" y="130" width="70" height="210" rx="8" fill="url(#oilg)"/>
+            <circle cx="465" cy="350" r="26" fill="#C0492B"/>
+            <text x="465" y="356" text-anchor="middle" font-size="13" fill="#fff" font-weight="700">油</text>
+            <text x="465" y="120" text-anchor="middle" font-size="13" fill="#9C3A22" font-weight="700">160–220°</text>
+            <!-- 油的分区标注 -->
+            <text x="512" y="200" font-size="11" fill="#9C3A22">220° 冒烟 · 过热</text>
+            <text x="512" y="180" font-size="11" fill="#9C3A22">180° 油炸酥脆</text>
+            <text x="512" y="218" font-size="11" fill="#9C3A22">160° 美拉德起跑</text>
+          </svg>
+          <figcaption>图 2 · 水温被锁在 100°C，而油温可达 160–220°C——上色、香气都发生在水做不到的高温区</figcaption>
+        </figure>
+
+        <div class="note science">
+          <span class="badge">原</span>
+          <div>
+            <h4>为什么"水煮的菜不香、煎炸的菜香"？</h4>
+            <p>因为产生香气和棕色的<strong>美拉德反应</strong>大约要 <span class="mech">140°C 以上</span>才显著进行，而水煮环境最高只有 100°C，根本到不了反应温度。要香、要色，就得让食材表面进入"高温少水"的状态。</p>
+          </div>
+        </div>
+
+        <div class="note tip">
+          <span class="badge">!</span>
+          <div>
+            <h4>"热锅冷油"到底防了什么？</h4>
+            <p>先把空锅烧热，让金属受热<strong>微微膨胀、填平表面微孔</strong>，再倒油润锅，油会在金属表面形成一层光滑的"油膜"。食材下锅时，蛋白质遇到高温会先<strong>凝固定型</strong>而不是瘫在锅上，于是不容易粘锅、破皮。冷锅冷油则相反：升温过程里蛋白质有充足时间钻进金属缝隙，一翻就破。</p>
+          </div>
+        </div>
+
+        <hr />
+
+        <!-- 2. 美拉德 -->
+        <h2 data-toc="香气与色泽"><span class="idx">2</span>香气与色泽从哪来：美拉德反应 & 焦糖化</h2>
+        <p>
+          煎得金黄的牛排、烤得喷香的面包、炒糖色、葱姜蒜爆香——这些"诱人"的核心，是两类高温反应：
+        </p>
+        <ul>
+          <li><strong>美拉德反应（Maillard）</strong>：<span class="mech">氨基酸 + 还原糖</span>在约 <strong>140–165°C</strong> 下反应，生成<strong>数百种</strong>香气分子和棕色色素。肉、海鲜、面食上色变香基本都靠它。</li>
+          <li><strong>焦糖化（Caramelization）</strong>：<span class="mech">糖单独受热</span>到约 <strong>160°C 以上</strong>分解重组，产生焦糖香与褐色（炒糖色、烤洋葱回甜）。</li>
+        </ul>
+
+        <figure>
+          <svg viewBox="0 0 640 170" role="img" aria-label="美拉德反应温度带">
+            <rect x="0" y="0" width="640" height="170" rx="14" fill="#FFFDF8" stroke="#E7D8C2"/>
+            <!-- 温度条 -->
+            <defs>
+              <linearGradient id="tempbar" x1="0" y1="0" x2="1" y2="0">
+                <stop offset="0" stop-color="#EAF1EC"/>
+                <stop offset="0.5" stop-color="#F6D79A"/>
+                <stop offset="0.8" stop-color="#E2A03F"/>
+                <stop offset="1" stop-color="#9C3A22"/>
+              </linearGradient>
+            </defs>
+            <rect x="40" y="60" width="560" height="34" rx="17" fill="url(#tempbar)"/>
+            <!-- 刻度 -->
+            <g font-size="12" fill="#5A3A2A" text-anchor="middle">
+              <text x="40" y="120">60°</text>
+              <text x="200" y="120">100°</text>
+              <text x="360" y="120">140°</text>
+              <text x="470" y="120">170°</text>
+              <text x="600" y="120">200°+</text>
+            </g>
+            <!-- 区段标注 -->
+            <text x="120" y="48" text-anchor="middle" font-size="12" fill="#4E7235" font-weight="700">蛋白凝固 / 糊化</text>
+            <text x="200" y="148" text-anchor="middle" font-size="11" fill="#3F6463">水煮上限 100°</text>
+            <text x="415" y="48" text-anchor="middle" font-size="12" fill="#9C3A22" font-weight="700">美拉德 · 焦糖化 香气棕色</text>
+            <text x="585" y="148" text-anchor="middle" font-size="11" fill="#9C3A22">过头 → 焦苦</text>
+            <!-- 指示线 -->
+            <line x1="360" y1="56" x2="360" y2="98" stroke="#9C3A22" stroke-width="2" stroke-dasharray="3 3"/>
+          </svg>
+          <figcaption>图 3 · 温度带：100°C 以下只是熟，140°C 以上才开始"又香又上色"</figcaption>
+        </figure>
+
+        <div class="note warn">
+          <span class="badge">×</span>
+          <div>
+            <h4>最常见的翻车：炒出一锅"水煮菜"</h4>
+            <p>把食材<strong>挤满锅、不擦干、火又不够旺</strong>，食材一下锅就大量出水，锅内温度被拉到 100°C 上下，美拉德根本启动不了——结果是灰白、出汤、不香。<br/>对策：<strong>大火、分批、铺开、表面擦干</strong>，让水分快速蒸发、温度顶上去。</p>
+          </div>
+        </div>
+
+        <hr />
+
+        <!-- 3. 蛋白质 & 淀粉 -->
+        <h2 data-toc="食材为什么会变"><span class="idx">3</span>食材为什么会变：蛋白质变性与淀粉糊化</h2>
+        <p>
+          "生 → 熟"本质上是分子结构被热改写。两类主角：<strong>蛋白质</strong>（肉、蛋、海鲜）和 <strong>淀粉</strong>（米、面、土豆、勾芡）。
+        </p>
+
+        <h3>蛋白质变性：从软嫩到柴，只差十几度</h3>
+        <p>
+          蛋白质原本是折叠好的"线团"。受热后它<strong>展开、再相互连接</strong>（变性 + 凝结），这就是肉变硬、蛋变固的原因。关键温度点：
+        </p>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>温度</th><th>发生了什么</th><th>厨房意义</th></tr></thead>
+            <tbody>
+              <tr><td>~50–55°C</td><td>蛋白开始变性</td><td>牛排"一分熟"内部</td></tr>
+              <tr><td>~60–65°C</td><td>肌肉纤维收缩、开始挤出水分</td><td>瘦肉最嫩多汁的临界点</td></tr>
+              <tr><td>~70°C+</td><td>大量失水、变紧实</td><td>过头就"柴"</td></tr>
+              <tr><td>长时间 70–90°C + 水</td><td>胶原蛋白 → 明胶</td><td>炖煮软烂、入口即化的关键</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <figure>
+          <svg viewBox="0 0 640 220" role="img" aria-label="肉受热收缩出水示意">
+            <rect x="0" y="0" width="640" height="220" rx="14" fill="#FFFDF8" stroke="#E7D8C2"/>
+            <!-- 低温：松弛 含水 -->
+            <text x="120" y="36" text-anchor="middle" font-size="13" fill="#4E7235" font-weight="700">60–65° 嫩 · 多汁</text>
+            <g>
+              <rect x="60" y="60" width="120" height="100" rx="12" fill="#F0CDBF" stroke="#C0492B"/>
+              <g stroke="#9C3A22" stroke-width="3" fill="none" opacity="0.6">
+                <line x1="80" y1="70" x2="80" y2="150"/><line x1="100" y1="70" x2="100" y2="150"/>
+                <line x1="120" y1="70" x2="120" y2="150"/><line x1="140" y1="70" x2="140" y2="150"/>
+                <line x1="160" y1="70" x2="160" y2="150"/>
+              </g>
+              <circle cx="90" cy="90" r="4" fill="#5A8C8B"/><circle cx="130" cy="120" r="4" fill="#5A8C8B"/>
+              <circle cx="150" cy="100" r="4" fill="#5A8C8B"/><circle cx="105" cy="135" r="4" fill="#5A8C8B"/>
+            </g>
+            <text x="120" y="184" text-anchor="middle" font-size="11" fill="#9A8775">纤维松弛，水分锁在内部</text>
+
+            <!-- 箭头 -->
+            <g transform="translate(300,110)"><line x1="-10" y1="0" x2="40" y2="0" stroke="#8B5E3C" stroke-width="3"/><path d="M40 -6 L52 0 L40 6 z" fill="#8B5E3C"/><text x="22" y="-12" text-anchor="middle" font-size="11" fill="#8B5E3C">继续加热</text></g>
+
+            <!-- 高温：收缩 出水 -->
+            <text x="500" y="36" text-anchor="middle" font-size="13" fill="#9C3A22" font-weight="700">70°+ 紧实 · 变柴</text>
+            <g>
+              <rect x="455" y="72" width="90" height="76" rx="10" fill="#D98F76" stroke="#9C3A22"/>
+              <g stroke="#7A2A16" stroke-width="4" fill="none">
+                <line x1="472" y1="80" x2="472" y2="140"/><line x1="490" y1="80" x2="490" y2="140"/>
+                <line x1="508" y1="80" x2="508" y2="140"/><line x1="526" y1="80" x2="526" y2="140"/>
+              </g>
+              <!-- 挤出的水 -->
+              <circle cx="430" cy="160" r="4" fill="#5A8C8B"/><circle cx="450" cy="172" r="4" fill="#5A8C8B"/>
+              <circle cx="560" cy="160" r="4" fill="#5A8C8B"/><circle cx="540" cy="174" r="4" fill="#5A8C8B"/>
+            </g>
+            <text x="500" y="190" text-anchor="middle" font-size="11" fill="#9A8775">纤维收缩，把水分挤出 → 干</text>
+          </svg>
+          <figcaption>图 4 · 瘦肉在 60–65°C 最嫩；超过后纤维收缩挤出水分，越煮越柴（所以滑炒讲究"嫩、快、准"）</figcaption>
+        </figure>
+
+        <div class="note science">
+          <span class="badge">原</span>
+          <div>
+            <h4>炖肉"越炖越烂"和炒肉"越炒越柴"为何相反？</h4>
+            <p>瘦肉（里脊、鸡胸）几乎没有结缔组织，<strong>超过 65°C 就只会失水变柴</strong>，所以要"快炒、断生即起"。<br/>而五花、牛腩、蹄筋富含<strong>胶原蛋白</strong>，需要 <span class="mech">长时间 + 水 + 70–90°C</span> 把胶原慢慢转化成明胶，口感才会软糯——这正是"小火慢炖"的科学依据。</p>
+          </div>
+        </div>
+
+        <h3>淀粉糊化：勾芡、米饭、土豆背后的同一件事</h3>
+        <p>
+          淀粉颗粒在 <strong>约 60–75°C 的热水中吸水膨胀、破裂、变黏</strong>，这就是<strong>糊化</strong>。
+          米饭变软、勾芡变稠、土豆变粉，本质都是糊化。糊化需要<strong>足够的水 + 足够的温度</strong>——这也是为什么勾芡的水淀粉下锅要边倒边搅、汤汁要保持微沸。
+        </p>
+
+        <hr />
+
+        <!-- 4. 乳化勾芡 -->
+        <h2 data-toc="酱汁为什么浓稠"><span class="idx">4</span>让酱汁浓稠挂味：乳化与勾芡</h2>
+        <p>
+          油和水天生"不合"，但很多好吃的酱汁恰恰是油水的稳定混合——比如奶白的鱼汤、浓而挂勺的红烧汁。让它们"合"起来，靠两条路：
+        </p>
+        <ul>
+          <li><strong>乳化（Emulsion）</strong>：把油打成无数小液滴均匀悬浮在水里，需要<strong>乳化剂</strong>（蛋黄里的卵磷脂、芥末、明胶、甚至淀粉）+ <strong>搅动</strong>。鱼汤奶白，就是油脂被持续沸腾的水流"打碎"乳化的结果。</li>
+          <li><strong>勾芡（增稠）</strong>：靠淀粉糊化提高汤汁黏度，让味道<strong>包裹</strong>在食材表面而不是沉在盘底。</li>
+        </ul>
+
+        <figure>
+          <svg viewBox="0 0 640 200" role="img" aria-label="乳化前后对比">
+            <rect x="0" y="0" width="640" height="200" rx="14" fill="#FFFDF8" stroke="#E7D8C2"/>
+            <!-- 分层 -->
+            <text x="150" y="34" text-anchor="middle" font-size="13" fill="#9A8775" font-weight="700">未乳化 · 油水分层</text>
+            <rect x="80" y="50" width="140" height="110" rx="10" fill="#EAF1EC" stroke="#D8C2A6"/>
+            <rect x="80" y="50" width="140" height="38" rx="10" fill="#F6D79A"/>
+            <text x="150" y="74" text-anchor="middle" font-size="12" fill="#9C3A22">油</text>
+            <text x="150" y="130" text-anchor="middle" font-size="12" fill="#3F6463">水</text>
+
+            <!-- 箭头 -->
+            <g transform="translate(300,105)"><line x1="0" y1="0" x2="44" y2="0" stroke="#8B5E3C" stroke-width="3"/><path d="M44 -6 L56 0 L44 6 z" fill="#8B5E3C"/><text x="26" y="-12" text-anchor="middle" font-size="11" fill="#8B5E3C">乳化剂+搅动</text></g>
+
+            <!-- 乳化 -->
+            <text x="500" y="34" text-anchor="middle" font-size="13" fill="#4E7235" font-weight="700">乳化 · 稳定浓稠</text>
+            <rect x="430" y="50" width="140" height="110" rx="10" fill="#F4E3C5" stroke="#E2A03F"/>
+            <g fill="#E2A03F">
+              <circle cx="455" cy="78" r="6"/><circle cx="490" cy="70" r="5"/><circle cx="525" cy="84" r="7"/>
+              <circle cx="555" cy="72" r="5"/><circle cx="470" cy="110" r="6"/><circle cx="510" cy="120" r="5"/>
+              <circle cx="545" cy="118" r="6"/><circle cx="500" cy="98" r="4"/><circle cx="535" cy="104" r="4"/>
+              <circle cx="460" cy="140" r="5"/><circle cx="520" cy="146" r="5"/><circle cx="555" cy="142" r="4"/>
+            </g>
+            <text x="500" y="180" text-anchor="middle" font-size="11" fill="#9A8775">油被打成小液滴均匀悬浮</text>
+          </svg>
+          <figcaption>图 5 · 乳化：把油"切碎"分散到水中，酱汁因此变得顺滑、浓稠、不油腻分离</figcaption>
+        </figure>
+
+        <hr />
+
+        <!-- 5. 鲜味 -->
+        <h2 data-toc="鲜味的科学"><span class="idx">5</span>鲜味的科学：为什么高汤、蚝油、番茄那么"鲜"</h2>
+        <p>
+          鲜（Umami）是第五种基本味觉，由特定分子触发。最重要的是三类：
+        </p>
+        <ul>
+          <li><strong>谷氨酸（Glutamate）</strong>：海带、酱油、番茄、菌菇、奶酪、发酵物——也是味精（MSG）的主体。</li>
+          <li><strong>肌苷酸（Inosinate）</strong>：肉类、鱼、柴鱼（鲣节）。</li>
+          <li><strong>鸟苷酸（Guanylate）</strong>：干香菇尤其高。</li>
+        </ul>
+        <p>
+          神奇之处在于<strong>协同效应</strong>：谷氨酸单独已经鲜，一旦和肌苷酸/鸟苷酸同时出现，鲜味会被<strong>放大数倍</strong>，远不止 1+1=2。
+        </p>
+
+        <figure>
+          <svg viewBox="0 0 640 230" role="img" aria-label="鲜味协同效应">
+            <rect x="0" y="0" width="640" height="230" rx="14" fill="#FFFDF8" stroke="#E7D8C2"/>
+            <!-- 基线 -->
+            <line x1="60" y1="185" x2="600" y2="185" stroke="#D8C2A6"/>
+            <!-- 柱1 谷氨酸 -->
+            <rect x="110" y="135" width="80" height="50" rx="6" fill="#6F9A4C"/>
+            <text x="150" y="205" text-anchor="middle" font-size="12" fill="#5A3A2A">谷氨酸</text>
+            <text x="150" y="221" text-anchor="middle" font-size="10" fill="#9A8775">海带/番茄/酱油</text>
+            <text x="150" y="126" text-anchor="middle" font-size="12" fill="#4E7235" font-weight="700">鲜</text>
+            <!-- 柱2 肌苷酸 -->
+            <rect x="250" y="140" width="80" height="45" rx="6" fill="#E2A03F"/>
+            <text x="290" y="205" text-anchor="middle" font-size="12" fill="#5A3A2A">肌苷酸</text>
+            <text x="290" y="221" text-anchor="middle" font-size="10" fill="#9A8775">肉/鱼/柴鱼</text>
+            <text x="290" y="131" text-anchor="middle" font-size="12" fill="#9C6A1E" font-weight="700">鲜</text>
+            <!-- 加号 -->
+            <text x="215" y="170" text-anchor="middle" font-size="22" fill="#9A8775">+</text>
+            <!-- 等号 -->
+            <text x="370" y="170" text-anchor="middle" font-size="22" fill="#9A8775">=</text>
+            <!-- 柱3 协同 -->
+            <rect x="430" y="55" width="120" height="130" rx="8" fill="#C0492B"/>
+            <text x="490" y="205" text-anchor="middle" font-size="12" fill="#5A3A2A" font-weight="700">协同后</text>
+            <text x="490" y="221" text-anchor="middle" font-size="10" fill="#9A8775">高汤/上汤/复合鲜</text>
+            <text x="490" y="46" text-anchor="middle" font-size="14" fill="#9C3A22" font-weight="800">鲜味 ×几倍</text>
+          </svg>
+          <figcaption>图 6 · 鲜味协同：谷氨酸 + 肌苷酸/鸟苷酸 同时存在时，鲜度成倍放大（高汤、上汤的秘密）</figcaption>
+        </figure>
+
+        <div class="note tip">
+          <span class="badge">!</span>
+          <div>
+            <h4>用协同思维"配鲜"</h4>
+            <p>想让一道素菜更鲜？把<strong>谷氨酸源</strong>（番茄、菌菇、海带、少许酱油）和一点<strong>肌苷酸源</strong>（高汤、虾皮、火腿）搭起来，比单放一样鲜得多。这就是"昆布 + 柴鱼 = 日式高汤"、"火腿 + 干贝 + 鸡 = 中式上汤"的底层逻辑。</p>
+          </div>
+        </div>
+
+        <h3>香气：脂溶性 vs 水溶性，决定你"怎么放料"</h3>
+        <p>
+          很多香味分子是<strong>脂溶性</strong>的——只有溶进油脂、并被加热，香气才能释放出来。这就是<strong>"爆香"</strong>的原理：葱姜蒜、花椒、干辣椒先下油锅，香味物质溶进热油，再裹到整道菜上。
+          而另一些风味是<strong>水溶性</strong>或<strong>易挥发</strong>的（如香菜、葱花的清香、料酒里的酒精），适合<strong>起锅前</strong>才放，避免高温久煮把香气熬没了。
+        </p>
+
+        <hr />
+
+        <!-- 6. 盐糖酸碱醇 -->
+        <h2 data-toc="五个调节旋钮"><span class="idx">6</span>盐糖酸碱醇：五个"调节旋钮"对食材做了什么</h2>
+        <p>
+          调味不只是"加味道"，它们还在物理化学层面<strong>改造食材</strong>。把它们理解成五个旋钮：
+        </p>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>旋钮</th><th>味觉作用</th><th>物理化学作用（重点）</th></tr></thead>
+            <tbody>
+              <tr><td><strong>盐</strong></td><td>提味、放大其他味道</td><td>渗透脱水（杀水、腌渍）；高浓度时<strong>溶解肌肉蛋白</strong>形成上浆锁水的关键；抑菌</td></tr>
+              <tr><td><strong>糖</strong></td><td>增甜、圆润、平衡咸辣</td><td>参与<strong>焦糖化/美拉德</strong>上色增香；保水；高浓度防腐</td></tr>
+              <tr><td><strong>酸</strong>（醋/柠檬/番茄）</td><td>解腻、提亮、开胃</td><td>使蛋白<strong>变性</strong>（嫩化、"酸杀"腌渍）；影响色泽（护色或变色）；软化纤维</td></tr>
+              <tr><td><strong>碱</strong>（小苏打）</td><td>—（用量需克制）</td><td>提高 pH，<strong>破坏蛋白结构</strong>使肉滑嫩（致嫩/上浆）；加速美拉德上色；护绿叶色</td></tr>
+              <tr><td><strong>醇</strong>（料酒/黄酒）</td><td>去腥、增香</td><td>酒精<strong>溶解</strong>腥味与脂溶香味物质，受热<strong>挥发时带走腥味</strong>；与酸生成微量芳香酯</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="note science">
+          <span class="badge">原</span>
+          <div>
+            <h4>"盐"的双面性：既能锁水，也能脱水</h4>
+            <p>低浓度、短时间，盐能让<strong>盐溶蛋白</strong>溶出、提升保水（上浆嫩肉、灌汤）；但高浓度或久放，<strong>渗透压</strong>会把食材里的水"拔"出来（腌黄瓜出水、炒青菜过早放盐变蔫）。所以同一个"盐"，<strong>什么时候放、放多少</strong>，结果完全不同。</p>
+          </div>
+        </div>
+
+        <hr />
+
+        <!-- 案例 -->
+        <h2 data-toc="案例：番茄炒蛋"><span class="idx">★</span>用原理拆一道菜：番茄炒蛋</h2>
+        <p>把这一篇的原理串起来，看看一道最普通的番茄炒蛋里藏着多少科学：</p>
+        <ol>
+          <li><strong>蛋液加少许盐和水</strong>：盐让蛋白质适度变性、口感更嫩；少量水变成蒸汽让蛋更蓬松（蛋白质变性 + 水的相变）。</li>
+          <li><strong>热锅热油、油温够高再下蛋</strong>：蛋液瞬间凝固膨起、不粘锅（热锅冷油原理 + 蛋白质快速凝固）。</li>
+          <li><strong>炒蛋</strong>"<strong>嫩</strong>"<strong>的关键是早出锅</strong>：蛋一旦全熟变干就老了（蛋白质过度失水）。</li>
+          <li><strong>番茄要炒出汁、甚至加一点糖</strong>：番茄本身富含<strong>谷氨酸</strong>（鲜），加热让细胞壁破裂出汁；少许糖平衡酸味并助上色。</li>
+          <li><strong>鲜味协同</strong>：番茄（谷氨酸）+ 鸡蛋（含肌苷酸类）天然就是一对协同 CP，所以即使不放味精也很鲜。</li>
+          <li><strong>汤汁浓稠挂味</strong>：番茄出的汁 + 蛋的脂质轻微乳化，让酱汁裹住食材（乳化）。爱浓稠的可勾一点薄芡（糊化）。</li>
+        </ol>
+        <blockquote>
+          看懂了吗？同一道菜，你现在可以主动调节任何一个"变量"：想更香 → 让番茄边缘焦一点（美拉德）；想更嫩 → 蛋更早出锅；想更鲜 → 加一点高汤或蚝油（协同）。这就是"懂原理之后的创新自由"。
+        </blockquote>
+
+        <div class="note tip">
+          <span class="badge">→</span>
+          <div>
+            <h4>下一步</h4>
+            <p>原理是引擎，但很多成败发生在<strong>下锅之前</strong>。下一篇我们讲<strong>预处理</strong>：刀工、腌制上浆、焯水——怎么用这一篇的原理，把食材调到"最佳起跑状态"。</p>
+          </div>
+        </div>
+
+        <!-- 上一篇/下一篇 -->
+        <nav class="pager">
+          <a href="index.html"><span class="dir">← 返回</span><b>学习全景图</b></a>
+          <a class="next" href="prep.html"><span class="dir">下一篇 →</span><b>02 · 预处理</b></a>
+        </nav>
+
+      </article>
+    </div>
+  </div>
+
+  <script src="assets/js/data.js"></script>
+  <script src="assets/js/main.js"></script>
+</body>
+</html>

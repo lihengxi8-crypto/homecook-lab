@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <script>(function(){try{var t=localStorage.getItem('hcl-theme');if(t==='dark')document.documentElement.setAttribute('data-theme','dark');}catch(e){}})();</script>
+  <title>家常菜实验室 · 用原理学会中餐家常菜</title>
+  <meta name="description" content="用理科生视角系统学习中餐家常菜：底层原理、预处理、调味酱料、火候技法、实操与保存。先懂原理，再谈技法，方便创新变换。" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@500;700;900&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="assets/css/style.css" />
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Ctext y='20' font-size='20'%3E%F0%9F%8D%B2%3C/text%3E%3C/svg%3E" />
+</head>
+<body data-page="home">
+
+  <!-- Hero -->
+  <section class="hero">
+    <div class="container">
+      <div class="hero-inner">
+        <div class="hero-copy">
+          <span class="eyebrow">🧪 用理科生的方式学做菜</span>
+          <h1>把家常菜，<br /><span class="hl">拆成可以理解的原理</span></h1>
+          <p class="lead">
+            不背菜谱，先搞懂"为什么"。从热怎么传、香从哪来，到腌制、焯水、勾芡、锅气的底层机制，
+            建立一张可复用、可创新的知识全景图——通俗易懂，又有科普深度。
+          </p>
+          <div class="hero-actions">
+            <a class="btn btn-primary" href="principles.html">从底层原理开始 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+            <a class="btn btn-ghost" href="#map">查看学习全景图</a>
+          </div>
+          <div class="stat-row">
+            <div class="stat"><b>5</b><span>学习篇章</span></div>
+            <div class="stat"><b>原理优先</b><span>知其所以然</span></div>
+            <div class="stat"><b>SVG 手绘</b><span>风格统一示意图</span></div>
+            <div class="stat"><b>可创新</b><span>变量化思维</span></div>
+          </div>
+        </div>
+        <div class="hero-art">
+          <img src="assets/img/hero-kitchen.webp" width="1100" height="733"
+               alt="手绘风格的中式家庭厨房静物：冒着热气的炒锅、番茄、葱姜蒜辣椒、菜刀砧板与酱油瓶" />
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 学习理念 -->
+  <section class="section-tight">
+    <div class="container">
+      <div class="grid grid-3">
+        <div class="card reveal">
+          <div class="ic" style="font-size:1.8rem">🔬</div>
+          <h3 style="margin:.4rem 0 0;font-size:1.15rem">先懂原理</h3>
+          <p class="muted" style="margin-top:8px;font-size:.95rem">每一步操作背后都有物理或化学机制。理解它，你才知道火大了/盐早了会发生什么。</p>
+        </div>
+        <div class="card reveal">
+          <div class="ic" style="font-size:1.8rem">🍳</div>
+          <h3 style="margin:.4rem 0 0;font-size:1.15rem">再练技法</h3>
+          <p class="muted" style="margin-top:8px;font-size:.95rem">把炒煎炸烹、蒸炖焖烧归纳成"热 + 水 + 时间"的几套组合，技法不再零散。</p>
+        </div>
+        <div class="card reveal">
+          <div class="ic" style="font-size:1.8rem">🧩</div>
+          <h3 style="margin:.4rem 0 0;font-size:1.15rem">最后创新</h3>
+          <p class="muted" style="margin-top:8px;font-size:.95rem">把食材、味型、技法当成可替换的变量，理解约束后再排列组合，做出属于你的菜。</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 学习全景图（章节卡） -->
+  <section class="section" id="map">
+    <div class="container">
+      <div class="center">
+        <span class="kicker">Learning Map</span>
+        <h2 class="section-title">学习全景图</h2>
+        <p class="section-sub">五个篇章构成一条主线：从厨房里的科学，到下锅前后的每个决定。建议按顺序，也可随时跳读。</p>
+        <div class="lead-divider"></div>
+      </div>
+
+      <figure class="mindmap-wrap reveal">
+        <svg viewBox="0 0 980 430" role="img" aria-label="家常菜知识树：底层原理为根，长出预处理与调味，汇入技法，收于实操保存创新">
+          <defs>
+            <marker id="mm-arrow" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+              <path d="M0 0 L10 5 L0 10 z" fill="#C9B49A"/>
+            </marker>
+          </defs>
+          <!-- 连接线 -->
+          <g fill="none" stroke="#C9B49A" stroke-width="2.5" marker-end="url(#mm-arrow)">
+            <path d="M196 198 C 250 150, 268 115, 314 108"/>
+            <path d="M196 232 C 250 290, 268 325, 314 332"/>
+            <path d="M486 108 C 540 140, 560 180, 594 202"/>
+            <path d="M486 332 C 540 300, 560 255, 594 232"/>
+            <path d="M756 215 L 794 215"/>
+          </g>
+          <!-- 根：底层原理 -->
+          <a href="principles.html">
+            <rect class="mm-node" x="40" y="175" width="156" height="82" rx="16" fill="#FFFDF8" stroke="#C0492B" stroke-width="2.6"/>
+            <text x="118" y="200" text-anchor="middle" font-size="13" fill="#C0492B" font-weight="700">01 · 根</text>
+            <text x="118" y="226" text-anchor="middle" font-size="21" fill="#5A3A2A" font-weight="700">底层原理</text>
+            <text x="118" y="246" text-anchor="middle" font-size="12" fill="#9A8775">热 × 水 × 时间</text>
+          </a>
+          <!-- 预处理 -->
+          <a href="prep.html">
+            <rect class="mm-node" x="316" y="72" width="172" height="72" rx="16" fill="#FFFDF8" stroke="#8B5E3C" stroke-width="2.6"/>
+            <text x="402" y="98" text-anchor="middle" font-size="13" fill="#8B5E3C" font-weight="700">02 · 下锅前</text>
+            <text x="402" y="124" text-anchor="middle" font-size="20" fill="#5A3A2A" font-weight="700">预处理</text>
+          </a>
+          <!-- 调味 -->
+          <a href="sauces.html">
+            <rect class="mm-node" x="316" y="296" width="172" height="72" rx="16" fill="#FFFDF8" stroke="#E2A03F" stroke-width="2.6"/>
+            <text x="402" y="322" text-anchor="middle" font-size="13" fill="#C98A1E" font-weight="700">03 · 定味道</text>
+            <text x="402" y="348" text-anchor="middle" font-size="20" fill="#5A3A2A" font-weight="700">调味与酱料</text>
+          </a>
+          <!-- 技法 -->
+          <a href="techniques.html">
+            <rect class="mm-node" x="596" y="174" width="160" height="82" rx="16" fill="#FFFDF8" stroke="#6F9A4C" stroke-width="2.6"/>
+            <text x="676" y="199" text-anchor="middle" font-size="13" fill="#4E7235" font-weight="700">04 · 下锅</text>
+            <text x="676" y="225" text-anchor="middle" font-size="21" fill="#5A3A2A" font-weight="700">火候技法</text>
+            <text x="676" y="245" text-anchor="middle" font-size="12" fill="#9A8775">热的组合</text>
+          </a>
+          <!-- 实操 -->
+          <a href="practice.html">
+            <rect class="mm-node" x="796" y="174" width="160" height="82" rx="16" fill="#FFFDF8" stroke="#5A8C8B" stroke-width="2.6"/>
+            <text x="876" y="199" text-anchor="middle" font-size="13" fill="#3F6F6E" font-weight="700">05 · 收尾</text>
+            <text x="876" y="221" text-anchor="middle" font-size="18" fill="#5A3A2A" font-weight="700">实操·保存</text>
+            <text x="876" y="243" text-anchor="middle" font-size="18" fill="#5A3A2A" font-weight="700">·创新</text>
+          </a>
+        </svg>
+        <figcaption>知识树：先扎根「原理」，长出「预处理 / 调味」，汇成「火候技法」，最后收于「实操 · 保存 · 创新」。点节点直达对应篇章。</figcaption>
+      </figure>
+
+      <div class="grid grid-auto" data-chapters style="margin-top:38px"></div>
+    </div>
+  </section>
+
+  <!-- 学习路线图 roadmap -->
+  <section class="section" style="background:linear-gradient(180deg,transparent,rgba(245,234,218,.6));">
+    <div class="container" style="max-width:820px">
+      <div class="center">
+        <span class="kicker">Roadmap</span>
+        <h2 class="section-title">建议的学习路线</h2>
+        <p class="section-sub">像搭知识树一样，先有根（原理），再长枝（技法），最后开花（创新）。</p>
+        <div class="lead-divider"></div>
+      </div>
+
+      <div class="roadmap" style="margin-top:40px">
+        <div class="road-step reveal" style="--accent:#C0492B">
+          <div class="dot">1</div>
+          <div class="body">
+            <h3>打地基：底层原理</h3>
+            <p>搞懂热传递、美拉德反应、蛋白质变性、乳化与鲜味协同。这部分是后面一切的"物理引擎"。</p>
+            <div class="tags"><span>热怎么传</span><span>香从哪来</span><span>为什么会嫩</span></div>
+          </div>
+        </div>
+        <div class="road-step reveal" style="--accent:#8B5E3C">
+          <div class="dot">2</div>
+          <div class="body">
+            <h3>下锅前：预处理</h3>
+            <p>刀工决定受热均匀与入味；腌制上浆锁水嫩肉；焯水去腥定色断生。下锅前已经赢了一半。</p>
+            <div class="tags"><span>刀工</span><span>腌制上浆</span><span>焯水</span></div>
+          </div>
+        </div>
+        <div class="road-step reveal" style="--accent:#E2A03F">
+          <div class="dot">3</div>
+          <div class="body">
+            <h3>定味道：调味与酱料</h3>
+            <p>认识每种调料的"职责"，再把味型理解成可计算的配比（兑碗汁）。从此调味不靠玄学。</p>
+            <div class="tags"><span>五味平衡</span><span>复合酱料</span><span>味型公式</span></div>
+          </div>
+        </div>
+        <div class="road-step reveal" style="--accent:#6F9A4C">
+          <div class="dot">4</div>
+          <div class="body">
+            <h3>控火候：技法体系</h3>
+            <p>把炒煎炸烹、蒸煮炖焖烧卤拆成"热源 + 介质 + 时间"，理解每种技法适合什么食材。</p>
+            <div class="tags"><span>炒爆</span><span>煎炸</span><span>蒸炖烧</span><span>勾芡时机</span></div>
+          </div>
+        </div>
+        <div class="road-step reveal" style="--accent:#5A8C8B">
+          <div class="dot">5</div>
+          <div class="body">
+            <h3>会收尾：实操 · 保存 · 创新</h3>
+            <p>通用流程模板、翻车排查清单、剩菜保存的食品安全，最后用"变量化思维"做创新。</p>
+            <div class="tags"><span>流程模板</span><span>翻车排查</span><span>冷藏复热</span><span>创新组合</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 如何使用本站 -->
+  <section class="section-tight">
+    <div class="container">
+      <div class="grid grid-2" style="align-items:start">
+        <div class="reveal">
+          <span class="kicker">How to use</span>
+          <h2 class="section-title" style="font-size:1.8rem">怎么用这个站</h2>
+          <div class="lead-divider"></div>
+          <ul class="prose" style="margin-top:18px">
+            <li><strong>看懂原理框</strong>：绿色「原理」框是机制解释，理科生可以深挖；只想做菜也能跳过。</li>
+            <li><strong>记住提示与翻车</strong>：黄色「贴士」和红色「翻车」是实操经验，最容易踩坑的地方。</li>
+            <li><strong>对照示意图</strong>：每个关键概念配 SVG 原理图，比纯文字更直观。</li>
+            <li><strong>用案例验证</strong>：每篇会配 1–2 道经典家常菜，把原理落到具体操作。</li>
+          </ul>
+        </div>
+        <div class="card card-soft reveal" style="background:var(--card-soft)">
+          <h3 style="margin-top:0">🧰 还有这些趁手工具</h3>
+          <ul class="prose" style="margin-top:14px">
+            <li><strong>互动工具</strong>：味型配比计算器、温度互动图、创新组合器（<a href="tools.html">厨房工具</a>）。</li>
+            <li><strong>查得到</strong>：按 <kbd>/</kbd> 全站搜索；正文术语自动加链接、悬浮即看释义（<a href="glossary.html">术语表</a>）。</li>
+            <li><strong>对照学</strong>：<a href="dishes.html">案例菜库</a> 与 <a href="ingredients.html">食材档案</a> 双向链接到原理与技法。</li>
+            <li><strong>看演示</strong>：每篇底部「参考视频」精选检索词，一键直达 B站 / YouTube。</li>
+          </ul>
+          <p class="muted" style="margin-top:14px;font-size:.86rem">右上角可切换深色模式，并标记「已掌握」记录学习进度。</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="section center">
+    <div class="container" style="max-width:620px">
+      <h2 class="section-title">准备好了吗？</h2>
+      <p class="section-sub" style="margin-inline:auto">从第一篇「底层原理」开始，30 分钟建立起对厨房的全新理解。</p>
+      <div class="hero-actions" style="justify-content:center;margin-top:24px">
+        <a class="btn btn-primary" href="principles.html">开始第一篇 →</a>
+      </div>
+    </div>
+  </section>
+
+  <script src="assets/js/data.js"></script>
+  <script src="assets/js/main.js"></script>
+  <script>renderChapterCards('[data-chapters]');</script>
+</body>
+</html>

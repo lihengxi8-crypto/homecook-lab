@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <script>(function(){try{var t=localStorage.getItem('hcl-theme');if(t==='dark')document.documentElement.setAttribute('data-theme','dark');}catch(e){}})();</script>
+  <title>第四篇 · 火候与技法 | 家常菜实验室</title>
+  <meta name="description" content="用介质×温度×时间的坐标系系统梳理炒煎炸烹、蒸煮炖焖烧卤；油温判断、勾芡时机与锅气成因。" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@500;700;900&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="assets/css/style.css" />
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Ctext y='20' font-size='20'%3E%F0%9F%8D%B2%3C/text%3E%3C/svg%3E" />
+</head>
+<body data-page="techniques">
+
+  <header class="page-head" style="--accent:#6F9A4C">
+    <div class="container">
+      <div class="crumbs"><a href="index.html">首页</a> / 第四篇</div>
+      <span class="num-chip">04</span>
+      <h1>火候与技法</h1>
+      <div class="en">Heat &amp; Techniques</div>
+      <p class="intro">
+        中餐技法看似繁多，但本质都能拆成三个变量：<strong>热源（火力）× 介质（油/水/蒸汽/空气）× 时间</strong>。
+        理解了这套坐标，炒煎炸烹、蒸煮炖焖烧卤就不再是零散的招式，而是同一套规律的不同取值。
+      </p>
+      <div class="tag-row">
+        <span class="pill">干热法 vs 湿热法</span><span class="pill">油温几成热</span><span class="pill">滑炒/爆炒</span>
+        <span class="pill">煎炸烹</span><span class="pill">蒸煮炖焖烧卤</span><span class="pill">勾芡时机</span><span class="pill">锅气</span>
+      </div>
+    </div>
+  </header>
+
+  <div class="container section-tight">
+    <div class="doc-layout">
+      <aside class="toc" data-toc></aside>
+      <article class="prose">
+
+        <!-- 1 坐标系 -->
+        <h2 data-toc="一套坐标系"><span class="idx">1</span>一套坐标系，看懂所有技法</h2>
+        <p>
+          先建立一个判断框架，所有技法都能往里套。最重要的一刀，是分成<strong>干热法</strong>和<strong>湿热法</strong>：
+        </p>
+        <ul>
+          <li><strong>干热法（高温上色）</strong>：介质是油或热空气，温度能冲到 <strong>140°C 以上</strong>，会发生美拉德/焦糖化——<strong>炒、煎、炸、烤</strong>。特点：香、上色、外焦。</li>
+          <li><strong>湿热法（水/汽，封顶 100°C）</strong>：介质是水或蒸汽，温度被锁在 <strong>100°C 上下</strong>，靠<strong>时间</strong>换软烂入味——<strong>蒸、煮、炖、焖、烧、卤</strong>。特点：嫩、入味、出胶、不上色。</li>
+        </ul>
+
+        <figure>
+          <svg viewBox="0 0 640 320" role="img" aria-label="技法坐标系：温度与含水量">
+            <rect x="0" y="0" width="640" height="320" rx="14" fill="#FFFDF8" stroke="#E7D8C2"/>
+            <!-- 轴 -->
+            <line x1="80" y1="270" x2="600" y2="270" stroke="#8B5E3C" stroke-width="2"/>
+            <line x1="80" y1="270" x2="80" y2="40" stroke="#8B5E3C" stroke-width="2"/>
+            <text x="610" y="274" font-size="12" fill="#5A3A2A">温度 →</text>
+            <text x="50" y="40" font-size="12" fill="#5A3A2A">含水量 ↑</text>
+            <!-- 分界 -->
+            <line x1="340" y1="40" x2="340" y2="270" stroke="#C0492B" stroke-width="1.5" stroke-dasharray="5 5"/>
+            <text x="340" y="290" text-anchor="middle" font-size="11" fill="#9C3A22">100°C（水的上限）</text>
+            <!-- 区域标题 -->
+            <text x="210" y="60" text-anchor="middle" font-size="13" fill="#3F6463" font-weight="700">湿热法 · 嫩/入味/出胶</text>
+            <text x="470" y="60" text-anchor="middle" font-size="13" fill="#9C3A22" font-weight="700">干热法 · 香/上色/焦脆</text>
+            <!-- 散点 -->
+            <g font-size="12" fill="#5A3A2A">
+              <circle cx="150" cy="110" r="7" fill="#5A8C8B"/><text x="162" y="114">蒸</text>
+              <circle cx="200" cy="150" r="7" fill="#5A8C8B"/><text x="212" y="154">煮/汆</text>
+              <circle cx="170" cy="210" r="7" fill="#5A8C8B"/><text x="182" y="214">炖/焖/烧/卤</text>
+              <circle cx="420" cy="220" r="7" fill="#E2A03F"/><text x="432" y="224">煎</text>
+              <circle cx="470" cy="160" r="7" fill="#E2A03F"/><text x="482" y="164">炒/爆</text>
+              <circle cx="520" cy="120" r="7" fill="#C0492B"/><text x="532" y="124">炸</text>
+              <circle cx="560" cy="90" r="7" fill="#9C3A22"/><text x="500" y="94" text-anchor="end">烤</text>
+            </g>
+          </svg>
+          <figcaption>图 1 · 技法坐标：横轴温度、纵轴含水量。左侧湿热法重"软烂入味"，右侧干热法重"香与上色"</figcaption>
+        </figure>
+
+        <hr />
+
+        <!-- 2 油温 -->
+        <h2 data-toc="油温几成热"><span class="idx">2</span>油温"几成热"：干热法的仪表盘</h2>
+        <p>
+          家里没有油温计，但"几成热"是可以<strong>用现象判断</strong>的。一成约 30°C，常用区间如下：
+        </p>
+        <figure>
+          <svg viewBox="0 0 640 220" role="img" aria-label="油温分级">
+            <rect x="0" y="0" width="640" height="220" rx="14" fill="#FFFDF8" stroke="#E7D8C2"/>
+            <defs>
+              <linearGradient id="oiltemp" x1="0" y1="0" x2="1" y2="0">
+                <stop offset="0" stop-color="#F6D79A"/><stop offset="0.5" stop-color="#E2A03F"/><stop offset="1" stop-color="#9C3A22"/>
+              </linearGradient>
+            </defs>
+            <rect x="50" y="60" width="540" height="30" rx="15" fill="url(#oiltemp)"/>
+            <!-- 分段 -->
+            <g font-size="11" fill="#5A3A2A" text-anchor="middle">
+              <text x="150" y="50" font-weight="700" fill="#9C6A1E">3–4 成 (≈120°C)</text>
+              <text x="150" y="112">温油</text>
+              <text x="150" y="130" fill="#9A8775">滑油、滑炒、炸花生</text>
+
+              <text x="340" y="50" font-weight="700" fill="#C0492B">5–6 成 (≈160°C)</text>
+              <text x="340" y="112">中油</text>
+              <text x="340" y="130" fill="#9A8775">炒菜、油炸、煎</text>
+
+              <text x="500" y="50" font-weight="700" fill="#9C3A22">7–8 成 (≈190°C)</text>
+              <text x="500" y="112">热油</text>
+              <text x="500" y="130" fill="#9A8775">爆炒、复炸、爆香</text>
+            </g>
+            <!-- 现象提示 -->
+            <text x="320" y="170" text-anchor="middle" font-size="12" fill="#5A3A2A">判断法：插入干木筷</text>
+            <text x="320" y="192" text-anchor="middle" font-size="11" fill="#9A8775">周围冒小细泡=温油 · 密集大泡=中热 · 油面微动起青烟=高热（别冒大烟）</text>
+          </svg>
+          <figcaption>图 2 · 油温三档与现象判断；"几成热"对应不同技法</figcaption>
+        </figure>
+
+        <div class="note tip">
+          <span class="badge">!</span>
+          <div>
+            <h4>实用判断口诀</h4>
+            <p>插一根<strong>干木筷</strong>到油里：<strong>周围冒小细泡</strong>≈ 三四成（滑油）；<strong>密集均匀的泡</strong>≈ 五六成（炒、炸）；<strong>油面微微波动、刚起青烟</strong>≈ 七八成（爆炒、复炸）。看到<strong>大量浓烟</strong>说明油过热（接近冒烟点，会产生有害物），赶紧关小火。</p>
+          </div>
+        </div>
+
+        <hr />
+
+        <!-- 3 炒 -->
+        <h2 data-toc="炒"><span class="idx">3</span>炒：中餐的核心技法</h2>
+        <p>"炒"是高温、少油、快速翻动。根据食材和处理方式，又分几种：</p>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>类型</th><th>做法</th><th>适用</th></tr></thead>
+            <tbody>
+              <tr><td><strong>滑炒</strong></td><td>上浆 → 温油滑散 → 回锅快炒</td><td>嫩肉片、虾仁、鸡丁（滑嫩）</td></tr>
+              <tr><td><strong>爆炒</strong></td><td>极高温、极短时间、猛火快翻</td><td>腰花、肚尖、爆炒类（脆嫩、锅气）</td></tr>
+              <tr><td><strong>生炒</strong></td><td>生料直接下锅炒熟</td><td>大部分素菜</td></tr>
+              <tr><td><strong>熟炒</strong></td><td>食材先煮/蒸至半熟再炒</td><td>回锅肉（先煮后炒）</td></tr>
+              <tr><td><strong>干煸</strong></td><td>中火较长时间煸至水分收干</td><td>干煸豆角、干煸牛肉丝（焦香有嚼劲）</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="note warn">
+          <span class="badge">×</span>
+          <div>
+            <h4>家庭灶火力不足？用策略弥补</h4>
+            <p>家用灶比饭店猛火灶弱很多，硬炒一大锅必然出水变"水煮"。对策：<strong>① 锅一定要烧到很热再下油；② 食材分批炒、别堆满锅；③ 表面控干水分；④ 备料切配、兑汁全部提前就位，下锅后一气呵成。</strong>本质是想办法<strong>把温度顶上去、把时间压下来</strong>（呼应第一篇美拉德）。</p>
+          </div>
+        </div>
+
+        <hr />
+
+        <!-- 4 煎炸烹 -->
+        <h2 data-toc="煎炸烹"><span class="idx">4</span>煎 · 炸 · 烹</h2>
+        <h3>煎：靠"传导"单面上色</h3>
+        <p>
+          少油、中火，食材贴着锅底靠<strong>传导</strong>受热。要点：<strong>锅热油润、下锅后别急着翻</strong>——让贴锅那一面充分美拉德上色、自然定型后再翻，否则破皮粘锅（呼应第一篇"热锅冷油")。
+        </p>
+        <h3>炸：大量油"对流"包围加热</h3>
+        <ul>
+          <li><strong>挂糊/拍粉</strong>：脆浆、蛋液+面包糠、干淀粉等，形成酥壳并保护内部水分。</li>
+          <li><strong>复炸</strong>：第一遍中油炸熟，捞出升高油温后<strong>再炸一遍</strong>——逼出表面水分、进一步美拉德，<strong>更酥更脆、回软慢</strong>。</li>
+        </ul>
+        <h3>烹：炸/煎后"烹汁"激香</h3>
+        <p>
+          先把食材炸或煎到酥香，再<strong>快速烹入调好的味汁</strong>，高温让香气爆发、味汁迅速收裹。代表：锅包肉、烹对虾。
+        </p>
+
+        <hr />
+
+        <!-- 5 湿热法 -->
+        <h2 data-toc="蒸煮炖焖烧卤"><span class="idx">5</span>蒸 · 煮 · 炖 · 焖 · 烧 · 卤</h2>
+        <p>都属于湿热法，温度被锁在 100°C 上下，差别在于<strong>用水多少、时间长短、是否上色收汁</strong>。</p>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>技法</th><th>特征</th><th>关键</th></tr></thead>
+            <tbody>
+              <tr><td><strong>蒸</strong></td><td>蒸汽加热，原汁原味、最嫩</td><td>足汽上锅；鱼/蛋羹忌蒸过久变老</td></tr>
+              <tr><td><strong>煮 / 汆</strong></td><td>水中快速熟成、清爽</td><td>断生即起，别久煮</td></tr>
+              <tr><td><strong>炖</strong></td><td>大量水、长时间、出汤</td><td>小火微沸，转化胶原（见下）</td></tr>
+              <tr><td><strong>焖</strong></td><td>少量水、加盖、小火</td><td>靠余汽和时间把食材焖透入味</td></tr>
+              <tr><td><strong>烧</strong></td><td>先煎炒上色 → 加汤调味 → 收汁</td><td>红烧的核心；收汁让味道浓缩挂裹</td></tr>
+              <tr><td><strong>卤</strong></td><td>卤水长时间浸煮入味上色</td><td>靠卤水的复合香料和时间</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="note science">
+          <span class="badge">原</span>
+          <div>
+            <h4>为什么炖肉要"小火微沸"而不是"大火滚开"？</h4>
+            <p>富含胶原的肉（牛腩、五花、蹄筋）需要<span class="mech">长时间 + 70–90°C</span>把胶原慢慢转化成明胶，才会软糯（第一篇）。<strong>大火滚开</strong>水温虽然还是 100°C，但剧烈翻滚会让肉块表面纤维猛烈收缩、变柴，汤也容易煮浑。<strong>小火微沸</strong>温和均匀，肉嫩汤清。<br/>例外：想要<strong>奶白汤</strong>（鱼汤、骨汤）时，反而要<strong>大火滚</strong>，让油脂被水流打碎<strong>乳化</strong>（第一篇）成乳白色。</p>
+          </div>
+        </div>
+
+        <hr />
+
+        <!-- 6 勾芡 -->
+        <h2 data-toc="勾芡时机"><span class="idx">6</span>勾芡的时机：早了澥、晚了生</h2>
+        <p>
+          勾芡靠淀粉糊化增稠（第一、三篇）。除了浓度，<strong>时机</strong>同样关键：
+        </p>
+        <ul>
+          <li><strong>汤汁要保持微沸</strong>时下水淀粉——温度够才能糊化。</li>
+          <li><strong>边淋边推</strong>，分次加到合适稠度，避免一次倒太多结成坨。</li>
+          <li>勾完<strong>稍煮十几秒</strong>让淀粉彻底糊化（否则有生粉味），再淋明油起锅。</li>
+          <li>勾芡后<strong>不宜久煮翻动</strong>，否则芡会"澥"（变稀回水）。</li>
+        </ul>
+
+        <hr />
+
+        <!-- 7 锅气 -->
+        <h2 data-toc="锅气"><span class="idx">7</span>锅气（Wok Hei）到底是什么</h2>
+        <p>那股饭店小炒特有的"焦香镬气"，并不神秘，它来自几件事的叠加：</p>
+        <ul>
+          <li><strong>极高温</strong>：食材表面瞬间发生强烈<strong>美拉德/焦化</strong>（第一篇），产生焦香。</li>
+          <li><strong>颠勺腾空</strong>：食材短暂离开锅面、接触<strong>火焰与高温蒸汽</strong>，微量油脂在高温下<strong>裂解</strong>出特殊香气。</li>
+          <li><strong>快速失水</strong>：高温让表面水分迅速蒸发，避免变成"水煮"。</li>
+        </ul>
+        <div class="note tip">
+          <span class="badge">!</span>
+          <div>
+            <h4>家庭灶怎么尽量逼出锅气</h4>
+            <p>① 铁锅<strong>烧到冒烟</strong>再下油（够热）；② <strong>分批少量</strong>，别让锅温被压下去；③ 食材<strong>沥干</strong>；④ 备料兑汁全部就位，<strong>动作快</strong>；⑤ 起锅前沿锅边<strong>烹一点料酒/生抽</strong>，瞬间激香。虽然比不上猛火灶，但能明显接近。</p>
+          </div>
+        </div>
+
+        <hr />
+
+        <!-- 案例 -->
+        <h2 data-toc="案例"><span class="idx">★</span>案例：爆炒与红烧，两种典型路径</h2>
+
+        <h3>案例 A · 宫保鸡丁（糊辣 + 爆炒 + 兑汁）</h3>
+        <ol>
+          <li><strong>鸡丁上浆</strong>（第二篇）：滑嫩不柴。</li>
+          <li><strong>兑碗汁</strong>（第三篇糊辣/小糖醋）：酱油、糖、醋、水淀粉、高汤一碗调好。</li>
+          <li><strong>热油炝干辣椒、花椒</strong>出糊辣香（脂溶香料爆香）——注意别炒糊发苦。</li>
+          <li><strong>大火爆炒鸡丁</strong>，下葱姜蒜、花生米。</li>
+          <li><strong>烹入碗汁</strong>，快速翻匀挂芡，几秒出锅——锅气、滑嫩、酸甜辣香俱全。</li>
+        </ol>
+
+        <h3>案例 B · 红烧肉（焯水 → 炒糖色 → 烧 → 收汁）</h3>
+        <ol>
+          <li><strong>冷水焯五花</strong>（第二篇）：去血沫腥味。</li>
+          <li><strong>炒糖色</strong>（第一、三篇焦糖化）：冰糖小火炒到枣红起泡，裹上肉块上色增香。</li>
+          <li><strong>煸炒 + 调味</strong>：下姜葱八角，烹料酒、生抽，少许老抽补色。</li>
+          <li><strong>加热水没过，小火慢烧</strong>（湿热法）：约 40–60 分钟，把胶原烧化、肉变软糯。</li>
+          <li><strong>大火收汁</strong>：汤汁浓稠红亮、裹满每块肉（收汁=浓缩+轻微乳化挂裹）。</li>
+        </ol>
+
+        <div class="note tip">
+          <span class="badge">→</span>
+          <div>
+            <h4>下一步</h4>
+            <p>原理、预处理、调味、技法四块拼图都齐了。最后一篇<strong>实操 · 保存 · 创新</strong>：把它们装配成可执行流程，补上剩菜保存的食品安全，并用"变量化思维"教你<strong>从照着做到自己创造</strong>。</p>
+          </div>
+        </div>
+
+        <nav class="pager">
+          <a href="sauces.html"><span class="dir">← 上一篇</span><b>03 · 调味与酱料</b></a>
+          <a class="next" href="practice.html"><span class="dir">下一篇 →</span><b>05 · 实操 · 保存 · 创新</b></a>
+        </nav>
+      </article>
+    </div>
+  </div>
+
+  <script src="assets/js/data.js"></script>
+  <script src="assets/js/main.js"></script>
+</body>
+</html>

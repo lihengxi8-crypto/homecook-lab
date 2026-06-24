@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <script>(function(){try{var t=localStorage.getItem('hcl-theme');if(t==='dark')document.documentElement.setAttribute('data-theme','dark');}catch(e){}})();</script>
+  <title>第五篇 · 实操 · 保存 · 创新 | 家常菜实验室</title>
+  <meta name="description" content="通用流程模板、翻车排查与补救、剩菜保存的食品安全（危险温度区间），以及基于原理的变量化创新方法论。" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@500;700;900&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="assets/css/style.css" />
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Ctext y='20' font-size='20'%3E%F0%9F%8D%B2%3C/text%3E%3C/svg%3E" />
+</head>
+<body data-page="practice">
+
+  <header class="page-head" style="--accent:#5A8C8B">
+    <div class="container">
+      <div class="crumbs"><a href="index.html">首页</a> / 第五篇</div>
+      <span class="num-chip">05</span>
+      <h1>实操 · 保存 · 创新</h1>
+      <div class="en">Practice &amp; Beyond</div>
+      <p class="intro">
+        前四篇是"零件"，这一篇把它们装配成可执行的流程，并补上两件常被忽略的事：<strong>剩菜保存的食品安全</strong>，
+        以及最让理科生兴奋的——<strong>如何基于原理做创新</strong>。
+      </p>
+      <div class="tag-row">
+        <span class="pill">流程模板</span><span class="pill">下锅顺序</span><span class="pill">翻车排查</span>
+        <span class="pill">味道补救</span><span class="pill">危险温度区间</span><span class="pill">冷藏复热</span>
+        <span class="pill">食品安全</span><span class="pill">变量化创新</span>
+      </div>
+    </div>
+  </header>
+
+  <div class="container section-tight">
+    <div class="doc-layout">
+      <aside class="toc" data-toc></aside>
+      <article class="prose">
+
+        <!-- 1 流程模板 -->
+        <h2 data-toc="通用流程模板"><span class="idx">1</span>通用流程模板：一道菜的标准装配线</h2>
+        <p>新手最容易在锅边手忙脚乱。把流程固定下来，把"思考"提前到下锅之前，剩下的就只是执行：</p>
+
+        <figure>
+          <svg viewBox="0 0 640 200" role="img" aria-label="做菜通用流程">
+            <rect x="0" y="0" width="640" height="200" rx="14" fill="#FFFDF8" stroke="#E7D8C2"/>
+            <!-- 时间线 -->
+            <line x1="40" y1="100" x2="600" y2="100" stroke="#D8C2A6" stroke-width="2"/>
+            <g font-size="11" text-anchor="middle">
+              <!-- 步骤点 -->
+              <g><circle cx="95" cy="100" r="20" fill="#5A8C8B"/><text x="95" y="104" fill="#fff" font-size="14">1</text><text x="95" y="48" fill="#5A3A2A" font-weight="700">备料</text><text x="95" y="150" fill="#9A8775">切配/称量</text></g>
+              <g><circle cx="220" cy="100" r="20" fill="#6F9A4C"/><text x="220" y="104" fill="#fff" font-size="14">2</text><text x="220" y="48" fill="#5A3A2A" font-weight="700">预处理</text><text x="220" y="150" fill="#9A8775">腌/浆/焯</text></g>
+              <g><circle cx="345" cy="100" r="20" fill="#E2A03F"/><text x="345" y="104" fill="#fff" font-size="14">3</text><text x="345" y="48" fill="#5A3A2A" font-weight="700">兑碗汁</text><text x="345" y="150" fill="#9A8775">味型配比</text></g>
+              <g><circle cx="470" cy="100" r="20" fill="#C0492B"/><text x="470" y="104" fill="#fff" font-size="14">4</text><text x="470" y="48" fill="#5A3A2A" font-weight="700">烹制</text><text x="470" y="150" fill="#9A8775">爆香→主→副→味</text></g>
+              <g><circle cx="565" cy="100" r="20" fill="#8B5E3C"/><text x="565" y="104" fill="#fff" font-size="14">5</text><text x="565" y="48" fill="#5A3A2A" font-weight="700">收尾</text><text x="565" y="150" fill="#9A8775">勾芡/点香</text></g>
+            </g>
+          </svg>
+          <figcaption>图 1 · 做菜流水线：把 80% 的工作（1–3 步）放在开火之前，开火后只剩快速执行</figcaption>
+        </figure>
+
+        <h3>下锅顺序的通用原则</h3>
+        <ul>
+          <li><strong>难熟的先下，易熟的后下</strong>：胡萝卜/肉 → 青椒 → 蒜苗/叶菜，保证同时熟（呼应第二篇刀工"同步成熟"）。</li>
+          <li><strong>香料先爆</strong>：葱姜蒜、干辣椒等脂溶香料先下热油爆香（第三篇）。</li>
+          <li><strong>调味分时</strong>：料酒沿锅边烹、生抽中途、蚝油/香醋/香油起锅前（第三篇时机）。</li>
+          <li><strong>盐的时机</strong>：炒青菜<strong>临出锅</strong>放盐（早放出水变蔫，第一篇渗透）；炖肉则可早放入味。</li>
+        </ul>
+
+        <hr />
+
+        <!-- 2 翻车排查 -->
+        <h2 data-toc="翻车排查"><span class="idx">2</span>常见翻车排查表</h2>
+        <p>遇到问题先别慌，按"现象 → 原因 → 对策"定位，多数能追溯到前四篇的某条原理：</p>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>现象</th><th>最可能的原因</th><th>对策（关联篇章）</th></tr></thead>
+            <tbody>
+              <tr><td>炒菜出水、灰白不香</td><td>火不够 / 堆锅 / 没擦干</td><td>大火、分批、铺开、沥干（第一、二、四篇）</td></tr>
+              <tr><td>肉柴、老</td><td>过火失水 / 没上浆 / 顺纹切</td><td>上浆 + 断生即起 + 逆纹切（第一、二篇）</td></tr>
+              <tr><td>粘锅、破皮</td><td>锅不够热 / 太早翻动</td><td>热锅冷油、定型再翻（第一、四篇）</td></tr>
+              <tr><td>味道寡淡没层次</td><td>缺鲜 / 没底味</td><td>鲜味协同 + 码味 + 兑汁（第一、二、三篇）</td></tr>
+              <tr><td>青菜发黄变软</td><td>焯/炒过久、没护色</td><td>沸水快焯过凉、临出锅放盐（第二篇）</td></tr>
+              <tr><td>勾芡结块 / 澥汤</td><td>淀粉没调匀 / 时机不对 / 久煮</td><td>冷水调匀、微沸边推、勾后少翻（第三、四篇）</td></tr>
+              <tr><td>红烧不亮、不入味</td><td>没炒糖色 / 没收汁 / 火太大</td><td>炒糖色、小火慢烧、大火收汁（第四篇）</td></tr>
+              <tr><td>油炸不脆、回软快</td><td>油温低 / 没复炸</td><td>升温复炸逼水分（第四篇）</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h3>味道补救速查（再贴一次，太实用）</h3>
+        <ul>
+          <li><strong>太咸</strong>：加水/糖/醋稀释，或丢豆腐、土豆吸味。</li>
+          <li><strong>太辣</strong>：加糖、加酸、加油脂或牛奶（辣椒素溶于油脂）。</li>
+          <li><strong>太酸/太甜</strong>：互相找平衡，少量盐也能压。</li>
+          <li><strong>太油腻</strong>：加一点醋或辣，或配清口菜。</li>
+        </ul>
+
+        <hr />
+
+        <!-- 3 食品安全 -->
+        <h2 data-toc="保存与食品安全"><span class="idx">3</span>烹饪后的保存：被忽视的食品安全</h2>
+        <p>
+          做得好吃只是一半，<strong>吃得安全</strong>是另一半。这里的几条是<strong>有明确科学依据的硬规则</strong>，建议当成常识记住。
+        </p>
+
+        <figure>
+          <svg viewBox="0 0 640 280" role="img" aria-label="危险温度区间">
+            <rect x="0" y="0" width="640" height="280" rx="14" fill="#FFFDF8" stroke="#E7D8C2"/>
+            <!-- 温度计 -->
+            <rect x="120" y="30" width="40" height="200" rx="20" fill="#EEE3D2" stroke="#D8C2A6"/>
+            <!-- 区段 -->
+            <rect x="120" y="30" width="40" height="40" fill="#9C3A22"/>     <!-- >60 安全(热) -->
+            <rect x="120" y="70" width="40" height="120" fill="#E2A03F"/>    <!-- 4-60 危险 -->
+            <rect x="120" y="190" width="40" height="40" fill="#5A8C8B"/>    <!-- <4 安全(冷) -->
+            <circle cx="140" cy="245" r="22" fill="#5A8C8B"/>
+            <!-- 刻度文字 -->
+            <g font-size="13" fill="#5A3A2A">
+              <text x="180" y="52" font-weight="700" fill="#9C3A22">60°C 以上</text>
+              <text x="180" y="70" font-size="11" fill="#9A8775">保持热 → 安全</text>
+              <text x="180" y="125" font-weight="700" fill="#9C6A1E">4–60°C 危险温度区间</text>
+              <text x="180" y="145" font-size="11" fill="#9A8775">细菌快速繁殖 · 熟食室温别放超过 2 小时</text>
+              <text x="180" y="165" font-size="11" fill="#9A8775">（30–40°C 最危险）</text>
+              <text x="180" y="212" font-weight="700" fill="#3F6463">4°C 以下</text>
+              <text x="180" y="230" font-size="11" fill="#9A8775">冷藏 → 减缓繁殖（非杀菌）</text>
+            </g>
+          </svg>
+          <figcaption>图 2 · 危险温度区间 4–60°C：熟食应尽快离开这个区间——要么热着吃，要么尽快冷藏</figcaption>
+        </figure>
+
+        <div class="note warn">
+          <span class="badge">×</span>
+          <div>
+            <h4>核心规则：4–60°C 是细菌的"游乐场"</h4>
+            <p>细菌在 <strong>4–60°C</strong> 繁殖最快。所以：① 熟食在室温下<strong>放置别超过 2 小时</strong>（夏天/高温缩短到 1 小时）；② 吃不完<strong>尽快分装、降温、冷藏</strong>，不要等完全凉了再放冰箱（那时已在危险区待太久）；③ 复热要<strong>彻底热透（中心 ≥ 70°C）</strong>，且<strong>只复热一次</strong>。</p>
+          </div>
+        </div>
+
+        <h3>几条具体提醒</h3>
+        <ul>
+          <li><strong>米饭 / 淀粉类</strong>：煮熟的米饭含<strong>蜡样芽孢杆菌</strong>芽孢，室温久放会繁殖产毒。米饭<strong>尽快冷藏</strong>，别在锅里温一整天。<br/>（淀粉<strong>回生</strong>是另一回事：冷藏后饭变硬，是淀粉结构重排，复热可部分恢复，属口感问题不是安全问题。）</li>
+          <li><strong>绿叶菜</strong>：含较多硝酸盐，存放中可被细菌还原成<strong>亚硝酸盐</strong>。不必恐慌，但<strong>绿叶菜尽量当顿吃完</strong>，少隔夜反复加热。</li>
+          <li><strong>木耳 / 银耳</strong>：见第二篇——<strong>不要常温长时间泡发</strong>，以防致命的米酵菌酸。</li>
+          <li><strong>炸过的油</strong>：反复高温使用会产生有害物质，<strong>别反复用太多次</strong>。</li>
+          <li><strong>解冻</strong>：冷藏缓化或冷水解冻，<strong>避免反复冻融</strong>（既掉品质又利于细菌）。</li>
+        </ul>
+
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>食物</th><th>冷藏（0–4°C）参考</th><th>备注</th></tr></thead>
+            <tbody>
+              <tr><td>熟肉菜 / 剩菜</td><td>1–2 天，尽快吃完</td><td>分装、彻底复热</td></tr>
+              <tr><td>米饭 / 面食</td><td>1–2 天</td><td>尽快冷藏，别室温久放</td></tr>
+              <tr><td>绿叶菜（熟）</td><td>尽量当顿吃完</td><td>少隔夜</td></tr>
+              <tr><td>生肉（冷藏）</td><td>1–2 天</td><td>更久则冷冻</td></tr>
+              <tr><td>高汤</td><td>2–3 天 / 冷冻更久</td><td>煮沸后冷藏</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <hr />
+
+        <!-- 4 创新 -->
+        <h2 data-toc="创新方法论"><span class="idx">4</span>创新方法论：把做菜当成"可调变量"</h2>
+        <p>
+          这是本站的终点，也是理科生的主场。前面所有篇章，都是为了让你<strong>理解约束</strong>；理解了约束，就能放心地替换变量、做出新菜，而不是瞎试翻车。
+        </p>
+
+        <h3>把一道菜分解成正交变量</h3>
+        <p>任何一道家常菜，几乎都能拆成五个相对独立的变量：</p>
+
+        <figure>
+          <svg viewBox="0 0 640 250" role="img" aria-label="创新变量矩阵">
+            <rect x="0" y="0" width="640" height="250" rx="14" fill="#FFFDF8" stroke="#E7D8C2"/>
+            <g font-size="12">
+              <!-- 五列变量 -->
+              <g text-anchor="middle">
+                <rect x="40" y="30" width="100" height="34" rx="8" fill="#C0492B"/><text x="90" y="52" fill="#fff" font-weight="700">主料</text>
+                <rect x="160" y="30" width="100" height="34" rx="8" fill="#8B5E3C"/><text x="210" y="52" fill="#fff" font-weight="700">预处理</text>
+                <rect x="280" y="30" width="100" height="34" rx="8" fill="#6F9A4C"/><text x="330" y="52" fill="#fff" font-weight="700">技法</text>
+                <rect x="400" y="30" width="100" height="34" rx="8" fill="#E2A03F"/><text x="450" y="52" fill="#fff" font-weight="700">味型</text>
+                <rect x="520" y="30" width="90" height="34" rx="8" fill="#5A8C8B"/><text x="565" y="52" fill="#fff" font-weight="700">配料/香料</text>
+              </g>
+              <!-- 选项 -->
+              <g fill="#5A3A2A" text-anchor="middle">
+                <text x="90" y="100">鸡 / 虾 / 里脊</text>
+                <text x="90" y="124">豆腐 / 鱼</text>
+                <text x="210" y="100">上浆 / 焯水</text>
+                <text x="210" y="124">腌制 / 直用</text>
+                <text x="330" y="100">滑炒 / 爆炒</text>
+                <text x="330" y="124">煎 / 烧</text>
+                <text x="450" y="100">咸鲜 / 鱼香</text>
+                <text x="450" y="124">糖醋 / 麻辣</text>
+                <text x="565" y="100">葱姜蒜</text>
+                <text x="565" y="124">花椒 / 泡椒</text>
+              </g>
+            </g>
+            <line x1="40" y1="150" x2="610" y2="150" stroke="#E7D8C2"/>
+            <text x="320" y="180" text-anchor="middle" font-size="13" fill="#9C3A22" font-weight="700">固定其他，只换一个变量 = 一道"新菜"</text>
+            <text x="320" y="208" text-anchor="middle" font-size="12" fill="#9A8775">滑炒里脊（咸鲜）→ 换味型 → 鱼香肉丝 → 换主料 → 鱼香鸡丝</text>
+            <text x="320" y="230" text-anchor="middle" font-size="11" fill="#9A8775">前提：懂约束（主料的蛋白/水分特性决定能用哪些技法）</text>
+          </svg>
+          <figcaption>图 3 · 创新 = 在五个变量上做"有约束的排列组合"，每换一个变量就是一道新菜</figcaption>
+        </figure>
+
+        <div class="note science">
+          <span class="badge">原</span>
+          <div>
+            <h4>"有约束"是关键，否则就是瞎试</h4>
+            <p>替换变量不能乱来，要尊重原理约束：<br/>• <strong>主料 ↔ 技法</strong>：嫩的瘦肉/虾仁适合滑炒爆炒（快、断生即起）；富含胶原的牛腩五花适合炖烧（长时间转化明胶）。把牛腩拿去爆炒只会又柴又韧。<br/>• <strong>主料 ↔ 味型</strong>：清淡食材（豆腐、鱼）配咸鲜/糖醋能突出本味；重口味型（麻辣、鱼香）适合配中性或略腥的食材去压味提香。<br/><strong>懂了这些约束，替换就不会翻车——这就是从"照着做"到"自己创造"的跃迁。</strong></p>
+          </div>
+        </div>
+
+        <h3>从模仿到创造的三步路径</h3>
+        <ol>
+          <li><strong>精确复现</strong>：照一个靠谱配方做 2–3 遍，体会每一步的状态（颜色、声音、香气）。</li>
+          <li><strong>单变量微调</strong>：每次只改一个变量（少放点盐 / 换个味型 / 换个技法），观察结果，建立"因果直觉"。</li>
+          <li><strong>组合创新</strong>：理解约束后，主动组合变量做出自己的菜——并能<strong>预测</strong>大致结果。</li>
+        </ol>
+
+        <blockquote>
+          做菜的终极乐趣，不是会做多少道菜，而是<strong>理解了它运转的规律</strong>，从此面对任何食材都能从容应对。这正是理科生学做菜的最大优势——你不是在背菜谱，你在掌握一套可迁移的系统。
+        </blockquote>
+
+        <div class="note tip">
+          <span class="badge">★</span>
+          <div>
+            <h4>恭喜，你已经走完全景图</h4>
+            <p>原理（第一篇）→ 预处理（第二篇）→ 调味（第三篇）→ 技法（第四篇）→ 实操与创新（本篇）。<br/>接下来就是<strong>动手、观察、调整</strong>的循环。后续我们会在各篇陆续接入 B站/YouTube 的演示视频，让"懂原理"和"看操作"结合得更紧。</p>
+          </div>
+        </div>
+
+        <nav class="pager">
+          <a href="techniques.html"><span class="dir">← 上一篇</span><b>04 · 火候与技法</b></a>
+          <a class="next" href="index.html"><span class="dir">完结 →</span><b>回到全景图</b></a>
+        </nav>
+      </article>
+    </div>
+  </div>
+
+  <script src="assets/js/data.js"></script>
+  <script src="assets/js/main.js"></script>
+</body>
+</html>

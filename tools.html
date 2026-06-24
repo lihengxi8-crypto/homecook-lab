@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <script>(function(){try{var t=localStorage.getItem('hcl-theme');if(t==='dark')document.documentElement.setAttribute('data-theme','dark');}catch(e){}})();</script>
+  <title>厨房工具 | 家常菜实验室</title>
+  <meta name="description" content="三个理科生爱玩的小工具：味型配比计算器、温度交互图、创新组合器。把原理变成可计算、可调、可玩的工具。" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@500;700;900&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="assets/css/style.css" />
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Ctext y='20' font-size='20'%3E%F0%9F%8D%B2%3C/text%3E%3C/svg%3E" />
+</head>
+<body data-page="tools">
+
+  <header class="page-head" style="--accent:#5A8C8B">
+    <div class="container">
+      <div class="crumbs"><a href="index.html">首页</a> / 工具箱 / 厨房工具</div>
+      <span class="num-chip">🧮 工具</span>
+      <h1>厨房小工具</h1>
+      <div class="en">Interactive Tools</div>
+      <p class="intro">
+        把书里的原理变成<strong>能算、能调、能玩</strong>的小工具：按比例算碗汁、滑动温度看食材里发生了什么、随机组合练创新思维。
+      </p>
+    </div>
+  </header>
+
+  <div class="container section-tight">
+
+    <!-- 工具 1：味型配比计算器 -->
+    <section class="card tool-card reveal">
+      <h2>🥣 味型配比计算器</h2>
+      <p class="tool-sub">选一个味型，调整份量，自动算出每种调料的用量。比例固定，味道就稳定——这就是“兑碗汁”的科学。</p>
+      <div class="field-row">
+        <div class="field">
+          <label>味型</label>
+          <select data-taste></select>
+        </div>
+        <div class="field">
+          <label>份量倍数</label>
+          <input type="number" data-mult value="1" min="0.5" max="10" step="0.5" />
+        </div>
+        <div class="field">
+          <label>1 勺约</label>
+          <select data-spoon>
+            <option value="15">15 毫升（汤匙）</option>
+            <option value="10">10 毫升</option>
+            <option value="5">5 毫升（茶匙）</option>
+          </select>
+        </div>
+      </div>
+      <p class="tool-sub" data-taste-desc style="margin:0 0 14px"></p>
+      <div class="recipe-out table-wrap" style="margin:0">
+        <table>
+          <thead><tr><th>调料</th><th style="text-align:right">份额（勺）</th><th style="text-align:right">约（毫升）</th></tr></thead>
+          <tbody data-recipe></tbody>
+        </table>
+      </div>
+      <p class="calc-note" data-taste-note></p>
+    </section>
+
+    <!-- 工具 2：温度交互图 -->
+    <section class="card tool-card reveal">
+      <h2>🌡️ 温度里发生了什么</h2>
+      <p class="tool-sub">拖动温度，看看此刻食材内部正在发生哪些物理化学变化。理解温度，才能理解火候。</p>
+      <div class="gauge-wrap">
+        <div class="gauge-temp"><span data-temp-val>100</span><small> ℃</small></div>
+        <div style="height:14px;border-radius:999px;margin:16px 0 4px;background:linear-gradient(90deg,#5A8C8B 0%,#6F9A4C 24%,#E2A03F 55%,#C0492B 80%,#9C3A22 100%)"></div>
+        <input type="range" min="0" max="260" value="100" step="1" data-temp />
+        <div style="display:flex;justify-content:space-between;font-size:.72rem;color:var(--ink-faint)"><span>0℃</span><span>100℃</span><span>260℃</span></div>
+        <div class="phenom-list" data-phenom></div>
+      </div>
+    </section>
+
+    <!-- 工具 3：创新组合器 -->
+    <section class="card tool-card reveal">
+      <h2>🎲 创新组合器</h2>
+      <p class="tool-sub">点任一卡片可切换选项，或一键随机。系统会用「食材特性 × 技法」的约束，告诉你这个组合靠不靠谱。</p>
+      <div style="margin-bottom:16px"><button class="btn btn-primary" data-roll>🎲 随机来一道</button></div>
+      <div class="combo-board" data-combo></div>
+      <div class="combo-verdict" data-verdict></div>
+    </section>
+
+  </div>
+
+  <script src="assets/js/data.js"></script>
+  <script src="assets/js/main.js"></script>
+  <script>
+  /* ===== 工具 1：味型计算器 ===== */
+  (function () {
+    const T = window.HCL.tastes;
+    const sel = document.querySelector('[data-taste]');
+    const mult = document.querySelector('[data-mult]');
+    const spoon = document.querySelector('[data-spoon]');
+    const out = document.querySelector('[data-recipe]');
+    const desc = document.querySelector('[data-taste-desc]');
+    const note = document.querySelector('[data-taste-note]');
+    sel.innerHTML = T.map((t, i) => `<option value="${i}">${t.name}</option>`).join('');
+
+    function fmt(n) { return Number.isInteger(n) ? n : n.toFixed(2).replace(/\.?0+$/, ''); }
+    function render() {
+      const t = T[+sel.value];
+      const m = parseFloat(mult.value) || 1;
+      const ml = parseFloat(spoon.value) || 15;
+      desc.textContent = t.desc;
+      note.textContent = '💡 ' + t.note;
+      let totalSpoon = 0, totalMl = 0;
+      out.innerHTML = t.items.map(([name, parts]) => {
+        const s = parts * m, v = s * ml; totalSpoon += s; totalMl += v;
+        return `<tr><td>${name}</td><td style="text-align:right">${fmt(s)}</td><td style="text-align:right">${Math.round(v)}</td></tr>`;
+      }).join('') +
+        `<tr class="total"><td>合计</td><td style="text-align:right">${fmt(totalSpoon)}</td><td style="text-align:right">${Math.round(totalMl)}</td></tr>`;
+    }
+    [sel, mult, spoon].forEach(el => el.addEventListener('input', render));
+    render();
+  })();
+
+  /* ===== 工具 2：温度交互图 ===== */
+  (function () {
+    const PH = [
+      { name: '危险温度带', lo: 4, hi: 60, c: '#C0492B', d: '细菌繁殖最快的区间。熟食别在此久放，热菜尽快冷却进冰箱、冷菜回锅热透。' },
+      { name: '蛋白质变性', lo: 58, hi: 75, c: '#6F9A4C', d: '肉开始变色变硬、蛋液凝固。嫩与老往往只差这几度——所以要控温、断生即止。' },
+      { name: '淀粉糊化', lo: 60, hi: 80, c: '#E2A03F', d: '淀粉吸水膨胀、变黏变透明。勾芡、煮粥、土豆变粉糯都发生在这里。' },
+      { name: '水的沸点（约 100℃）', lo: 96, hi: 104, c: '#5A8C8B', d: '水/汤的温度天花板≈100℃。所以“水煮/炖”其实温度并不高，靠的是时间。' },
+      { name: '美拉德反应', lo: 140, hi: 260, c: '#8B5E3C', d: '高温褐变、生香上色。煎、炸、烤、煸出的“香”大多来自这里（需先把表面水分蒸发掉）。' },
+      { name: '焦糖化', lo: 160, hi: 260, c: '#9C3A22', d: '糖单独受热分解出焦香、上色。炒糖色、糖醋亮红靠它。再高就发苦发黑了。' },
+    ];
+    const slider = document.querySelector('[data-temp]');
+    const valEl = document.querySelector('[data-temp-val]');
+    const list = document.querySelector('[data-phenom]');
+    list.innerHTML = PH.map((p, i) => `
+      <div class="phenom" data-i="${i}" style="--c:${p.c}">
+        <span class="pdot"></span>
+        <div><b>${p.name}</b><span class="prange">${p.lo}–${p.hi >= 260 ? '200+' : p.hi}℃</span>
+        <p>${p.d}</p></div>
+      </div>`).join('');
+    const items = [...list.querySelectorAll('.phenom')];
+    function render() {
+      const v = +slider.value;
+      valEl.textContent = v;
+      PH.forEach((p, i) => items[i].classList.toggle('on', v >= p.lo && v <= p.hi));
+    }
+    slider.addEventListener('input', render);
+    render();
+  })();
+
+  /* ===== 工具 3：创新组合器 ===== */
+  (function () {
+    const C = window.HCL.combo;
+    const board = document.querySelector('[data-combo]');
+    const verdict = document.querySelector('[data-verdict]');
+    const state = { main: 0, prep: 0, tech: 0, taste: 0 };
+    const slots = [
+      { key: 'main', label: '主料', get: i => C.mains[i].label, len: () => C.mains.length },
+      { key: 'prep', label: '预处理', get: i => C.preps[i], len: () => C.preps.length },
+      { key: 'tech', label: '技法', get: i => C.techs[i].label, len: () => C.techs.length },
+      { key: 'taste', label: '味型', get: i => C.tastes[i], len: () => C.tastes.length },
+    ];
+    function reason(type, tech) {
+      const quick = ['滑炒', '爆炒', '清蒸', '凉拌', '煎'];
+      if (type === 'collagen' && quick.includes(tech.label))
+        return '高胶原部位（结缔组织多）需要长时间低温慢炖，胶原才会化成明胶变软糯；快做只会又硬又柴。';
+      if (type === 'tender' && ['红烧', '炖焖'].includes(tech.label))
+        return '瘦肉/海鲜含水低、纤维细，久炖会脱水发柴，鲜嫩尽失。';
+      if (type === 'veg' && ['红烧', '炖焖', '炸'].includes(tech.label))
+        return '叶菜/含水蔬菜久煮易塌烂、变色，通常更适合快炒或快焯。';
+      if (type === 'starch' && ['滑炒', '清蒸', '凉拌'].includes(tech.label))
+        return '高淀粉食材这样处理口感尴尬，更适合炒丝（去淀粉求脆）或久炖（求粉糯）。';
+      return '这种食材的特性和该技法不太匹配，口感会打折扣。';
+    }
+    function render() {
+      board.innerHTML = slots.map(s => `
+        <button class="combo-slot" data-key="${s.key}">
+          <div class="cl">${s.label}</div>
+          <div class="cv">${s.get(state[s.key])}</div>
+        </button>`).join('');
+      board.querySelectorAll('.combo-slot').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const k = btn.dataset.key, slot = slots.find(s => s.key === k);
+          state[k] = (state[k] + 1) % slot.len();
+          render();
+        });
+      });
+      const main = C.mains[state.main], tech = C.techs[state.tech], taste = C.tastes[state.taste];
+      const ok = tech.good.includes(main.type);
+      if (ok) {
+        verdict.className = 'combo-verdict good';
+        verdict.innerHTML = `<b>✓ ${main.label} × ${tech.label}，很搭！</b> ${tech.note}
+          搭配「${taste}」味型、先${C.preps[state.prep]}处理即可下手。`;
+      } else {
+        const better = C.techs.filter(t => t.good.includes(main.type)).map(t => t.label);
+        verdict.className = 'combo-verdict warn';
+        verdict.innerHTML = `<b>⚠ ${main.label}（${C.typeName[main.type]}）配「${tech.label}」要小心。</b>
+          ${reason(main.type, tech)} 更稳妥的技法：<b>${better.join(' / ') || '调整火候与时间'}</b>。`;
+      }
+    }
+    document.querySelector('[data-roll]').addEventListener('click', () => {
+      slots.forEach(s => state[s.key] = Math.floor(Math.random() * s.len()));
+      render();
+    });
+    render();
+  })();
+  </script>
+</body>
+</html>

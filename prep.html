@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <script>(function(){try{var t=localStorage.getItem('hcl-theme');if(t==='dark')document.documentElement.setAttribute('data-theme','dark');}catch(e){}})();</script>
+  <title>第二篇 · 预处理 | 家常菜实验室</title>
+  <meta name="description" content="刀工、腌制上浆、焯水、控水——下锅前决定成败的预处理，及其背后的盐溶蛋白、蛋白质变性、护色等原理。" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@500;700;900&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="assets/css/style.css" />
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Ctext y='20' font-size='20'%3E%F0%9F%8D%B2%3C/text%3E%3C/svg%3E" />
+</head>
+<body data-page="prep">
+
+  <header class="page-head" style="--accent:#8B5E3C">
+    <div class="container">
+      <div class="crumbs"><a href="index.html">首页</a> / 第二篇</div>
+      <span class="num-chip">02</span>
+      <h1>预处理</h1>
+      <div class="en">Prep &amp; Mise en place</div>
+      <p class="intro">
+        很多菜的成败，在<strong>下锅之前</strong>就已经决定。刀工决定受热是否均匀、是否入味；腌制上浆决定肉嫩不嫩；焯水决定腥不腥、颜色正不正。
+        这一篇把"起跑前的准备"逐一拆开，并用<a href="principles.html">第一篇</a>的原理解释每一步<em>为什么</em>这么做。
+      </p>
+      <div class="tag-row">
+        <span class="pill">刀工</span><span class="pill">逆纹切</span><span class="pill">码味</span>
+        <span class="pill">上浆</span><span class="pill">盐溶蛋白</span><span class="pill">小苏打致嫩</span>
+        <span class="pill">焯水</span><span class="pill">护色断生</span><span class="pill">控水沥干</span>
+      </div>
+    </div>
+  </header>
+
+  <div class="container section-tight">
+    <div class="doc-layout">
+      <aside class="toc" data-toc></aside>
+      <article class="prose">
+
+        <!-- 1 刀工 -->
+        <h2 data-toc="刀工"><span class="idx">1</span>刀工：不只是切得好看</h2>
+        <p>
+          刀工的本质，是<strong>控制食材的尺寸与朝向</strong>，从而控制两件事：<strong>受热速度</strong>和<strong>入味/口感</strong>。它不是炫技，而是物理。
+        </p>
+
+        <h3>① 大小要一致：为了"同步成熟"</h3>
+        <p>
+          食材越小，<strong>表面积 / 体积比</strong>越大，热量越快传到中心，也就越快熟。所以同一道菜里，<strong>配料要切得和主料差不多大</strong>——否则小的焦了、大的还生。这也是"为什么餐厅切得那么齐"的真正原因：不是好看，是为了让一锅东西在同一时刻恰好都熟。
+        </p>
+
+        <div class="note science">
+          <span class="badge">原</span>
+          <div>
+            <h4>切小块为什么熟得快？</h4>
+            <p>热量从表面往中心传需要时间，距离越短越快。把一块切成两半，中心到表面的距离减半，熟得明显更快。<span class="mech">表面积/体积比 ↑ → 受热更快、更均匀</span>。需要快熟、入味的（炒）就切小切薄；需要久炖不散的（炖）就切大块。</p>
+          </div>
+        </div>
+
+        <h3>② 逆纹切还是顺纹切：决定嫩还是耐嚼</h3>
+        <p>
+          肉是由一束束<strong>肌肉纤维</strong>组成的，像一捆平行的细绳。下刀的方向相对纤维不同，口感完全不同：
+        </p>
+
+        <figure>
+          <svg viewBox="0 0 640 250" role="img" aria-label="逆纹切与顺纹切对比">
+            <rect x="0" y="0" width="640" height="250" rx="14" fill="#FFFDF8" stroke="#E7D8C2"/>
+            <!-- 逆纹 -->
+            <text x="170" y="38" text-anchor="middle" font-size="14" fill="#4E7235" font-weight="700">逆纹切 ✓ 嫩</text>
+            <rect x="70" y="60" width="200" height="110" rx="10" fill="#F0CDBF" stroke="#C0492B"/>
+            <g stroke="#C0492B" stroke-width="2.5" opacity="0.55">
+              <line x1="80" y1="78" x2="260" y2="78"/><line x1="80" y1="98" x2="260" y2="98"/>
+              <line x1="80" y1="118" x2="260" y2="118"/><line x1="80" y1="138" x2="260" y2="138"/>
+              <line x1="80" y1="152" x2="260" y2="152"/>
+            </g>
+            <!-- 垂直下刀（切断纤维） -->
+            <g stroke="#5A3A2A" stroke-width="3" stroke-dasharray="5 4">
+              <line x1="130" y1="52" x2="130" y2="178"/><line x1="170" y1="52" x2="170" y2="178"/><line x1="210" y1="52" x2="210" y2="178"/>
+            </g>
+            <text x="170" y="196" text-anchor="middle" font-size="11" fill="#9A8775">刀口垂直于纤维 → 切断长纤维 → 好嚼</text>
+
+            <!-- 顺纹 -->
+            <text x="470" y="38" text-anchor="middle" font-size="14" fill="#9C3A22" font-weight="700">顺纹切 · 耐炖不散</text>
+            <rect x="370" y="60" width="200" height="110" rx="10" fill="#F0CDBF" stroke="#C0492B"/>
+            <g stroke="#C0492B" stroke-width="2.5" opacity="0.55">
+              <line x1="380" y1="78" x2="560" y2="78"/><line x1="380" y1="98" x2="560" y2="98"/>
+              <line x1="380" y1="118" x2="560" y2="118"/><line x1="380" y1="138" x2="560" y2="138"/>
+              <line x1="380" y1="152" x2="560" y2="152"/>
+            </g>
+            <!-- 水平下刀（顺着纤维） -->
+            <g stroke="#5A3A2A" stroke-width="3" stroke-dasharray="5 4">
+              <line x1="378" y1="88" x2="562" y2="88"/><line x1="378" y1="128" x2="562" y2="128"/>
+            </g>
+            <text x="470" y="196" text-anchor="middle" font-size="11" fill="#9A8775">刀口平行于纤维 → 长纤维保留 → 久炖不散</text>
+          </svg>
+          <figcaption>图 1 · 红线是肌肉纤维方向，虚线是刀口。逆纹（横切）切断纤维更嫩；顺纹（直切）保留长纤维更耐炖</figcaption>
+        </figure>
+
+        <div class="note tip">
+          <span class="badge">!</span>
+          <div>
+            <h4>口诀：横切牛羊、斜切猪、顺切鸡</h4>
+            <p>牛羊肉纤维粗韧 → <strong>逆纹横切</strong>才嫩；猪肉居中 → <strong>斜切</strong>（约 45°）；鸡肉本身嫩、纤维细 → 可<strong>顺纹切</strong>，否则一炒就碎。原则是：<strong>越老越韧的肉，越要逆纹切断它。</strong></p>
+          </div>
+        </div>
+
+        <h3>③ 拍松、剞花刀：用物理手段帮忙</h3>
+        <ul>
+          <li><strong>拍松 / 断筋</strong>：用刀背或肉锤把纤维和筋膜打断，让肉更松软、受热更均匀（嫩肉、煎排骨常用）。</li>
+          <li><strong>剞花刀（打花刀）</strong>：在表面切出交叉刀纹，<strong>增大表面积</strong>——更易熟、更易入味、受热卷曲后造型也漂亮（腰花、鱿鱼卷、松鼠鱼）。</li>
+        </ul>
+
+        <hr />
+
+        <!-- 2 腌制上浆 -->
+        <h2 data-toc="腌制上浆"><span class="idx">2</span>腌制 · 码味 · 上浆：锁水与致嫩的化学</h2>
+        <p>
+          这一节是预处理里"原理含量"最高的部分。它解释了一个核心问题：<strong>为什么餐厅的肉片又滑又嫩，自己做却又老又柴？</strong>答案藏在三件事里：码味、上浆、致嫩。
+        </p>
+
+        <h3>码味：入底味 + 去腥</h3>
+        <p>
+          下锅前用<strong>盐、生抽、料酒、白胡椒</strong>等抓匀静置，让味道先渗入食材内部（呼应第一篇：盐的渗透、料酒的去腥挥发）。这一步决定了菜"有没有底味"，而不是只靠表面那层酱汁。
+        </p>
+
+        <h3>上浆：给肉穿一件"防水防热"的衣服</h3>
+        <p>
+          上浆，是在肉表面裹一层<strong>蛋清 + 淀粉</strong>的薄浆。下锅后这层浆<strong>迅速糊化、凝固定型</strong>（淀粉糊化 + 蛋白质变性），形成一层保护壳，把肉里的水分<strong>封在里面</strong>，避免高温直接把肉烤干。这就是滑炒肉片滑嫩多汁的关键。
+        </p>
+
+        <figure>
+          <svg viewBox="0 0 640 230" role="img" aria-label="上浆保护层原理">
+            <rect x="0" y="0" width="640" height="230" rx="14" fill="#FFFDF8" stroke="#E7D8C2"/>
+            <!-- 未上浆 -->
+            <text x="160" y="36" text-anchor="middle" font-size="13" fill="#9C3A22" font-weight="700">未上浆 · 直接受热</text>
+            <rect x="100" y="60" width="120" height="80" rx="12" fill="#D98F76" stroke="#9C3A22"/>
+            <g stroke="#E2A03F" stroke-width="3" stroke-linecap="round">
+              <line x1="100" y1="55" x2="92" y2="45"/><line x1="160" y1="52" x2="160" y2="40"/><line x1="220" y1="55" x2="228" y2="45"/>
+            </g>
+            <!-- 水分流失 -->
+            <circle cx="90" cy="155" r="4" fill="#5A8C8B"/><circle cx="160" cy="160" r="4" fill="#5A8C8B"/><circle cx="230" cy="155" r="4" fill="#5A8C8B"/>
+            <text x="160" y="185" text-anchor="middle" font-size="11" fill="#9A8775">高温直逼 → 水分流失 → 柴、老</text>
+
+            <!-- 上浆 -->
+            <text x="480" y="36" text-anchor="middle" font-size="13" fill="#4E7235" font-weight="700">上浆 · 浆层保护</text>
+            <rect x="412" y="52" width="136" height="96" rx="16" fill="#F6D79A" stroke="#E2A03F" stroke-width="3"/>
+            <rect x="430" y="70" width="100" height="60" rx="10" fill="#F0CDBF" stroke="#C0492B"/>
+            <g stroke="#E2A03F" stroke-width="3" stroke-linecap="round">
+              <line x1="410" y1="48" x2="402" y2="38"/><line x1="480" y1="46" x2="480" y2="34"/><line x1="550" y1="48" x2="558" y2="38"/>
+            </g>
+            <circle cx="455" cy="100" r="4" fill="#5A8C8B"/><circle cx="505" cy="105" r="4" fill="#5A8C8B"/><circle cx="480" cy="90" r="3" fill="#5A8C8B"/>
+            <text x="480" y="185" text-anchor="middle" font-size="11" fill="#9A8775">浆层先糊化定型 → 锁住水分 → 滑嫩</text>
+          </svg>
+          <figcaption>图 2 · 上浆的蛋清淀粉层下锅瞬间糊化凝固，像一层"防热外衣"把肉汁封住</figcaption>
+        </figure>
+
+        <div class="note tip">
+          <span class="badge">!</span>
+          <div>
+            <h4>上浆的标准顺序（记住这 4 步）</h4>
+            <p>① <strong>加盐 + 少量水/葱姜水，抓打上劲</strong>（让肉先"吃水"）→ ② 加<strong>蛋清</strong>抓匀 → ③ 加<strong>淀粉</strong>抓匀成薄浆 → ④ 淋一层<strong>封油</strong>静置（防止互相粘连，下锅好滑散）。下锅用<strong>温油（三四成热）滑散</strong>，变色即捞起，再回锅快炒。</p>
+          </div>
+        </div>
+
+        <h3>致嫩的三种科学手段</h3>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>方法</th><th>原理</th><th>注意</th></tr></thead>
+            <tbody>
+              <tr><td><strong>抓水 / 打水</strong></td><td>分次加水抓打，靠<strong>盐溶蛋白</strong>把水"吃"进去并锁住</td><td>必须先放盐再加水，顺一个方向抓到发黏</td></tr>
+              <tr><td><strong>盐（盐溶蛋白）</strong></td><td>盐使肌球蛋白溶出，形成<strong>持水网络</strong>，肉更弹更嫩（丸子、虾滑、肉馅同理）</td><td>用量适度，过多反而脱水</td></tr>
+              <tr><td><strong>小苏打 / 食用碱</strong></td><td>提高 pH，使蛋白质带更多同种电荷而<strong>相互排斥、结构松开</strong>，持水增加 → 滑嫩</td><td>用量极少（约肉重 0.5–1%），需<strong>抓匀静置后冲洗</strong>，过量发苦、发滑、有碱味</td></tr>
+              <tr><td><strong>蛋白酶（嫩肉粉/木瓜/菠萝）</strong></td><td>蛋白酶<strong>切断</strong>肌肉与结缔组织蛋白</td><td>时间不能太久，否则表面糜烂</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="note science">
+          <span class="badge">原</span>
+          <div>
+            <h4>"盐溶蛋白"为什么能锁水？</h4>
+            <p>肌肉里的<strong>肌球蛋白</strong>在盐的作用下会溶解出来，形成一张能<strong>包裹水分</strong>的蛋白质网络。所以做肉馅、虾滑、鱼丸时"<strong>先放盐、顺一个方向使劲搅打上劲</strong>"，本质是在让这张网形成——这样加进去的水才不会在加热时跑掉，成品才弹嫩多汁。</p>
+          </div>
+        </div>
+
+        <hr />
+
+        <!-- 3 焯水 -->
+        <h2 data-toc="焯水"><span class="idx">3</span>焯水：冷水下锅，还是沸水下锅？</h2>
+        <p>
+          焯水（汆水/飞水）看似简单，但<strong>冷水下锅还是沸水下锅，是两种完全相反的策略</strong>，用错了适得其反。判断标准只有一个问句：<strong>你是想"把东西逼出来"，还是想"把东西封住"？</strong>
+        </p>
+
+        <figure>
+          <svg viewBox="0 0 640 250" role="img" aria-label="冷水下锅与沸水下锅对比">
+            <rect x="0" y="0" width="640" height="250" rx="14" fill="#FFFDF8" stroke="#E7D8C2"/>
+            <!-- 冷水下锅 -->
+            <text x="160" y="34" text-anchor="middle" font-size="14" fill="#3F6463" font-weight="700">冷水下锅</text>
+            <path d="M80 110 h160 v50 a14 14 0 0 1 -14 14 h-132 a14 14 0 0 1 -14 -14 z" fill="#CFE0E0" stroke="#5A8C8B"/>
+            <rect x="120" y="120" width="80" height="20" rx="6" fill="#D98F76" stroke="#9C3A22"/>
+            <!-- 缓慢升温箭头 -->
+            <g stroke="#5A8C8B" stroke-width="2" stroke-dasharray="3 3"><line x1="160" y1="195" x2="160" y2="215"/></g>
+            <text x="160" y="200" text-anchor="middle" font-size="11" fill="#3F6463">随水温慢慢升高</text>
+            <text x="160" y="230" text-anchor="middle" font-size="12" fill="#5A3A2A" font-weight="700">逼出血沫腥味 · 用于肉类</text>
+
+            <!-- 沸水下锅 -->
+            <text x="480" y="34" text-anchor="middle" font-size="14" fill="#9C3A22" font-weight="700">沸水下锅</text>
+            <path d="M400 110 h160 v50 a14 14 0 0 1 -14 14 h-132 a14 14 0 0 1 -14 -14 z" fill="#F4D9CC" stroke="#C0492B"/>
+            <!-- 气泡 -->
+            <g fill="#fff" opacity="0.8"><circle cx="430" cy="150" r="5"/><circle cx="470" cy="158" r="4"/><circle cx="520" cy="150" r="6"/><circle cx="545" cy="158" r="4"/></g>
+            <rect x="445" y="118" width="70" height="18" rx="6" fill="#6F9A4C" stroke="#4E7235"/>
+            <g stroke="#C0492B" stroke-width="2"><line x1="480" y1="195" x2="480" y2="215"/></g>
+            <text x="480" y="200" text-anchor="middle" font-size="11" fill="#9C3A22">瞬间高温</text>
+            <text x="480" y="230" text-anchor="middle" font-size="12" fill="#5A3A2A" font-weight="700">锁色断生 · 用于蔬菜</text>
+          </svg>
+          <figcaption>图 3 · 冷水下锅"逼"（肉类去血污）；沸水下锅"封"（蔬菜锁色保脆）</figcaption>
+        </figure>
+
+        <h3>冷水下锅：逼出来（多用于肉）</h3>
+        <p>
+          肉类（排骨、牛腩、整鸡）<strong>冷水下锅</strong>，随水温缓慢升高，内部的<strong>血水、腥味物质、杂质</strong>有充足时间慢慢溶出、浮成血沫被撇掉。如果一开始就沸水下，肉表面蛋白质<strong>瞬间凝固封住</strong>，血污反而锁在里面出不来。
+        </p>
+
+        <h3>沸水下锅：封住（多用于菜）</h3>
+        <p>
+          绿叶菜、西兰花、芦笋等<strong>沸水快焯</strong>，<strong>时间极短（几十秒）</strong>，目的是：
+        </p>
+        <ul>
+          <li><strong>锁色</strong>：高温快速<strong>钝化氧化酶</strong>，叶绿素被保护，颜色更翠绿（焯后<strong>过冷水</strong>立即终止加热、定色保脆）。</li>
+          <li><strong>断生 / 去涩</strong>：去掉草酸（菠菜、苋菜涩口的来源）、去生味，缩短后续翻炒时间。</li>
+        </ul>
+
+        <div class="note tip">
+          <span class="badge">!</span>
+          <div>
+            <h4>焯青菜更绿的小技巧</h4>
+            <p>水里<strong>加一点盐和几滴油</strong>，并且<strong>不要盖盖子</strong>——开盖能让蔬菜里的挥发性酸排出，避免酸破坏叶绿素；盐和油有助于护色和保持光亮。焯完<strong>马上过冰水</strong>，颜色最翠。</p>
+          </div>
+        </div>
+
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>食材</th><th>下锅水温</th><th>目的</th></tr></thead>
+            <tbody>
+              <tr><td>排骨/牛腩/整禽</td><td>冷水</td><td>去血沫腥味</td></tr>
+              <tr><td>肉片/虾仁（汆熟）</td><td>沸水/温油</td><td>快速断生、保嫩</td></tr>
+              <tr><td>绿叶菜/西兰花</td><td>沸水 + 过凉</td><td>锁色、断生、去涩</td></tr>
+              <tr><td>菠菜/苋菜/竹笋</td><td>沸水</td><td>去草酸涩味</td></tr>
+              <tr><td>土豆/胡萝卜（预熟）</td><td>冷水或沸水</td><td>缩短后续烹制</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <hr />
+
+        <!-- 4 控水 -->
+        <h2 data-toc="控水沥干"><span class="idx">4</span>控水 · 沥干 · 泡发 · 解冻</h2>
+        <p>这些"不起眼"的步骤，常常是翻车的隐藏原因。</p>
+
+        <h3>表面擦干 / 沥干：呼应第一篇的两件事</h3>
+        <ul>
+          <li><strong>防止炒成"水煮菜"</strong>：表面带水下锅，会把油温迅速拉低、食材出水，美拉德启动不了（见<a href="principles.html">第一篇·美拉德</a>）。</li>
+          <li><strong>防止热油爆溅</strong>：水的沸点远低于油温，水珠进热油会<strong>瞬间汽化膨胀</strong>，把油炸得四溅。煎炸前一定要把食材表面<strong>擦干</strong>。</li>
+        </ul>
+
+        <h3>泡发：时间与安全</h3>
+        <p>
+          木耳、香菇、笋干等干货要泡发回软。原则：<strong>冷水泡发更鲜（慢但风味保留好）</strong>，温水较快但香气损失多。
+        </p>
+
+        <div class="note warn">
+          <span class="badge">×</span>
+          <div>
+            <h4>木耳/银耳别泡太久！（重要安全提醒）</h4>
+            <p>木耳、银耳在<strong>常温下长时间（数小时以上）浸泡</strong>，可能被环境中的细菌污染并产生<strong>米酵菌酸</strong>——这是一种<strong>耐高温、煮不死、可致命</strong>的毒素。正确做法：<strong>用冷水泡 1–2 小时即可，或放冰箱冷藏泡发，泡好尽快吃完，不要隔夜久泡。</strong></p>
+          </div>
+        </div>
+
+        <h3>解冻：别让汁水白白流走</h3>
+        <p>
+          冷冻会在细胞内形成冰晶。<strong>缓慢解冻（冷藏室一夜）</strong>冰晶融化温和，汁水流失少、口感好；<strong>反复冻融</strong>会让冰晶反复撑破细胞，肉变得松散、出水多。急用时可用<strong>密封袋泡冷水</strong>解冻，避免直接用热水（外熟内冻、还利于细菌繁殖）。
+        </p>
+
+        <hr />
+
+        <!-- 案例 -->
+        <h2 data-toc="案例"><span class="idx">★</span>案例拆解：滑炒里脊 &amp; 焯西兰花</h2>
+
+        <h3>案例 A · 滑炒里脊肉（上浆致嫩的全流程）</h3>
+        <ol>
+          <li><strong>逆纹切薄片</strong>：切断纤维 → 更嫩（刀工）。</li>
+          <li><strong>码味</strong>：盐、少许生抽、料酒抓匀（入底味、去腥）。</li>
+          <li><strong>抓水上劲</strong>：分两次加一点葱姜水，顺一个方向抓到发黏（盐溶蛋白锁水）。</li>
+          <li><strong>上浆</strong>：加蛋清抓匀 → 加淀粉抓成薄浆 → 封一层油静置（穿"防热外衣"）。</li>
+          <li><strong>温油滑散</strong>：三四成热油下锅滑散，变色立即捞出（蛋白质刚变性即止，避免过火）。</li>
+          <li><strong>回锅快炒</strong>：爆香配料、下肉、淋兑好的碗汁，几秒翻匀出锅 → 滑嫩多汁。</li>
+        </ol>
+
+        <h3>案例 B · 焯西兰花（锁色断生）</h3>
+        <ol>
+          <li><strong>切小朵、大小一致</strong>：同步成熟（刀工）。</li>
+          <li><strong>沸水 + 盐 + 几滴油，不盖盖</strong>：高温快焯护色（钝化氧化酶、护叶绿素）。</li>
+          <li><strong>30–60 秒，断生即捞</strong>：时间一长就发黄变软。</li>
+          <li><strong>立即过冰水</strong>：终止加热、定色保脆。</li>
+          <li><strong>沥干</strong>再下锅炒/拌（防止出水冲淡味道、防溅油）。</li>
+        </ol>
+
+        <div class="note tip">
+          <span class="badge">→</span>
+          <div>
+            <h4>下一步</h4>
+            <p>食材已经调到"最佳起跑状态"。下一篇进入<strong>调味与酱料</strong>：认识每种调料的职责，并把味型变成<strong>可计算的配比</strong>——从此调味不靠玄学。</p>
+          </div>
+        </div>
+
+        <nav class="pager">
+          <a href="principles.html"><span class="dir">← 上一篇</span><b>01 · 底层原理</b></a>
+          <a class="next" href="sauces.html"><span class="dir">下一篇 →</span><b>03 · 调味与酱料</b></a>
+        </nav>
+      </article>
+    </div>
+  </div>
+
+  <script src="assets/js/data.js"></script>
+  <script src="assets/js/main.js"></script>
+</body>
+</html>

@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <script>(function(){try{var t=localStorage.getItem('hcl-theme');if(t==='dark')document.documentElement.setAttribute('data-theme','dark');}catch(e){}})();</script>
+  <title>术语表 | 家常菜实验室</title>
+  <meta name="description" content="厨房里的物理化学术语速查：美拉德反应、蛋白质变性、淀粉糊化、乳化、鲜味协同、盐溶蛋白、勾芡、锅气等，配通俗解释与所属篇章。" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@500;700;900&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="assets/css/style.css" />
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Ctext y='20' font-size='20'%3E%F0%9F%8D%B2%3C/text%3E%3C/svg%3E" />
+</head>
+<body data-page="glossary">
+
+  <header class="page-head" style="--accent:#7A6A57">
+    <div class="container">
+      <div class="crumbs"><a href="index.html">首页</a> / 工具箱 / 术语表</div>
+      <span class="num-chip">📖 术语</span>
+      <h1>厨房术语表</h1>
+      <div class="en">Glossary</div>
+      <p class="intro">
+        把全站出现的关键概念集中速查。每条都用一句话讲清<strong>“是什么 + 为什么有用”</strong>，并标注所属篇章。
+        正文里这些词会有<span style="border-bottom:1.5px dotted var(--scallion-dk)">虚线下划线</span>，悬停即可看到解释。
+      </p>
+    </div>
+  </header>
+
+  <div class="container section-tight">
+    <div class="filter-bar" data-cats></div>
+    <div class="ing-grid" data-glossary style="margin-top:8px"></div>
+  </div>
+
+  <script src="assets/js/data.js"></script>
+  <script src="assets/js/main.js"></script>
+  <script>
+  (function () {
+    const G = window.HCL.glossary;
+    const chapterName = {
+      'principles.html': '第一篇 · 底层原理',
+      'prep.html': '第二篇 · 预处理',
+      'sauces.html': '第三篇 · 调味与酱料',
+      'techniques.html': '第四篇 · 火候与技法',
+      'practice.html': '第五篇 · 实操 · 保存 · 创新',
+    };
+    const cats = ['全部', ...[...new Set(G.map(g => g.cat))]];
+    const barEl = document.querySelector('[data-cats]');
+    const gridEl = document.querySelector('[data-glossary]');
+    let activeCat = '全部';
+
+    barEl.innerHTML = cats.map((c, i) =>
+      `<button class="chip${i === 0 ? ' active' : ''}" data-cat="${c}">${c}</button>`).join('');
+
+    function render() {
+      const list = G.filter(g => activeCat === '全部' || g.cat === activeCat);
+      gridEl.innerHTML = list.map(g => `
+        <article class="card ing-card reveal" id="term-${g.id}">
+          <div class="ih">
+            <h3>${g.term}</h3>
+            <span class="itype">${g.cat}</span>
+          </div>
+          <p class="inote" style="margin-top:12px">${g.def}</p>
+          <a class="best" href="${g.chapter}">详见 ${chapterName[g.chapter] || g.chapter} →</a>
+        </article>`).join('');
+      if (window.setupReveal) window.setupReveal();
+      const hash = location.hash;
+      if (hash) { const t = document.querySelector(hash); if (t) t.scrollIntoView({ behavior: 'smooth', block: 'center' }); }
+    }
+    barEl.addEventListener('click', e => {
+      const b = e.target.closest('.chip'); if (!b) return;
+      activeCat = b.dataset.cat;
+      barEl.querySelectorAll('.chip').forEach(c => c.classList.toggle('active', c === b));
+      render();
+    });
+    render();
+  })();
+  </script>
+</body>
+</html>
