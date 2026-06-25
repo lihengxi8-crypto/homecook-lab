@@ -125,7 +125,7 @@ function injectFooter() {
       <div class="foot-grid">
         <div class="foot-brand">
           <b>${SITE.brand.title}</b>
-          <p>用理科生的视角拆解中餐家常菜：先懂原理，再谈技法，最后才是创新。通俗、系统、可复用。</p>
+          <p>用科学思维拆解中餐家常菜：先懂原理，再谈技法，最后才是创新。通俗、系统、可复用。</p>
         </div>
         <div>
           <h4>学习篇章</h4>

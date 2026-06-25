@@ -228,11 +228,16 @@
     };
 
     // —— 单个条目（部位 / 食材）——
-    const renderItem = (it) => `
+    const renderItem = (it, gid, idx) => {
+      const thumb = it.img || (gid ? 'assets/img/item/' + gid + '-' + idx + '.webp' : '');
+      return `
       <article class="food-item reveal">
         <div class="fi-main">
-          <h4 class="fi-name">${esc(it.n)}</h4>
-          <div class="fi-tags">${(it.t || []).map(x => `<span class="fi-tag">${esc(x)}</span>`).join('')}</div>
+          ${thumb ? `<figure class="fi-thumb"><img src="${thumb}" alt="${esc(it.n)}手绘示意图" loading="lazy" width="200" height="200" onerror="this.closest('.fi-thumb')?.remove()"></figure>` : ''}
+          <div class="fi-head">
+            <h4 class="fi-name">${esc(it.n)}</h4>
+            <div class="fi-tags">${(it.t || []).map(x => `<span class="fi-tag">${esc(x)}</span>`).join('')}</div>
+          </div>
         </div>
         <div class="fi-meta">
           <p class="fi-line"><span class="fi-key">适合</span>${(it.m || []).map(x => `<b>${esc(x)}</b>`).join('<i>·</i>')}</p>
@@ -240,13 +245,17 @@
           ${it.note ? `<p class="fi-note">${esc(it.note)}</p>` : ''}
         </div>
       </article>`;
+    };
 
     // —— 渲染全部 ——
     guideEl.innerHTML = FG.map(cat => `
       <section class="food-cat" id="cat-${cat.id}">
         <div class="food-cat-head reveal">
-          <h2><span class="fc-emoji">${cat.emoji}</span>${esc(cat.name)} <em class="fc-en">${esc(cat.en || '')}</em></h2>
-          <p class="fc-lead">${esc(cat.lead || '')}</p>
+          <div class="fc-text">
+            <h2><span class="fc-emoji">${cat.emoji}</span>${esc(cat.name)} <em class="fc-en">${esc(cat.en || '')}</em></h2>
+            <p class="fc-lead">${esc(cat.lead || '')}</p>
+          </div>
+          ${cat.art ? `<figure class="cat-art"><img src="${cat.art}" alt="${esc(cat.name)}手绘图示" loading="lazy" width="900" height="600" /></figure>` : ''}
         </div>
         ${cat.groups.map(grp => `
           <section class="food-group" id="grp-${grp.id}">
@@ -256,7 +265,7 @@
             </div>
             ${renderMap(grp.map, grp.id)}
             <div class="food-items">
-              ${grp.items.map(renderItem).join('')}
+              ${grp.items.map((it, i) => renderItem(it, grp.id, i + 1)).join('')}
             </div>
           </section>`).join('')}
       </section>`).join('');

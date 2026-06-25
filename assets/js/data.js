@@ -329,7 +329,7 @@
      肉类 group 带 map：从“前/上”到“后/下”的部位嫩度地图，k = tender|mid|stew */
   const foodGuide = [
     /* ===== 肉类 ===== */
-    { id: 'meat', name: '肉类', emoji: '🥩', en: 'Meat & Poultry',
+    { id: 'meat', name: '肉类', emoji: '🥩', en: 'Meat & Poultry', art: 'assets/img/cat-meat.webp',
       lead: '记住一条总原则：运动越多、结缔组织越多的部位越“老”，要靠低温久炖把胶原化成明胶才软糯；运动少的部位嫩，适合大火快炒/煎，过火即柴。',
       groups: [
         { id: 'pork', name: '猪肉', emoji: '🐖',
@@ -379,7 +379,7 @@
       ] },
 
     /* ===== 水产 ===== */
-    { id: 'aquatic', name: '水产', emoji: '🐟', en: 'Seafood',
+    { id: 'aquatic', name: '水产', emoji: '🐟', en: 'Seafood', art: 'assets/img/cat-aquatic.webp',
       lead: '共性是“鲜、嫩、易过火”。越新鲜越适合做减法（清蒸/白灼）；判断熟度以“刚断生”为准，多一分就老。',
       groups: [
         { id: 'fish', name: '鱼', emoji: '🐟',
@@ -401,7 +401,7 @@
       ] },
 
     /* ===== 蔬菜 ===== */
-    { id: 'veg', name: '蔬菜', emoji: '🥬', en: 'Vegetables',
+    { id: 'veg', name: '蔬菜', emoji: '🥬', en: 'Vegetables', art: 'assets/img/cat-veg.webp',
       lead: '按“含水/纤维/淀粉”决定火与时间：嫩叶菜大火快炒抢时间，根茎瓜茄耐烧吸味，豆荚类必须彻底熟。',
       groups: [
         { id: 'leafy', name: '叶菜类', emoji: '🥬',
@@ -460,7 +460,7 @@
       ] },
 
     /* ===== 菌菇 · 蛋奶豆 ===== */
-    { id: 'protein2', name: '菌菇 · 蛋奶豆', emoji: '🍄', en: 'Fungi · Egg · Soy',
+    { id: 'protein2', name: '菌菇 · 蛋奶豆', emoji: '🍄', en: 'Fungi · Egg · Soy', art: 'assets/img/cat-protein2.webp',
       lead: '植物蛋白与“天然鲜味库”。菌菇富含鸟苷酸，和肉同烹鲜味协同放大。',
       groups: [
         { id: 'fungi', name: '菌菇 · 藻类', emoji: '🍄',
@@ -487,7 +487,7 @@
       ] },
 
     /* ===== 主食 · 淀粉 ===== */
-    { id: 'staple', name: '主食 · 淀粉', emoji: '🌾', en: 'Staples & Starch',
+    { id: 'staple', name: '主食 · 淀粉', emoji: '🌾', en: 'Staples & Starch', art: 'assets/img/cat-staple.webp',
       lead: '主食看“筋度/淀粉类型”定用途；勾芡上浆则要选对淀粉。',
       groups: [
         { id: 'grain', name: '米 · 面', emoji: '🍚',
@@ -505,7 +505,7 @@
       ] },
 
     /* ===== 干货 · 调味基底 ===== */
-    { id: 'season', name: '干货 · 调味基底', emoji: '🧂', en: 'Aromatics & Pantry',
+    { id: 'season', name: '干货 · 调味基底', emoji: '🧂', en: 'Aromatics & Pantry', art: 'assets/img/cat-season.webp',
       lead: '这些不是主角，却决定一道菜的“底味与层次”。多数香味脂溶，要靠油和加热释放。详见“调味与酱料”篇。',
       groups: [
         { id: 'spice', name: '香辛料', emoji: '🌶️',
@@ -536,7 +536,7 @@
      带 map 的 group 另有 axis（两端文字）与 legend（[色块类, 文字]），复用部位地图样式 */
   const gear = [
     /* ===== 锅具 ===== */
-    { id: 'pots', name: '锅具', emoji: '🍳', en: 'Cookware',
+    { id: 'pots', name: '锅具', emoji: '🍳', en: 'Cookware', art: 'assets/img/cat-pots.webp',
       lead: '锅的本质是“热量的中转站”：导热快慢、蓄热多少、是否粘、能否接触酸性食材，决定它擅长哪种火候。先看锅型选用途，再看材质懂脾气。',
       groups: [
         { id: 'pot-types', name: '常见锅型', emoji: '🍳',
@@ -567,7 +567,7 @@
       ] },
 
     /* ===== 刀具 ===== */
-    { id: 'knives', name: '刀具', emoji: '🔪', en: 'Knives',
+    { id: 'knives', name: '刀具', emoji: '🔪', en: 'Knives', art: 'assets/img/cat-knives.webp',
       lead: '切割是用刀刃把食材“挤裂”。刃口角度越小越锋利但越脆；钢材的硬度（锋利保持）与韧性（抗崩）要平衡。会用、会磨、会养，比买贵刀更重要。',
       groups: [
         { id: 'knife-types', name: '常用刀型', emoji: '🔪',
@@ -596,7 +596,7 @@
       ] },
 
     /* ===== 加热电器 ===== */
-    { id: 'appliances', name: '加热电器', emoji: '🔥', en: 'Appliances',
+    { id: 'appliances', name: '加热电器', emoji: '🔥', en: 'Appliances', art: 'assets/img/cat-appliances.webp',
       lead: '这些设备的差别，本质是“用哪种热传递”：微波是介电加热、空气炸/烤箱是热风对流＋辐射、电磁炉是磁感应。懂原理，就知道它擅长什么、不擅长什么。',
       groups: [
         { id: 'heat-app', name: '加热与烹饪电器', emoji: '🔌',
@@ -616,8 +616,8 @@
       ] },
 
     /* ===== 备料与辅助工具 ===== */
-    { id: 'helpers', name: '备料 · 辅助工具', emoji: '🥄', en: 'Prep & Helpers',
-      lead: '让烹饪“可量化、可复现、更安全”的小工具——理科生尤其受用：把“少许/适量/差不多”变成克数、温度和时间。',
+    { id: 'helpers', name: '备料 · 辅助工具', emoji: '🥄', en: 'Prep & Helpers', art: 'assets/img/cat-helpers.webp',
+      lead: '让烹饪“可量化、可复现、更安全”的小工具——把“少许/适量/差不多”变成克数、温度和时间，谁用都顺手。',
       groups: [
         { id: 'prep-tools', name: '称量 · 控温 · 备料', emoji: '⚖️',
           lead: '这些不起眼的工具，是把家常菜从“凭感觉”变成“可复现实验”的关键。',
