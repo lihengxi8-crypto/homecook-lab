@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <script>(function(){try{var t=localStorage.getItem('hcl-theme');if(t==='dark')document.documentElement.setAttribute('data-theme','dark');}catch(e){}})();</script>
+  <title>翻车诊断 | 家常菜实验室</title>
+  <meta name="description" content="像 debug 一样系统排错：把常见的家常菜失败按「症状 → 可能原因 → 背后原理 → 改法」整理成一座可检索的故障库，从发柴、出水、粘锅到蒸蛋蜂窝、勾芡澥汤、太咸救场，逐个对症下药。" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@500;700;900&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="assets/css/style.css" />
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Ctext y='20' font-size='20'%3E%F0%9F%8D%B2%3C/text%3E%3C/svg%3E" />
+</head>
+<body data-page="troubleshoot">
+
+  <header class="page-head" style="--accent:#C0492B">
+    <div class="container">
+      <div class="crumbs"><a href="index.html">首页</a> / 动手工具 / 翻车诊断</div>
+      <span class="num-chip">🩺 翻车诊断</span>
+      <h1>翻车诊断</h1>
+      <div class="en">Troubleshooting</div>
+      <p class="intro">
+        做菜也能像 <strong>debug</strong> 一样系统排错。这里把最常见的家常菜「翻车」按
+        <strong>症状 → 可能原因 → 背后原理 → 改法</strong> 整理成一座故障库——
+        先认出现象，再顺着<em>原理</em>找到根因，最后照着改法对症下药。
+        遇到问题用顶部搜索（按 <kbd>/</kbd>）搜个症状词，比如「发柴」「蒸蛋」「太咸」。
+      </p>
+      <div class="tag-row">
+        <span class="pill">发柴</span><span class="pill">出水</span><span class="pill">粘锅</span>
+        <span class="pill">蒸蛋蜂窝</span><span class="pill">勾芡澥汤</span><span class="pill">回软不脆</span>
+        <span class="pill">焯水发黄</span><span class="pill">太咸救场</span><span class="pill">糖色发苦</span>
+      </div>
+    </div>
+  </header>
+
+  <div class="container section-tight">
+    <div class="doc-layout">
+      <aside class="toc" data-toc></aside>
+      <article class="prose">
+
+        <div class="ts-legend reveal" aria-hidden="true">
+          <span class="ts-pill sym">症状</span>
+          <span class="ts-flow">→</span>
+          <span class="ts-pill cause">可能原因</span>
+          <span class="ts-flow">→</span>
+          <span class="ts-pill why">背后原理</span>
+          <span class="ts-flow">→</span>
+          <span class="ts-pill fix">改法</span>
+        </div>
+
+        <div data-ts-host></div>
+
+        <div class="note tip">
+          <span class="badge">→</span>
+          <div>
+            <h4>没找到你的问题？</h4>
+            <p>翻车的本质往往是某条原理没照顾到。回到 <a href="principles.html">第一篇 · 底层原理</a> 或 <a href="techniques.html">第四篇 · 火候与技法</a> 补一补，再去 <a href="glossary.html">术语表</a> 把关键词查清楚——搞懂了机制，举一反三就不再翻车。</p>
+          </div>
+        </div>
+
+      </article>
+    </div>
+  </div>
+
+  <script src="assets/js/data.js"></script>
+  <script src="assets/js/troubleshoot-art.js"></script>
+  <script src="assets/js/main.js"></script>
+  <script>
+  (function () {
+    const TS = (window.HCL && window.HCL.troubleshoot) || [];
+    const G = Object.fromEntries(((window.HCL && window.HCL.glossary) || []).map(g => [g.id, g]));
+    const ART = window.HCL_TS_ART || { meta: {}, hero: {}, icon: {} };
+    const host = document.querySelector('[data-ts-host]');
+    if (!host) return;
+
+    const esc = s => String(s).replace(/[&<>]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;' }[c]));
+    const li = arr => (arr || []).map(x => `<li>${esc(x)}</li>`).join('');
+
+    // hero：有 art（水彩大图）用 <img>，否则用内联线稿占位
+    const heroArt = grp => {
+      const m = ART.meta[grp.id] || {};
+      return m.art
+        ? `<img src="${m.art}" alt="${esc(grp.name)}手绘插画" loading="lazy" decoding="async" />`
+        : (ART.hero[grp.id] || '');
+    };
+    const caseIcon = c => ART.icon[c.id] || '';
+
+    const renderCase = (c, gid) => {
+      const terms = (c.terms || []).filter(t => G[t]);
+      const extra = terms.length ? `
+        <div class="ts-extra">
+          <span class="ts-extra-label">延伸阅读</span>
+          <span class="ts-terms">${terms.map(t => `<a href="glossary.html#term-${t}">${esc(G[t].term)}</a>`).join('')}</span>
+        </div>` : '';
+      return `
+      <details class="ts-case reveal" id="ts-${gid}-${c.id}">
+        <summary class="ts-summary">
+          <span class="ts-thumb">${caseIcon(c)}</span>
+          <span class="ts-sum-main">
+            <span class="ts-sym-tag">症状</span>
+            <span class="ts-sym-title">${esc(c.sym)}</span>
+          </span>
+          <span class="ts-chevron" aria-hidden="true"></span>
+        </summary>
+        <div class="ts-body">
+          <div class="ts-blocks">
+            <section class="ts-block ts-cause">
+              <h4 class="ts-label">可能原因</h4>
+              <ul>${li(c.cause)}</ul>
+            </section>
+            <section class="ts-block ts-why">
+              <h4 class="ts-label">背后原理</h4>
+              <p>${esc(c.why)}</p>
+            </section>
+            <section class="ts-block ts-fix">
+              <h4 class="ts-label">改法 · 预防</h4>
+              <ul>${li(c.fix)}</ul>
+            </section>
+          </div>
+          ${extra}
+        </div>
+      </details>`;
+    };
+
+    host.innerHTML = TS.map(grp => {
+      const m = ART.meta[grp.id] || {};
+      const n = (grp.cases || []).length;
+      return `
+      <section class="ts-group" style="--accent:${m.accent || 'var(--brick)'}">
+        <header class="ts-hero">
+          <div class="ts-hero-art" aria-hidden="true">${heroArt(grp)}</div>
+          <div class="ts-hero-text">
+            <span class="ts-hero-en">${esc(m.en || '')}</span>
+            <h2 class="ts-hero-h" id="ts-${grp.id}" data-toc="${esc(grp.name)}"><span class="ts-hero-emoji">${grp.emoji || ''}</span>${esc(grp.name)}</h2>
+            ${grp.lead ? `<p class="ts-hero-lead">${esc(grp.lead)}</p>` : ''}
+            <span class="ts-hero-count">${n} 种常见翻车</span>
+          </div>
+        </header>
+        <div class="ts-cases">
+          ${(grp.cases || []).map(c => renderCase(c, grp.id)).join('')}
+        </div>
+      </section>`;
+    }).join('');
+
+    if (window.setupReveal) window.setupReveal();
+  })();
+  </script>
+</body>
+</html>

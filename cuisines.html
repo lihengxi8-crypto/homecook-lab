@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <script>(function(){try{var t=localStorage.getItem('hcl-theme');if(t==='dark')document.documentElement.setAttribute('data-theme','dark');}catch(e){}})();</script>
+  <title>菜系地图 | 家常菜实验室</title>
+  <meta name="description" content="一张可检索的中国菜系地图：八大菜系 + 一批代表性地方菜，用「特点 / 代表菜 / 为什么这样 / 家常可借鉴」四段框架逐个拆解。重点回答「为什么不同」——从地理气候、物产、保存、燃料灶具、历史经济、人口流动六个视角，讲清每个菜系的成因。" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@500;700;900&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="assets/css/style.css" />
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Ctext y='20' font-size='20'%3E%F0%9F%8D%B2%3C/text%3E%3C/svg%3E" />
+</head>
+<body data-page="cuisines">
+
+  <header class="page-head" style="--accent:#4F8C86">
+    <div class="container">
+      <div class="crumbs"><a href="index.html">首页</a> / 学以致用 / 菜系地图</div>
+      <span class="num-chip">🗺️ 菜系地图</span>
+      <h1>菜系地图</h1>
+      <div class="en">Regional Cuisines</div>
+      <p class="intro">
+        中国这么大，<strong>为什么各地的菜差别这么大</strong>？这里把八大菜系和一批代表性地方菜摊在地图上，
+        每个菜系都用 <strong>特点 → 代表菜 → 为什么这样 → 家常可借鉴</strong> 四段拆开看。
+        最值钱的是中间那段「<em>为什么</em>」——口味不是凭空来的，而是被
+        <strong>地理气候、物产、保存、灶火、历史经济、人口流动</strong> 一点点塑造出来的。
+        想找某个菜系，按 <kbd>/</kbd> 搜「川菜」「为什么辣」「海南」试试。
+      </p>
+      <div class="tag-row">
+        <span class="pill">鲁</span><span class="pill">川</span><span class="pill">粤</span>
+        <span class="pill">苏</span><span class="pill">闽</span><span class="pill">浙</span>
+        <span class="pill">湘</span><span class="pill">徽</span>
+        <span class="pill">京 · 东北 · 西北</span><span class="pill">云贵 · 本帮</span>
+        <span class="pill">潮汕 · 客家 · 海南</span>
+      </div>
+    </div>
+  </header>
+
+  <div class="container section-tight">
+    <div class="doc-layout">
+      <aside class="toc" data-toc></aside>
+      <article class="prose">
+
+        <figure class="cuisine-hero reveal">
+          <img src="assets/img/cuisines-map.svg"
+               alt="中国菜系分布地图：八大菜系与代表性地方菜（含台湾省与南海诸岛）" />
+          <figcaption>
+            八大菜系与代表性地方菜在中国版图上的大致分布，<strong>颜色对应菜系</strong>。
+            点击下方图例可跳到对应的菜系卡片。地图含台湾省、香港、澳门、海南省与南海诸岛（九段线）。
+          </figcaption>
+        </figure>
+
+        <div class="cuisine-legend reveal" data-legend aria-label="菜系图例"></div>
+
+        <h2 data-toc="为什么不同"><span class="idx">🧭</span>为什么不同：六把尺子</h2>
+        <p>
+          各地口味的差异，背后几乎都能归到下面这六个原因上。读每张菜系卡片时，
+          留意「为什么这样」一段标注的小尺子标签——它告诉你这个菜系主要被哪几股力量塑造。
+          口味从来不是凭空“爱重口”或“爱清淡”，而是一方水土、一段历史共同算出来的结果。
+        </p>
+        <div class="lens-grid reveal" data-lenses></div>
+
+        <h2 data-toc="八大菜系"><span class="idx">🥢</span>八大菜系</h2>
+        <p class="cuisine-section-lead">
+          公认的八大菜系，是历史上影响最广、体系最完整的八支。它们大多对应一个文化与物产高度集中的核心区域。
+        </p>
+        <div class="cuisine-features" data-cuisines="八大菜系" data-layout="feature"></div>
+
+        <h2 data-toc="地方菜"><span class="idx">🍲</span>地方菜（含海南）</h2>
+        <p class="cuisine-section-lead">
+          八大之外，还有许多个性鲜明的地方风味。它们或自成一派、或交融而生，同样是“一方水土养一方菜”的好例子。
+        </p>
+        <div class="cuisine-minis" data-cuisines="地方菜" data-layout="mini"></div>
+
+        <div class="note tip">
+          <span class="badge">→</span>
+          <div>
+            <h4>从“知道”到“做到”</h4>
+            <p>每个菜系的「家常可借鉴」都能直接搬进自家厨房。想动手，去 <a href="dishes.html">案例菜库</a> 找对应的菜照着练；想搞懂味型怎么调，看 <a href="sauces.html">第三篇 · 调味与酱料</a>；火候和锅气的门道在 <a href="techniques.html">第四篇 · 火候与技法</a>；遇到生词，<a href="glossary.html">术语表</a> 一查就懂。</p>
+          </div>
+        </div>
+
+      </article>
+    </div>
+  </div>
+
+  <script src="assets/js/data.js"></script>
+  <script src="assets/js/main.js"></script>
+  <script>
+  (function () {
+    const H = window.HCL || {};
+    const CUS = H.cuisines || [];
+    const G = Object.fromEntries((H.glossary || []).map(g => [g.id, g]));
+    const DISH = Object.fromEntries((H.dishes || []).map(d => [d.name, d.id]));
+
+    const esc = s => String(s).replace(/[&<>]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;' }[c]));
+
+    // 六把尺子（“为什么不同”的分析维度）
+    const LENS = {
+      geo:  { emoji: '🌦️', label: '地理气候', desc: '潮湿就嗜辣祛湿，炎热就求清爽，寒冷就重油高热量——气候直接写进口味。' },
+      crop: { emoji: '🌾', label: '物产',     desc: '靠山吃山、靠海吃海。一地有什么食材，就长出什么风格的菜。' },
+      keep: { emoji: '🫙', label: '保存需求', desc: '没有冰箱的年代，腌、腊、糟、酸都是为了让食物撑过淡季——保存方式也塑造了风味。' },
+      fire: { emoji: '🔥', label: '燃料灶具', desc: '北方旺火爆炒，南方文火慢煨；有没有猛火，决定了能不能“爆”出香。' },
+      hist: { emoji: '🏛️', label: '历史经济', desc: '富庶之地讲究刀工火工、用得起糖与油；都城与商埠则汇聚四方口味。' },
+      move: { emoji: '🧭', label: '人口流动', desc: '移民、商旅、迁徙把味道带来带去，于是有了融合与“他乡的家乡菜”。' },
+    };
+
+    // 渲染：六把尺子
+    const lensHost = document.querySelector('[data-lenses]');
+    if (lensHost) {
+      lensHost.innerHTML = Object.keys(LENS).map(k => {
+        const l = LENS[k];
+        return `<div class="lens-card lens-${k}">
+          <span class="lens-ic">${l.emoji}</span>
+          <div class="lens-tx"><b>${l.label}</b><span>${esc(l.desc)}</span></div>
+        </div>`;
+      }).join('');
+    }
+
+    // 渲染：代表菜（命中案例菜库则做成深链）
+    const dishChips = (arr) => (arr || []).map(name => {
+      const id = DISH[name];
+      return id
+        ? `<a class="cu-dish is-link" href="dishes.html#dish-${id}">${esc(name)}</a>`
+        : `<span class="cu-dish">${esc(name)}</span>`;
+    }).join('');
+
+    const liList = (arr) => (arr || []).map(x => `<li>${esc(x)}</li>`).join('');
+
+    const lensChips = (arr) => (arr || []).filter(k => LENS[k]).map(k =>
+      `<span class="cu-lens" title="${esc(LENS[k].label)}">${LENS[k].emoji}<i>${esc(LENS[k].label)}</i></span>`
+    ).join('');
+
+    const seeRow = (c) => {
+      const items = [];
+      (c.see || []).forEach(s => items.push(`<a href="${s.href}">${esc(s.t)}</a>`));
+      (c.terms || []).filter(t => G[t]).forEach(t => items.push(`<a href="glossary.html#term-${t}">${esc(G[t].term)}</a>`));
+      if (!items.length) return '';
+      return `<div class="cu-see"><span class="cu-see-k">延伸</span>${items.join('')}</div>`;
+    };
+
+    const img = (c) =>
+      `<img src="assets/img/cuisine/${c.id}.webp" alt="${esc(c.name)}代表菜手绘插图"
+            loading="lazy" width="900" height="600"
+            onerror="this.closest('figure')?.remove()">`;
+
+    // 四段正文（特点 / 代表菜 / 为什么这样 / 家常可借鉴 + 延伸），两种布局共用
+    const innerBlocks = (c) => `
+      <header class="cu-head">
+        <span class="cu-emoji">${c.emoji || '🍴'}</span>
+        <div class="cu-id">
+          <h3>${esc(c.name)}</h3>
+          <span class="cu-region">${esc(c.region || '')}</span>
+        </div>
+        <span class="cu-kind">${esc(c.kind || '')}</span>
+      </header>
+
+      <section class="cu-block cu-traits">
+        <h4 class="cu-label">特点</h4>
+        <ul>${liList(c.traits)}</ul>
+      </section>
+
+      <section class="cu-block cu-dishes">
+        <h4 class="cu-label">代表菜</h4>
+        <div class="cu-dish-row">${dishChips(c.dishes)}</div>
+      </section>
+
+      <section class="cu-block cu-why">
+        <h4 class="cu-label">为什么这样</h4>
+        <div class="cu-lens-row">${lensChips(c.lenses)}</div>
+        <p>${esc(c.why || '')}</p>
+      </section>
+
+      <section class="cu-block cu-borrow">
+        <h4 class="cu-label">家常可借鉴</h4>
+        <ul>${liList(c.borrow)}</ul>
+      </section>
+
+      ${seeRow(c)}`;
+
+    // 八大菜系：左右交错的大图文（奇偶交替图片在左/右）
+    const renderFeature = (c, i) => `
+      <article class="cuisine-feature reveal${i % 2 ? ' is-rev' : ''}" id="cuisine-${c.id}" style="--cu:${c.accent || 'var(--brick)'}">
+        <figure class="cu-figure">${img(c)}</figure>
+        <div class="cu-body">${innerBlocks(c)}</div>
+      </article>`;
+
+    // 地方菜：紧凑图卡（顶部插图横幅）
+    const renderMini = (c) => `
+      <article class="cuisine-mini reveal" id="cuisine-${c.id}" style="--cu:${c.accent || 'var(--brick)'}">
+        <figure class="cu-banner">${img(c)}</figure>
+        <div class="cu-mini-body">${innerBlocks(c)}</div>
+      </article>`;
+
+    document.querySelectorAll('[data-cuisines]').forEach(host => {
+      const kind = host.getAttribute('data-cuisines');
+      const list = CUS.filter(c => c.kind === kind);
+      host.innerHTML = host.getAttribute('data-layout') === 'feature'
+        ? list.map(renderFeature).join('')
+        : list.map(renderMini).join('');
+    });
+
+    // 渲染：可点击图例（跳到对应卡片并高亮）
+    const legendHost = document.querySelector('[data-legend]');
+    if (legendHost) {
+      const chip = (c) => `<button class="cu-leg" data-go="cuisine-${c.id}" style="--cu:${c.accent || 'var(--brick)'}">
+        <span class="cu-leg-dot"></span>${esc(c.name)}</button>`;
+      const great = CUS.filter(c => c.kind === '八大菜系').map(chip).join('');
+      const region = CUS.filter(c => c.kind === '地方菜').map(chip).join('');
+      legendHost.innerHTML =
+        `<div class="cu-leg-grp"><span class="cu-leg-h">八大菜系</span><div class="cu-leg-row">${great}</div></div>` +
+        `<div class="cu-leg-grp"><span class="cu-leg-h">地方菜</span><div class="cu-leg-row">${region}</div></div>`;
+      legendHost.addEventListener('click', (e) => {
+        const btn = e.target.closest('[data-go]');
+        if (!btn) return;
+        const el = document.getElementById(btn.getAttribute('data-go'));
+        if (!el) return;
+        el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        el.classList.remove('flash');
+        void el.offsetWidth;
+        el.classList.add('flash');
+      });
+    }
+
+    // 卡片是脚本注入的：此脚本先于 DOMContentLoaded 执行，
+    // 之后 main.js 会统一处理目录 / 术语自动标注 / 进场动画。这里只补一次进场观察。
+    if (window.setupReveal) window.setupReveal();
+  })();
+  </script>
+</body>
+</html>

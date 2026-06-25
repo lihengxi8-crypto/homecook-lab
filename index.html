@@ -16,6 +16,9 @@
 
   <!-- Hero -->
   <section class="hero">
+    <span class="blob blob--ginger" style="width:420px;height:420px;top:-110px;right:-60px;opacity:.42"></span>
+    <span class="blob blob--brick" style="width:320px;height:320px;bottom:-150px;left:-80px;opacity:.3"></span>
+    <span class="blob blob--scallion" style="width:240px;height:240px;top:38%;left:42%;opacity:.16"></span>
     <div class="container">
       <div class="hero-inner">
         <div class="hero-copy">
@@ -42,23 +45,23 @@
   <section class="section-tight">
     <div class="container">
       <div class="center">
-        <span class="kicker">Why this site</span>
+        <span class="eyebrow-line">Why this site</span>
         <h2 class="section-title" style="font-size:1.9rem">和普通菜谱不一样的地方</h2>
         <p class="section-sub" style="margin-inline:auto">不只告诉你"放盐少许"，而是讲清楚盐为什么这么放、放早了会怎样——把做菜变成可理解、可复现、可创新的事。</p>
         <div class="lead-divider" style="margin-inline:auto"></div>
       </div>
-      <div class="why-grid">
-        <article class="why-card reveal" style="--fc:#C0492B">
+      <div class="why-grid reveal reveal-stagger">
+        <article class="why-card" style="--fc:#C0492B">
           <span class="why-ic">🔬</span>
           <h3>先懂原理</h3>
           <p>每一步背后都有物理或化学机制。懂了它，你才知道"火大一点、盐早一点"会发生什么，而不是照抄克数。</p>
         </article>
-        <article class="why-card reveal" style="--fc:#6F9A4C">
+        <article class="why-card" style="--fc:#6F9A4C">
           <span class="why-ic">🍳</span>
           <h3>再练技法</h3>
           <p>把炒煎炸烹、蒸炖焖烧归纳成"热 + 水 + 时间"的几套组合，几十种技法收敛成几条规律，不再零散死记。</p>
         </article>
-        <article class="why-card reveal" style="--fc:#E2A03F">
+        <article class="why-card" style="--fc:#E2A03F">
           <span class="why-ic">🧩</span>
           <h3>最后创新</h3>
           <p>把食材、味型、技法当成可替换的变量。理解约束之后再排列组合，做出属于你的菜，而不是瞎试翻车。</p>
@@ -68,10 +71,10 @@
   </section>
 
   <!-- 学习全景图（章节卡） -->
-  <section class="section" id="map">
+  <section class="section section--spotlight" id="map">
     <div class="container">
       <div class="center">
-        <span class="kicker">Learning Map</span>
+        <span class="eyebrow-line">Learning Map</span>
         <h2 class="section-title">学习全景图</h2>
         <p class="section-sub">五个篇章构成一条主线：从厨房里的科学，到下锅前后的每个决定。建议按顺序，也可随时跳读。</p>
         <div class="lead-divider"></div>
@@ -137,7 +140,7 @@
   <section class="section" style="background:linear-gradient(180deg,transparent,rgba(245,234,218,.6));">
     <div class="container" style="max-width:820px">
       <div class="center">
-        <span class="kicker">Roadmap</span>
+        <span class="eyebrow-line">Roadmap</span>
         <h2 class="section-title">建议的学习路线</h2>
         <p class="section-sub">像搭知识树一样，先有根（原理），再长枝（技法），最后开花（创新）。</p>
         <div class="lead-divider"></div>
@@ -189,52 +192,15 @@
   </section>
 
   <!-- 工具箱亮点 -->
-  <section class="section" id="toolbox">
+  <section class="section section--tint" id="toolbox">
     <div class="container">
       <div class="center">
-        <span class="kicker">Toolbox</span>
-        <h2 class="section-title">不只有文章，还能算、能查、能玩</h2>
-        <p class="section-sub" style="margin-inline:auto">配套一整套趁手工具——把原理变成能算的数、查得到的词、对照得上的菜。</p>
+        <span class="eyebrow-line">Toolbox</span>
+        <h2 class="section-title">不只有文章，还能用、能查、能玩</h2>
+        <p class="section-sub" style="margin-inline:auto">配套页面按用途分三层：<strong>学以致用</strong> 把原理落到菜上、<strong>速查百科</strong> 随手查资料、<strong>动手工具</strong> 能算能排查。</p>
         <div class="lead-divider" style="margin-inline:auto"></div>
       </div>
-      <div class="feature-wall" style="margin-top:40px">
-        <a class="feature-card reveal" href="tools.html" style="--fc:#C0492B">
-          <span class="fc-ic">🧮</span>
-          <h3>互动小工具</h3>
-          <p>味型配比计算器、温度交互图、创新组合器——把原理调成能玩的旋钮。</p>
-          <span class="fc-go">去玩玩 <i>→</i></span>
-        </a>
-        <a class="feature-card reveal" href="dishes.html" style="--fc:#E2A03F">
-          <span class="fc-ic">🍲</span>
-          <h3>案例菜库</h3>
-          <p>每道菜拆成「原理 / 预处理 / 技法 / 味型」标签，点标签直接跳回对应原理。</p>
-          <span class="fc-go">对照学 <i>→</i></span>
-        </a>
-        <a class="feature-card reveal" href="ingredients.html" style="--fc:#8B5E3C">
-          <span class="fc-ic">🥩</span>
-          <h3>食材百科</h3>
-          <p>按部位与种类系统梳理，肉类配手绘动物切割图——一眼看懂哪块嫩、哪块适合炖。</p>
-          <span class="fc-go">查食材 <i>→</i></span>
-        </a>
-        <a class="feature-card reveal" href="gear.html" style="--fc:#6F9A4C">
-          <span class="fc-ic">🍳</span>
-          <h3>厨具百科</h3>
-          <p>锅型与材质、刀型与钢材、微波炉/空气炸锅/烤箱的加热原理，选购使用不靠玄学。</p>
-          <span class="fc-go">选对器 <i>→</i></span>
-        </a>
-        <a class="feature-card reveal" href="glossary.html" style="--fc:#5A8C8B">
-          <span class="fc-ic">📖</span>
-          <h3>术语表 + 全站搜索</h3>
-          <p>正文术语悬浮即看释义；按 <kbd>/</kbd> 随时全站搜索，找概念、找菜、找食材。</p>
-          <span class="fc-go">速查 <i>→</i></span>
-        </a>
-        <a class="feature-card reveal" href="principles.html" style="--fc:#C98A1E">
-          <span class="fc-ic">▶️</span>
-          <h3>参考视频</h3>
-          <p>每篇底部精选 B 站 / YouTube 检索词，想看演示一键直达，挑讲得清楚的看。</p>
-          <span class="fc-go">看演示 <i>→</i></span>
-        </a>
-      </div>
+      <div class="toolbox-wall" data-toolbox style="margin-top:40px"></div>
     </div>
   </section>
 
@@ -243,7 +209,7 @@
     <div class="container">
       <div class="grid grid-2" style="align-items:start">
         <div class="reveal">
-          <span class="kicker">How to use</span>
+          <span class="eyebrow-line">How to use</span>
           <h2 class="section-title" style="font-size:1.8rem">怎么用这个站</h2>
           <div class="lead-divider"></div>
           <ul class="prose" style="margin-top:18px">
@@ -253,7 +219,7 @@
             <li><strong>用案例验证</strong>：每篇会配 1–2 道经典家常菜，把原理落到具体操作。</li>
           </ul>
         </div>
-        <div class="card card-soft reveal" style="background:var(--card-soft)">
+        <div class="surface-note reveal" style="padding:28px 26px 24px">
           <h3 style="margin-top:0">⚙️ 趁手的小体验</h3>
           <ul class="prose" style="margin-top:14px">
             <li><strong>随时搜</strong>：按 <kbd>/</kbd> 唤出全站搜索，概念、菜、食材一起找。</li>
@@ -268,7 +234,7 @@
   </section>
 
   <!-- CTA -->
-  <section class="section center">
+  <section class="section center section--spotlight">
     <div class="container" style="max-width:620px">
       <h2 class="section-title">准备好了吗？</h2>
       <p class="section-sub" style="margin-inline:auto">从第一篇「底层原理」开始，30 分钟建立起对厨房的全新理解。</p>
@@ -280,6 +246,6 @@
 
   <script src="assets/js/data.js"></script>
   <script src="assets/js/main.js"></script>
-  <script>renderChapterCards('[data-chapters]');</script>
+  <script>renderChapterCards('[data-chapters]'); renderToolbox('[data-toolbox]');</script>
 </body>
 </html>

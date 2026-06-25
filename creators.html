@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <script>(function(){try{var t=localStorage.getItem('hcl-theme');if(t==='dark')document.documentElement.setAttribute('data-theme','dark');}catch(e){}})();</script>
+  <title>博主库 | 家常菜实验室</title>
+  <meta name="description" content="精选做得好的中餐家常菜博主：标注风格与代表方向，一键跳转到各平台原视频。做法步骤为本站自行复述的学习笔记，版权归原作者；本页只做指路。" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@500;700;900&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="assets/css/style.css" />
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Ctext y='20' font-size='20'%3E%F0%9F%8D%B2%3C/text%3E%3C/svg%3E" />
+</head>
+<body data-page="creators">
+
+  <header class="page-head" style="--accent:#7A6CA8">
+    <div class="container">
+      <div class="crumbs"><a href="index.html">首页</a> / 学以致用 / 博主库</div>
+      <span class="num-chip">📺 博主库</span>
+      <h1>博主库</h1>
+      <div class="en">Creators · Learn from the best</div>
+      <p class="intro">
+        把你<strong>觉得做得好的博主</strong>收进来：标注风格与擅长方向，一键跳到各平台的<strong>原视频</strong>看演示。
+        看完<a href="principles.html">原理</a>、再看高手怎么落地，最后到<a href="dishes.html">案例菜库</a>对照练习——这就是完整的学习闭环。
+      </p>
+      <p class="src-note">
+        ℹ️ 本页只做「指路」：所有视频都是<strong>跳转到博主的原始页面</strong>，不内嵌、不搬运。案例菜的做法步骤为本站
+        <strong>自行复述的学习笔记</strong>，相关视频、图文版权归原作者所有；如有侵权请告知，我会立即移除链接。
+      </p>
+    </div>
+  </header>
+
+  <div class="container section-tight">
+    <div class="creator-grid" data-creators></div>
+  </div>
+
+  <script src="assets/js/data.js"></script>
+  <script src="assets/js/main.js"></script>
+  <script>
+  (function () {
+    const C = (window.HCL && window.HCL.creators) || [];
+    const D = (window.HCL && window.HCL.dishes) || [];
+    const wrap = document.querySelector('[data-creators]');
+    const esc = s => String(s == null ? '' : s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+
+    // 平台展示配置：type -> { 文案, 样式类 }
+    const PLAT = {
+      bilibili:    { label: 'B站',     cls: 'bili' },
+      youtube:     { label: 'YouTube', cls: 'yt' },
+      xiaohongshu: { label: '小红书',  cls: 'xhs' },
+      douyin:      { label: '抖音',    cls: 'dy' },
+      wechat:      { label: '公众号',  cls: 'wx' },
+      web:         { label: '网站',    cls: 'web' },
+    };
+
+    // 反向索引：某博主关联了哪些案例菜（扫描 dishes.refs）
+    function dishesOf(cid) {
+      return D.filter(d => Array.isArray(d.refs) && d.refs.some(r => r && r.creator === cid));
+    }
+
+    function platBtns(list) {
+      const btns = (list || [])
+        .filter(p => p && p.url)
+        .map(p => {
+          const cfg = PLAT[p.type] || { label: p.type || '链接', cls: 'web' };
+          return `<a class="cr-plat ${cfg.cls}" href="${esc(p.url)}" target="_blank" rel="noopener noreferrer">${esc(cfg.label)} ↗</a>`;
+        }).join('');
+      return btns || '<span class="cr-plat empty">链接待填</span>';
+    }
+
+    function card(c) {
+      const ds = dishesOf(c.id);
+      const avatar = c.avatar
+        ? `<img src="${esc(c.avatar)}" alt="${esc(c.name)}" loading="lazy" width="56" height="56" onerror="this.replaceWith(Object.assign(document.createElement('span'),{className:'cr-ava-txt',textContent:'${esc((c.name || '·').slice(0, 1))}'}))">`
+        : `<span class="cr-ava-txt">${esc((c.name || '·').slice(0, 1))}</span>`;
+      const tags = (c.tags || []).map(t => `<span class="cr-tag">${esc(t)}</span>`).join('');
+      const linked = ds.length
+        ? `<div class="cr-dishes">${ds.map(d => `<a href="dishes.html#dish-${esc(d.id)}">${esc(d.emoji || '')} ${esc(d.name)}</a>`).join('')}</div>`
+        : `<p class="cr-dishes-empty">关联菜会在你给案例菜填上该博主的视频后自动出现。</p>`;
+      return `
+        <article class="card creator-card reveal" id="creator-${esc(c.id)}">
+          <div class="cr-head">
+            <div class="cr-ava">${avatar}</div>
+            <div class="cr-id">
+              <h3>${esc(c.name)}</h3>
+              ${c.style ? `<p class="cr-style">${esc(c.style)}</p>` : ''}
+            </div>
+          </div>
+          ${tags ? `<div class="cr-tags">${tags}</div>` : ''}
+          ${c.why ? `<p class="cr-why">${esc(c.why)}</p>` : ''}
+          <div class="cr-plats">${platBtns(c.platforms)}</div>
+          <div class="cr-linked">
+            <span class="cr-linked-k">关联案例菜</span>
+            ${linked}
+          </div>
+        </article>`;
+    }
+
+    if (!C.length) {
+      wrap.innerHTML = '<p class="empty-hint">还没有博主数据。请在 <code>assets/js/data.js</code> 的 <code>creators</code> 里添加。</p>';
+    } else {
+      wrap.innerHTML = C.map(card).join('');
+    }
+
+    if (window.setupReveal) window.setupReveal();
+
+    // 支持从案例菜深链跳转到具体博主（creators.html#creator-xxx）
+    const hash = location.hash;
+    if (hash) {
+      const t = document.querySelector(hash);
+      if (t) { t.scrollIntoView({ behavior: 'smooth', block: 'center' }); t.classList.add('flash'); }
+    }
+  })();
+  </script>
+</body>
+</html>

@@ -1,0 +1,922 @@
+{
+  "source": {
+    "name": "阿里 DataV GeoAtlas · 100000_full（标准省级行政区划）",
+    "url": "https://geo.datav.aliyun.com/areas_v3/bound/100000_full.json",
+    "includesTaiwan": true,
+    "includesSouthChinaSea": true,
+    "note": "遵循自然资源部标准地图；含台湾省、香港、澳门、海南省与南海诸岛（九段线）。"
+  },
+  "projection": {
+    "type": "equirectangular",
+    "standardParallelDeg": 35,
+    "formula": "x = PAD + (lng-lngMin)*cos(phi0)*SCALE ; y = PAD + (latMax-lat)*SCALE",
+    "lngMin": 73.5,
+    "lngMax": 135.1,
+    "latMin": 17.6,
+    "latMax": 53.7,
+    "scalePxPerDeg": 18.6,
+    "pad": 26,
+    "viewBox": [
+      0,
+      0,
+      992,
+      724
+    ]
+  },
+  "inset": {
+    "label": "南海诸岛",
+    "bbox": [
+      104.5,
+      2.5,
+      123,
+      25
+    ],
+    "rect": [
+      808,
+      487.5,
+      154,
+      203
+    ]
+  },
+  "palette": {
+    "lu": "#E0A93E",
+    "chuan": "#C8482E",
+    "yue": "#5F9148",
+    "su": "#4F8C86",
+    "min": "#9E586A",
+    "zhe": "#5E7FA0",
+    "xiang": "#CC6B3A",
+    "hui": "#8E7A3C",
+    "jing": "#B98A55",
+    "dongbei": "#6FA08E",
+    "xibei": "#CE9248",
+    "yungui": "#94A24E",
+    "bun": "#B0667A",
+    "hainan": "#3FA0A0",
+    "taiwan": "#CDB07E",
+    "neutral": "#F1E4C9"
+  },
+  "cuisines": [
+    {
+      "id": "lu",
+      "name": "鲁菜",
+      "type": "great",
+      "provinces": [
+        "山东省"
+      ],
+      "color": "#E0A93E",
+      "label": {
+        "lngLat": [
+          118.3,
+          36.4
+        ],
+        "svg": [
+          709.6,
+          348.3
+        ]
+      }
+    },
+    {
+      "id": "chuan",
+      "name": "川菜",
+      "type": "great",
+      "provinces": [
+        "四川省",
+        "重庆市"
+      ],
+      "color": "#C8482E",
+      "label": {
+        "lngLat": [
+          103.2,
+          30.5
+        ],
+        "svg": [
+          479.2,
+          458.2
+        ]
+      }
+    },
+    {
+      "id": "yue",
+      "name": "粤菜",
+      "type": "great",
+      "provinces": [
+        "广东省"
+      ],
+      "color": "#5F9148",
+      "label": {
+        "lngLat": [
+          112.4,
+          23.5
+        ],
+        "svg": [
+          619.6,
+          588.6
+        ]
+      }
+    },
+    {
+      "id": "su",
+      "name": "苏菜",
+      "type": "great",
+      "provinces": [
+        "江苏省"
+      ],
+      "color": "#4F8C86",
+      "label": {
+        "lngLat": [
+          119.9,
+          33.2
+        ],
+        "svg": [
+          734.1,
+          407.9
+        ]
+      }
+    },
+    {
+      "id": "min",
+      "name": "闽菜",
+      "type": "great",
+      "provinces": [
+        "福建省"
+      ],
+      "color": "#9E586A",
+      "label": {
+        "lngLat": [
+          117.9,
+          26.2
+        ],
+        "svg": [
+          703.5,
+          538.3
+        ]
+      }
+    },
+    {
+      "id": "zhe",
+      "name": "浙菜",
+      "type": "great",
+      "provinces": [
+        "浙江省"
+      ],
+      "color": "#5E7FA0",
+      "label": {
+        "lngLat": [
+          120.5,
+          29.1
+        ],
+        "svg": [
+          743.2,
+          484.3
+        ]
+      }
+    },
+    {
+      "id": "xiang",
+      "name": "湘菜",
+      "type": "great",
+      "provinces": [
+        "湖南省"
+      ],
+      "color": "#CC6B3A",
+      "label": {
+        "lngLat": [
+          111.6,
+          27.5
+        ],
+        "svg": [
+          607.4,
+          514.1
+        ]
+      }
+    },
+    {
+      "id": "hui",
+      "name": "徽菜",
+      "type": "great",
+      "provinces": [
+        "安徽省"
+      ],
+      "color": "#8E7A3C",
+      "label": {
+        "lngLat": [
+          116.6,
+          31.6
+        ],
+        "svg": [
+          683.7,
+          437.7
+        ]
+      }
+    },
+    {
+      "id": "dongbei",
+      "name": "东北菜",
+      "type": "region",
+      "provinces": [
+        "黑龙江省",
+        "吉林省",
+        "辽宁省"
+      ],
+      "color": "#6FA08E",
+      "label": {
+        "lngLat": [
+          125.6,
+          44.2
+        ],
+        "svg": [
+          821,
+          203
+        ]
+      }
+    },
+    {
+      "id": "xibei",
+      "name": "西北·新疆菜",
+      "type": "region",
+      "provinces": [
+        "新疆维吾尔自治区"
+      ],
+      "color": "#CE9248",
+      "label": {
+        "lngLat": [
+          85,
+          41.2
+        ],
+        "svg": [
+          201.5,
+          258.9
+        ]
+      }
+    },
+    {
+      "id": "yungui",
+      "name": "云贵菜",
+      "type": "region",
+      "provinces": [
+        "云南省",
+        "贵州省"
+      ],
+      "color": "#94A24E",
+      "label": {
+        "lngLat": [
+          103.9,
+          25.6
+        ],
+        "svg": [
+          489.9,
+          549.5
+        ]
+      }
+    },
+    {
+      "id": "hainan",
+      "name": "海南菜",
+      "type": "region",
+      "provinces": [
+        "海南省"
+      ],
+      "color": "#3FA0A0",
+      "label": {
+        "lngLat": [
+          109.8,
+          19.3
+        ],
+        "svg": [
+          579.9,
+          666.8
+        ]
+      }
+    },
+    {
+      "id": "taiwan",
+      "name": "台菜",
+      "type": "region",
+      "provinces": [
+        "台湾省"
+      ],
+      "color": "#CDB07E",
+      "label": {
+        "lngLat": [
+          121.4,
+          21.1
+        ],
+        "svg": [
+          756.9,
+          633.3
+        ]
+      }
+    },
+    {
+      "id": "jing",
+      "name": "京菜",
+      "type": "point",
+      "color": "#B98A55",
+      "label": {
+        "lngLat": [
+          116.4,
+          40
+        ],
+        "svg": [
+          680.6,
+          281.2
+        ]
+      }
+    },
+    {
+      "id": "bun",
+      "name": "本帮菜",
+      "type": "point",
+      "color": "#B0667A",
+      "label": {
+        "lngLat": [
+          121.47,
+          31.23
+        ],
+        "svg": [
+          758,
+          444.6
+        ]
+      }
+    },
+    {
+      "id": "chaoshan",
+      "name": "潮汕菜",
+      "type": "point",
+      "color": "#5F9148",
+      "label": {
+        "lngLat": [
+          116.6,
+          23.4
+        ],
+        "svg": [
+          683.7,
+          590.4
+        ]
+      }
+    },
+    {
+      "id": "kejia",
+      "name": "客家菜",
+      "type": "point",
+      "color": "#9E586A",
+      "label": {
+        "lngLat": [
+          115,
+          24.5
+        ],
+        "svg": [
+          659.3,
+          570
+        ]
+      }
+    }
+  ],
+  "provinces": {
+    "北京市": {
+      "pinyin": "beijing",
+      "adcode": 110000,
+      "cuisine": "jing",
+      "fill": "#B98A55",
+      "centroid": {
+        "lngLat": [
+          116.41995,
+          40.18994
+        ],
+        "svg": [
+          680.9,
+          277.7
+        ]
+      }
+    },
+    "天津市": {
+      "pinyin": "tianjin",
+      "adcode": 120000,
+      "cuisine": null,
+      "fill": "#F1E4C9",
+      "centroid": {
+        "lngLat": [
+          117.347043,
+          39.288036
+        ],
+        "svg": [
+          695.1,
+          294.5
+        ]
+      }
+    },
+    "河北省": {
+      "pinyin": "hebei",
+      "adcode": 130000,
+      "cuisine": null,
+      "fill": "#F1E4C9",
+      "centroid": {
+        "lngLat": [
+          114.502461,
+          38.045474
+        ],
+        "svg": [
+          651.7,
+          317.6
+        ]
+      }
+    },
+    "山西省": {
+      "pinyin": "shanxi",
+      "adcode": 140000,
+      "cuisine": null,
+      "fill": "#F1E4C9",
+      "centroid": {
+        "lngLat": [
+          112.304436,
+          37.618179
+        ],
+        "svg": [
+          618.1,
+          325.6
+        ]
+      }
+    },
+    "内蒙古自治区": {
+      "pinyin": "neimenggu",
+      "adcode": 150000,
+      "cuisine": null,
+      "fill": "#F1E4C9",
+      "centroid": {
+        "lngLat": [
+          114.077429,
+          44.331087
+        ],
+        "svg": [
+          645.2,
+          200.5
+        ]
+      }
+    },
+    "辽宁省": {
+      "pinyin": "liaoning",
+      "adcode": 210000,
+      "cuisine": "dongbei",
+      "fill": "#6FA08E",
+      "centroid": {
+        "lngLat": [
+          122.604994,
+          41.299712
+        ],
+        "svg": [
+          775.3,
+          257
+        ]
+      }
+    },
+    "吉林省": {
+      "pinyin": "jilin",
+      "adcode": 220000,
+      "cuisine": "dongbei",
+      "fill": "#6FA08E",
+      "centroid": {
+        "lngLat": [
+          126.171208,
+          43.703954
+        ],
+        "svg": [
+          829.7,
+          212.2
+        ]
+      }
+    },
+    "黑龙江省": {
+      "pinyin": "heilongjiang",
+      "adcode": 230000,
+      "cuisine": "dongbei",
+      "fill": "#6FA08E",
+      "centroid": {
+        "lngLat": [
+          127.693027,
+          48.040465
+        ],
+        "svg": [
+          853,
+          131.4
+        ]
+      }
+    },
+    "上海市": {
+      "pinyin": "shanghai",
+      "adcode": 310000,
+      "cuisine": "bun",
+      "fill": "#B0667A",
+      "centroid": {
+        "lngLat": [
+          121.438737,
+          31.072559
+        ],
+        "svg": [
+          757.5,
+          447.5
+        ]
+      }
+    },
+    "江苏省": {
+      "pinyin": "jiangsu",
+      "adcode": 320000,
+      "cuisine": "su",
+      "fill": "#4F8C86",
+      "centroid": {
+        "lngLat": [
+          119.486506,
+          32.983991
+        ],
+        "svg": [
+          727.7,
+          411.9
+        ]
+      }
+    },
+    "浙江省": {
+      "pinyin": "zhejiang",
+      "adcode": 330000,
+      "cuisine": "zhe",
+      "fill": "#5E7FA0",
+      "centroid": {
+        "lngLat": [
+          120.109913,
+          29.181466
+        ],
+        "svg": [
+          737.3,
+          482.7
+        ]
+      }
+    },
+    "安徽省": {
+      "pinyin": "anhui",
+      "adcode": 340000,
+      "cuisine": "hui",
+      "fill": "#8E7A3C",
+      "centroid": {
+        "lngLat": [
+          117.226884,
+          31.849254
+        ],
+        "svg": [
+          693.3,
+          433.1
+        ]
+      }
+    },
+    "福建省": {
+      "pinyin": "fujian",
+      "adcode": 350000,
+      "cuisine": "min",
+      "fill": "#9E586A",
+      "centroid": {
+        "lngLat": [
+          118.006468,
+          26.069925
+        ],
+        "svg": [
+          705.2,
+          540.7
+        ]
+      }
+    },
+    "江西省": {
+      "pinyin": "jiangxi",
+      "adcode": 360000,
+      "cuisine": null,
+      "fill": "#F1E4C9",
+      "centroid": {
+        "lngLat": [
+          115.732975,
+          27.636112
+        ],
+        "svg": [
+          670.5,
+          511.5
+        ]
+      }
+    },
+    "山东省": {
+      "pinyin": "shandong",
+      "adcode": 370000,
+      "cuisine": "lu",
+      "fill": "#E0A93E",
+      "centroid": {
+        "lngLat": [
+          118.187759,
+          36.376092
+        ],
+        "svg": [
+          707.9,
+          348.7
+        ]
+      }
+    },
+    "河南省": {
+      "pinyin": "henan",
+      "adcode": 410000,
+      "cuisine": null,
+      "fill": "#F1E4C9",
+      "centroid": {
+        "lngLat": [
+          113.619717,
+          33.902648
+        ],
+        "svg": [
+          638.2,
+          394.8
+        ]
+      }
+    },
+    "湖北省": {
+      "pinyin": "hubei",
+      "adcode": 420000,
+      "cuisine": null,
+      "fill": "#F1E4C9",
+      "centroid": {
+        "lngLat": [
+          112.271301,
+          30.987527
+        ],
+        "svg": [
+          617.6,
+          449.1
+        ]
+      }
+    },
+    "湖南省": {
+      "pinyin": "hunan",
+      "adcode": 430000,
+      "cuisine": "xiang",
+      "fill": "#CC6B3A",
+      "centroid": {
+        "lngLat": [
+          111.711649,
+          27.629216
+        ],
+        "svg": [
+          609.1,
+          511.7
+        ]
+      }
+    },
+    "广东省": {
+      "pinyin": "guangdong",
+      "adcode": 440000,
+      "cuisine": "yue",
+      "fill": "#5F9148",
+      "centroid": {
+        "lngLat": [
+          113.429919,
+          23.334643
+        ],
+        "svg": [
+          635.3,
+          591.7
+        ]
+      }
+    },
+    "广西壮族自治区": {
+      "pinyin": "guangxi",
+      "adcode": 450000,
+      "cuisine": null,
+      "fill": "#F1E4C9",
+      "centroid": {
+        "lngLat": [
+          108.7944,
+          23.833381
+        ],
+        "svg": [
+          564.6,
+          582.4
+        ]
+      }
+    },
+    "海南省": {
+      "pinyin": "hainan",
+      "adcode": 460000,
+      "cuisine": "hainan",
+      "fill": "#3FA0A0",
+      "centroid": {
+        "lngLat": [
+          109.754859,
+          19.189767
+        ],
+        "svg": [
+          579.2,
+          668.9
+        ]
+      }
+    },
+    "重庆市": {
+      "pinyin": "chongqing",
+      "adcode": 500000,
+      "cuisine": "chuan",
+      "fill": "#C8482E",
+      "centroid": {
+        "lngLat": [
+          107.8839,
+          30.067297
+        ],
+        "svg": [
+          550.7,
+          466.2
+        ]
+      }
+    },
+    "四川省": {
+      "pinyin": "sichuan",
+      "adcode": 510000,
+      "cuisine": "chuan",
+      "fill": "#C8482E",
+      "centroid": {
+        "lngLat": [
+          102.693453,
+          30.674545
+        ],
+        "svg": [
+          471.5,
+          454.9
+        ]
+      }
+    },
+    "贵州省": {
+      "pinyin": "guizhou",
+      "adcode": 520000,
+      "cuisine": "yungui",
+      "fill": "#94A24E",
+      "centroid": {
+        "lngLat": [
+          106.880455,
+          26.826368
+        ],
+        "svg": [
+          535.4,
+          526.6
+        ]
+      }
+    },
+    "云南省": {
+      "pinyin": "yunnan",
+      "adcode": 530000,
+      "cuisine": "yungui",
+      "fill": "#94A24E",
+      "centroid": {
+        "lngLat": [
+          101.485106,
+          25.008643
+        ],
+        "svg": [
+          453,
+          560.5
+        ]
+      }
+    },
+    "西藏自治区": {
+      "pinyin": "xizang",
+      "adcode": 540000,
+      "cuisine": null,
+      "fill": "#F1E4C9",
+      "centroid": {
+        "lngLat": [
+          88.388277,
+          31.56375
+        ],
+        "svg": [
+          253.2,
+          438.4
+        ]
+      }
+    },
+    "陕西省": {
+      "pinyin": "shaanxi",
+      "adcode": 610000,
+      "cuisine": null,
+      "fill": "#F1E4C9",
+      "centroid": {
+        "lngLat": [
+          108.887114,
+          35.263661
+        ],
+        "svg": [
+          566,
+          369.4
+        ]
+      }
+    },
+    "甘肃省": {
+      "pinyin": "gansu",
+      "adcode": 620000,
+      "cuisine": null,
+      "fill": "#F1E4C9",
+      "centroid": {
+        "lngLat": [
+          103.823557,
+          36.058039
+        ],
+        "svg": [
+          488.7,
+          354.6
+        ]
+      }
+    },
+    "青海省": {
+      "pinyin": "qinghai",
+      "adcode": 630000,
+      "cuisine": null,
+      "fill": "#F1E4C9",
+      "centroid": {
+        "lngLat": [
+          96.043533,
+          35.726403
+        ],
+        "svg": [
+          370,
+          360.8
+        ]
+      }
+    },
+    "宁夏回族自治区": {
+      "pinyin": "ningxia",
+      "adcode": 640000,
+      "cuisine": null,
+      "fill": "#F1E4C9",
+      "centroid": {
+        "lngLat": [
+          106.169866,
+          37.291332
+        ],
+        "svg": [
+          524.5,
+          331.7
+        ]
+      }
+    },
+    "新疆维吾尔自治区": {
+      "pinyin": "xinjiang",
+      "adcode": 650000,
+      "cuisine": "xibei",
+      "fill": "#CE9248",
+      "centroid": {
+        "lngLat": [
+          85.294711,
+          41.371801
+        ],
+        "svg": [
+          206,
+          255.7
+        ]
+      }
+    },
+    "台湾省": {
+      "pinyin": "taiwan",
+      "adcode": 710000,
+      "cuisine": "taiwan",
+      "fill": "#CDB07E",
+      "centroid": {
+        "lngLat": [
+          120.971485,
+          23.749452
+        ],
+        "svg": [
+          750.4,
+          583.9
+        ]
+      }
+    },
+    "香港特别行政区": {
+      "pinyin": "xianggang",
+      "adcode": 810000,
+      "cuisine": null,
+      "fill": "#F1E4C9",
+      "centroid": {
+        "lngLat": [
+          114.134357,
+          22.377366
+        ],
+        "svg": [
+          646.1,
+          609.5
+        ]
+      }
+    },
+    "澳门特别行政区": {
+      "pinyin": "aomen",
+      "adcode": 820000,
+      "cuisine": null,
+      "fill": "#F1E4C9",
+      "centroid": {
+        "lngLat": [
+          113.566988,
+          22.159307
+        ],
+        "svg": [
+          637.4,
+          613.6
+        ]
+      }
+    }
+  }
+}

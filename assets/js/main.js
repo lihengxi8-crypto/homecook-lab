@@ -54,10 +54,22 @@ const ICONS = {
 
 const LS = { theme: 'hcl-theme', learned: 'hcl-learned' };
 
+/* 把扁平的 utils 按 utilGroups 归类，返回 [{...group, items:[...]}]，
+   保持 utilGroups 的顺序与每组内 utils 的原始顺序；未归类的并入末尾“更多”。 */
+function utilGroupsWith(utils) {
+  const defs = (window.HCL && window.HCL.utilGroups) || [];
+  const groups = defs.map(g => ({ ...g, items: utils.filter(u => u.group === g.id) }));
+  const known = new Set(defs.map(g => g.id));
+  const rest = utils.filter(u => !known.has(u.group));
+  if (rest.length) groups.push({ id: 'more', title: '更多', en: 'More', desc: '', items: rest });
+  return groups.filter(g => g.items.length);
+}
+
 /* ---------- 顶部导航 ---------- */
 function injectHeader() {
   const current = document.body.dataset.page || '';
   const utils = (window.HCL && window.HCL.utils) || [];
+  const groups = utilGroupsWith(utils);
 
   const chapterLinks = SITE.chapters.map(c =>
     `<li><a href="${c.file}" data-id="${c.id}" class="${c.id === current ? 'active' : ''}">
@@ -65,10 +77,16 @@ function injectHeader() {
   ).join('');
 
   const utilActive = utils.some(u => u.id === current);
-  const utilLinks = utils.map(u =>
-    `<li><a href="${u.file}" data-id="${u.id}" class="${u.id === current ? 'active' : ''}">
-       <span class="emoji">${u.icon}</span>${u.title}</a></li>`
-  ).join('');
+  // 按分组渲染「工具箱」超级菜单：每组一个小标题 + 该组链接
+  const utilGroupsHtml = groups.map(g => `
+    <div class="nav-grp">
+      <p class="nav-grp-h">${g.title}<span>${g.en}</span></p>
+      <ul class="nav-grp-list">
+        ${g.items.map(u =>
+          `<li><a href="${u.file}" data-id="${u.id}" class="${u.id === current ? 'active' : ''}">
+             <span class="emoji">${u.icon}</span>${u.title}</a></li>`).join('')}
+      </ul>
+    </div>`).join('');
 
   const header = document.createElement('header');
   header.className = 'site-header';
@@ -82,7 +100,7 @@ function injectHeader() {
         ${chapterLinks}
         <li class="nav-more${utilActive ? ' active' : ''}">
           <button class="nav-more-btn" aria-haspopup="true" aria-expanded="false">工具箱 ${ICONS.chevron}</button>
-          <ul class="nav-dropdown">${utilLinks}</ul>
+          <div class="nav-dropdown mega">${utilGroupsHtml}</div>
         </li>
       </ul>
       <div class="nav-actions">
@@ -117,7 +135,12 @@ function injectHeader() {
 function injectFooter() {
   const links = SITE.chapters.map(c => `<li><a href="${c.file}">${c.num} · ${c.title}</a></li>`).join('');
   const utils = (window.HCL && window.HCL.utils) || [];
-  const utilLinks = utils.map(u => `<li><a href="${u.file}">${u.icon} ${u.title}</a></li>`).join('');
+  const groups = utilGroupsWith(utils);
+  const groupCols = groups.map(g => `
+    <div>
+      <h4>${g.title}</h4>
+      <ul>${g.items.map(u => `<li><a href="${u.file}">${u.icon} ${u.title}</a></li>`).join('')}</ul>
+    </div>`).join('');
   const footer = document.createElement('footer');
   footer.className = 'site-footer';
   footer.innerHTML = `
@@ -131,10 +154,7 @@ function injectFooter() {
           <h4>学习篇章</h4>
           <ul>${links}</ul>
         </div>
-        <div>
-          <h4>工具箱</h4>
-          <ul>${utilLinks}</ul>
-        </div>
+        ${groupCols}
       </div>
       <div class="container foot-bottom" style="padding-inline:0">
         <span>© ${new Date().getFullYear()} 家常菜实验室 · 自用学习项目</span>
@@ -284,7 +304,8 @@ function buildSearchIndex() {
   const H = window.HCL || {};
   const idx = [];
   SITE.chapters.forEach(c => idx.push({ type: '篇章', title: `${c.num} · ${c.title}`, sub: c.desc, href: c.file, kw: c.tags.join(' ') + ' ' + c.en }));
-  (H.utils || []).forEach(u => idx.push({ type: '工具', title: u.title, sub: u.en, href: u.file, kw: u.en }));
+  const groupTitle = Object.fromEntries((H.utilGroups || []).map(g => [g.id, g.title]));
+  (H.utils || []).forEach(u => idx.push({ type: '工具', title: u.title, sub: groupTitle[u.group] ? `${groupTitle[u.group]} · ${u.en}` : u.en, href: u.file, kw: (u.en || '') + ' ' + (groupTitle[u.group] || '') + ' ' + (u.blurb || '') }));
   (H.topics || []).forEach(t => idx.push({ type: '小节', title: t.title, sub: '', href: t.page, kw: t.kw }));
   (H.glossary || []).forEach(g => idx.push({ type: '术语', title: g.term, sub: g.def, href: 'glossary.html#term-' + g.id, kw: (g.aliases || []).join(' ') + ' ' + g.cat }));
   (H.foodGuide || []).forEach(cat => (cat.groups || []).forEach(grp => {
@@ -295,7 +316,25 @@ function buildSearchIndex() {
     idx.push({ type: '厨具', title: grp.name, sub: grp.lead || '', href: 'gear.html#grp-' + grp.id, kw: cat.name + ' ' + (grp.items || []).map(it => it.n).join(' ') });
     (grp.items || []).forEach(it => idx.push({ type: '厨具', title: it.n, sub: it.note || '', href: 'gear.html#grp-' + grp.id, kw: cat.name + ' ' + grp.name + ' ' + (it.t || []).join(' ') + ' ' + (it.use || []).join(' ') }));
   }));
-  (H.dishes || []).forEach(d => idx.push({ type: '菜谱', title: d.name, sub: d.summary, href: 'dishes.html#dish-' + d.id, kw: d.taste.map(x => x[0]).join(' ') + ' ' + d.tech.map(x => x[0]).join(' ') }));
+  (H.dishes || []).forEach(d => idx.push({ type: '菜谱', title: d.name, sub: d.summary, href: 'dishes.html#dish-' + d.id, kw: d.taste.map(x => x[0]).join(' ') + ' ' + d.tech.map(x => x[0]).join(' ') + ' ' + (d.skills || []).join(' ') + ' ' + (d.cuisine || '') }));
+  (H.creators || []).forEach(c => idx.push({ type: '博主', title: c.name, sub: c.style || '', href: 'creators.html#creator-' + c.id, kw: '博主 创作者 ' + (c.tags || []).join(' ') + ' ' + (c.style || '') }));
+  (H.troubleshoot || []).forEach(grp => {
+    idx.push({ type: '翻车', title: grp.name, sub: grp.lead || '', href: 'troubleshoot.html#ts-' + grp.id, kw: '翻车 诊断 排查 ' + (grp.cases || []).map(c => c.sym).join(' ') });
+    (grp.cases || []).forEach(c => idx.push({ type: '翻车', title: c.sym, sub: c.why || '', href: 'troubleshoot.html#ts-' + grp.id + '-' + c.id, kw: grp.name + ' ' + (c.cause || []).join(' ') + ' ' + (c.fix || []).join(' ') }));
+  });
+  (H.cuisines || []).forEach(c => {
+    const blob = (c.traits || []).join('') + (c.why || '');
+    const hints = [];
+    [['辣', '为什么辣 为什么麻 麻辣 香辣 祛湿'], ['甜', '为什么甜 偏甜'], ['酸', '为什么酸 酸辣'], ['鲜', '为什么鲜 本味鲜'], ['咸', '咸鲜']]
+      .forEach(([k, tag]) => { if (blob.includes(k)) hints.push(tag); });
+    idx.push({
+      type: '菜系',
+      title: `${c.name} · ${c.region}`,
+      sub: (c.traits || []).slice(0, 2).join('、') || (c.why || '').slice(0, 40),
+      href: 'cuisines.html#cuisine-' + c.id,
+      kw: '菜系 菜系地图 为什么不同 ' + c.kind + ' ' + c.region + ' ' + (c.dishes || []).join(' ') + ' ' + (c.traits || []).join(' ') + ' ' + (c.borrow || []).join(' ') + ' ' + hints.join(' ') + ' ' + (c.why || '')
+    });
+  });
   return idx;
 }
 function setupSearch() {
@@ -309,7 +348,7 @@ function setupSearch() {
     <div class="search-box" role="dialog" aria-label="站内搜索">
       <div class="search-input">
         ${ICONS.search}
-        <input type="search" placeholder="搜原理、技法、术语、食材、菜谱…" aria-label="搜索" autocomplete="off" />
+        <input type="search" placeholder="搜原理、技法、术语、食材、菜谱、博主…" aria-label="搜索" autocomplete="off" />
         <kbd>Esc</kbd>
       </div>
       <div class="search-results" data-results></div>
@@ -321,7 +360,7 @@ function setupSearch() {
   const results = overlay.querySelector('[data-results]');
   let active = -1, current = [];
 
-  const typeOrder = { '篇章': 0, '工具': 1, '菜谱': 2, '术语': 3, '食材': 4, '厨具': 5, '小节': 6 };
+  const typeOrder = { '篇章': 0, '工具': 1, '菜系': 2, '菜谱': 3, '翻车': 4, '术语': 5, '食材': 6, '厨具': 7, '小节': 8 };
   function score(item, q) {
     const t = item.title.toLowerCase(), k = (item.kw || '').toLowerCase(), s = (item.sub || '').toLowerCase();
     if (t.includes(q)) return 3;
@@ -463,6 +502,32 @@ function renderChapterCards(selector) {
       <ul>${c.tags.map(t => `<li>${t}</li>`).join('')}</ul>
       <span class="go">进入学习 ${ICONS.arrow}</span>
     </a>`).join('');
+  setupReveal();
+}
+
+/* ---------- 首页工具箱（按分组数据驱动渲染） ---------- */
+function renderToolbox(selector) {
+  const host = document.querySelector(selector);
+  if (!host) return;
+  const utils = (window.HCL && window.HCL.utils) || [];
+  const groups = utilGroupsWith(utils);
+  const accents = ['#C0492B', '#8B5E3C', '#6F9A4C'];
+  host.innerHTML = groups.map((g, gi) => `
+    <div class="toolbox-group reveal">
+      <div class="tg-head">
+        <h3>${g.title}<span class="tg-en">${g.en}</span></h3>
+        ${g.desc ? `<p>${g.desc}</p>` : ''}
+      </div>
+      <div class="feature-wall">
+        ${g.items.map((u, i) => `
+          <a class="feature-card reveal" href="${u.file}" style="--fc:${accents[(gi + i) % accents.length]}">
+            <span class="fc-ic">${u.icon}</span>
+            <h3>${u.title}</h3>
+            <p>${u.blurb || u.en || ''}</p>
+            <span class="fc-go">${u.cta || '进入'} <i>→</i></span>
+          </a>`).join('')}
+      </div>
+    </div>`).join('');
   setupReveal();
 }
 

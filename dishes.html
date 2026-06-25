@@ -16,7 +16,7 @@
 
   <header class="page-head" style="--accent:#C0492B">
     <div class="container">
-      <div class="crumbs"><a href="index.html">首页</a> / 工具箱 / 案例菜库</div>
+      <div class="crumbs"><a href="index.html">首页</a> / 学以致用 / 案例菜库</div>
       <span class="num-chip">🍲 菜库</span>
       <h1>案例菜库</h1>
       <div class="en">Recipes · Principle-linked</div>
@@ -28,7 +28,8 @@
   </header>
 
   <div class="container section-tight">
-    <div class="filter-bar" data-filter></div>
+    <div class="filter-bar" data-filter aria-label="按技法筛选"></div>
+    <div class="filter-bar filter-sub" data-filter-lv aria-label="按难度筛选"></div>
     <div class="dish-grid" data-dishes></div>
   </div>
 
@@ -36,56 +37,102 @@
   <script src="assets/js/main.js"></script>
   <script>
   (function () {
-    const D = window.HCL.dishes;
+    const D = window.HCL.dishes || [];
+    const CREATORS = (window.HCL && window.HCL.creators) || [];
+    const esc = s => String(s == null ? '' : s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+    const PLAY = '<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>';
+
+    // 技法归类（按特征技法落桶；优先级从上到下）
     function catOf(d) {
-      const t = d.tech.map(x => x[0]).join('');
+      const t = (d.tech || []).map(x => x[0]).join('');
+      if (/凉拌/.test(t)) return '凉拌';
       if (/炸/.test(t)) return '油炸类';
-      if (/蒸|煮|羹/.test(t)) return '蒸/煮';
-      if (/烧|炖|焖|糖色/.test(t)) return '烧炖类';
-      if (/炒|爆|煸/.test(t)) return '快炒类';
+      if (/蒸|汆|羹|浸|煮/.test(t)) return '蒸/煮';
+      if (/烧|炖|焖|糖色|收汁/.test(t)) return '烧炖类';
+      if (/炒|爆|煸|煎|熘/.test(t)) return '快炒类';
       return '其他';
     }
-    const cats = ['全部', '快炒类', '烧炖类', '蒸/煮', '油炸类'];
+    const cats = ['全部', '快炒类', '烧炖类', '蒸/煮', '凉拌', '油炸类'];
+    const levels = ['全部难度', '易', '中', '难'];
+
     const filterEl = document.querySelector('[data-filter]');
+    const levelEl = document.querySelector('[data-filter-lv]');
     const gridEl = document.querySelector('[data-dishes]');
     let active = '全部';
+    let activeLv = '全部难度';
 
     filterEl.innerHTML = cats.map((c, i) =>
-      `<button class="chip${i === 0 ? ' active' : ''}" data-cat="${c}">${c}</button>`).join('');
+      `<button class="chip${i === 0 ? ' active' : ''}" data-cat="${esc(c)}">${esc(c)}</button>`).join('');
+    levelEl.innerHTML = levels.map((c, i) =>
+      `<button class="chip lv-chip${i === 0 ? ' active' : ''}" data-lv="${esc(c)}">${esc(c)}</button>`).join('');
 
     function xref(arr) {
-      return `<div class="xref">${arr.map(([label, href]) =>
-        `<a href="${href}">${label}</a>`).join('')}</div>`;
+      return `<div class="xref">${(arr || []).map(([label, href]) =>
+        `<a href="${esc(href)}">${esc(label)}</a>`).join('')}</div>`;
     }
+
+    function skillsRow(d) {
+      if (!d.skills || !d.skills.length) return '';
+      return `<div class="dish-skills">${d.skills.map(s => `<span class="sk">${esc(s)}</span>`).join('')}</div>`;
+    }
+
+    const nameOf = id => { const c = CREATORS.find(x => x.id === id); return c ? c.name : ''; };
+
+    // 演示视频：只渲染有 url 的深链；标注博主并链回博主库
+    function refsRow(d) {
+      const refs = (d.refs || []).filter(r => r && r.url);
+      if (!refs.length) return '';
+      return `<div class="dish-refs">
+        <span class="dr-k">${PLAY} 演示视频</span>
+        <div class="dr-list">${refs.map(r => {
+          const cname = nameOf(r.creator);
+          const label = r.title || cname || '观看视频';
+          const by = cname ? ` <a class="dr-by" href="creators.html#creator-${esc(r.creator)}">@${esc(cname)}</a>` : '';
+          return `<span class="dr-item"><a class="dr-link" href="${esc(r.url)}" target="_blank" rel="noopener noreferrer">${esc(label)} ↗</a>${by}</span>`;
+        }).join('')}</div>
+      </div>`;
+    }
+
     function render() {
-      const list = D.filter(d => active === '全部' || catOf(d) === active);
-      gridEl.innerHTML = list.map(d => `
-        <article class="card dish-card reveal" id="dish-${d.id}">
+      const list = D.filter(d =>
+        (active === '全部' || catOf(d) === active) &&
+        (activeLv === '全部难度' || d.level === activeLv));
+      gridEl.innerHTML = list.length ? list.map(d => `
+        <article class="card dish-card reveal" id="dish-${esc(d.id)}">
           <div class="dh">
-            <span class="demoji">${d.emoji}</span>
-            <h3>${d.name}</h3>
-            <span class="lvl ${d.level}">${d.level}</span>
+            <span class="demoji">${esc(d.emoji)}</span>
+            <h3>${esc(d.name)}</h3>
+            <span class="lvl ${esc(d.level)}">${esc(d.level)}</span>
           </div>
-          <p class="dsum">${d.summary}</p>
+          <p class="dsum">${esc(d.summary)}</p>
+          ${skillsRow(d)}
           <div class="dish-meta">
             <div class="row"><span class="k">原理</span>${xref(d.principles)}</div>
             <div class="row"><span class="k">预处理</span>${xref(d.prep)}</div>
             <div class="row"><span class="k">技法</span>${xref(d.tech)}</div>
             <div class="row"><span class="k">味型</span>${xref(d.taste)}</div>
           </div>
+          ${refsRow(d)}
           <details>
-            <summary>查看做法（${d.steps.length} 步）</summary>
-            <ol>${d.steps.map(s => `<li>${s}</li>`).join('')}</ol>
+            <summary>查看做法（${(d.steps || []).length} 步）</summary>
+            <ol>${(d.steps || []).map(s => `<li>${esc(s)}</li>`).join('')}</ol>
           </details>
-        </article>`).join('');
+        </article>`).join('') : '<p class="empty-hint">没有符合条件的菜，换个筛选试试。</p>';
       if (window.setupReveal) window.setupReveal();
       const hash = location.hash;
       if (hash) { const t = document.querySelector(hash); if (t) { t.scrollIntoView({ behavior: 'smooth', block: 'center' }); t.querySelector('details')?.setAttribute('open', ''); } }
     }
+
     filterEl.addEventListener('click', e => {
       const b = e.target.closest('.chip'); if (!b) return;
       active = b.dataset.cat;
       filterEl.querySelectorAll('.chip').forEach(c => c.classList.toggle('active', c === b));
+      render();
+    });
+    levelEl.addEventListener('click', e => {
+      const b = e.target.closest('.chip'); if (!b) return;
+      activeLv = b.dataset.lv;
+      levelEl.querySelectorAll('.chip').forEach(c => c.classList.toggle('active', c === b));
       render();
     });
     render();
