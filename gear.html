@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <script>(function(){try{var t=localStorage.getItem('hcl-theme');if(t==='dark')document.documentElement.setAttribute('data-theme','dark');}catch(e){}})();</script>
+  <title>厨具百科 | 家常菜实验室</title>
+  <meta name="description" content="系统梳理厨房装备：各类锅具（锅型与材质科学）、刀具（刀型与钢材保养）、加热电器（微波炉/空气炸锅/烤箱/电磁炉等的加热原理），以及称量控温备料工具。懂原理，才能选对、用好。" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@500;700;900&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="assets/css/style.css" />
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Ctext y='20' font-size='20'%3E%F0%9F%8D%B2%3C/text%3E%3C/svg%3E" />
+</head>
+<body data-page="gear">
+
+  <header class="page-head" style="--accent:#6E6257">
+    <div class="container">
+      <div class="crumbs"><a href="index.html">首页</a> / 工具箱 / 厨具百科</div>
+      <span class="num-chip">🍳 厨具百科</span>
+      <h1>厨具百科</h1>
+      <div class="en">Kitchen Equipment</div>
+      <p class="intro">
+        工欲善其事，必先利其器。锅是<strong>热量的中转站</strong>、刀是<strong>切割的几何学</strong>、电器则是<strong>不同的热传递</strong>。
+        这里按大类系统梳理：锅具讲<strong>锅型与材质</strong>、刀具讲<strong>刀型与钢材保养</strong>、电器讲<strong>加热原理</strong>，再到让烹饪可量化的备料工具。
+        懂了原理，选购和使用都不再靠玄学。
+      </p>
+    </div>
+  </header>
+
+  <nav class="cat-nav" data-catnav aria-label="厨具分类导航"></nav>
+
+  <div class="container section-tight">
+    <div class="food-guide" data-guide></div>
+  </div>
+
+  <script src="assets/js/data.js"></script>
+  <script src="assets/js/main.js"></script>
+  <script>
+  (function () {
+    const GEAR = window.HCL.gear || [];
+    const navEl = document.querySelector('[data-catnav]');
+    const guideEl = document.querySelector('[data-guide]');
+    const esc = s => String(s).replace(/[&<>]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;' }[c]));
+
+    navEl.innerHTML =
+      '<div class="cat-nav-inner">' +
+      GEAR.map(c => `<a class="cat-chip" href="#cat-${c.id}"><span>${c.emoji}</span>${esc(c.name)}</a>`).join('') +
+      '</div>';
+
+    // 材质/特性对比图（复用部位地图样式，支持自定义两端文字与图例）
+    const renderMap = (grp) => grp.map ? `
+      <div class="cut-map" role="img" aria-label="特性对比">
+        <div class="cut-map-axis"><span>${esc((grp.axis && grp.axis[0]) || '')}</span><span>${esc((grp.axis && grp.axis[1]) || '')}</span></div>
+        <div class="cut-map-track">
+          ${grp.map.map(s => `<span class="cut-seg ${s.k}">${esc(s.l)}</span>`).join('')}
+        </div>
+        ${grp.legend ? `<div class="cut-map-legend">${grp.legend.map(([cls, txt]) => `<span><i class="${cls}"></i>${esc(txt)}</span>`).join('')}</div>` : ''}
+      </div>` : '';
+
+    const renderItem = (it) => `
+      <article class="food-item reveal">
+        <div class="fi-main">
+          <h4 class="fi-name">${esc(it.n)}</h4>
+          <div class="fi-tags">${(it.t || []).map(x => `<span class="fi-tag">${esc(x)}</span>`).join('')}</div>
+        </div>
+        <div class="fi-meta">
+          ${it.use && it.use.length ? `<p class="fi-line"><span class="fi-key">擅长</span>${it.use.map(x => `<b>${esc(x)}</b>`).join('<i>·</i>')}</p>` : ''}
+          ${it.note ? `<p class="fi-note">${esc(it.note)}</p>` : ''}
+          ${it.care ? `<p class="fi-note fi-care">${esc(it.care)}</p>` : ''}
+        </div>
+      </article>`;
+
+    guideEl.innerHTML = GEAR.map(cat => `
+      <section class="food-cat" id="cat-${cat.id}">
+        <div class="food-cat-head reveal">
+          <h2><span class="fc-emoji">${cat.emoji}</span>${esc(cat.name)} <em class="fc-en">${esc(cat.en || '')}</em></h2>
+          <p class="fc-lead">${esc(cat.lead || '')}</p>
+        </div>
+        ${cat.groups.map(grp => `
+          <section class="food-group" id="grp-${grp.id}">
+            <div class="fg-head reveal">
+              <h3><span class="fg-emoji">${grp.emoji || ''}</span>${esc(grp.name)}</h3>
+              ${grp.lead ? `<p class="fg-lead">${esc(grp.lead)}</p>` : ''}
+            </div>
+            ${renderMap(grp)}
+            <div class="food-items">
+              ${grp.items.map(renderItem).join('')}
+            </div>
+          </section>`).join('')}
+      </section>`).join('');
+
+    navEl.addEventListener('click', e => {
+      const a = e.target.closest('.cat-chip'); if (!a) return;
+      e.preventDefault();
+      const t = document.querySelector(a.getAttribute('href'));
+      if (t) t.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    });
+    const chips = [...navEl.querySelectorAll('.cat-chip')];
+    const cats = [...document.querySelectorAll('.food-cat')];
+    const spy = new IntersectionObserver((ents) => {
+      ents.forEach(en => {
+        if (en.isIntersecting) {
+          const id = en.target.id;
+          chips.forEach(c => c.classList.toggle('active', c.getAttribute('href') === '#' + id));
+        }
+      });
+    }, { rootMargin: '-45% 0px -50% 0px' });
+    cats.forEach(c => spy.observe(c));
+
+    if (window.setupReveal) window.setupReveal();
+  })();
+  </script>
+</body>
+</html>

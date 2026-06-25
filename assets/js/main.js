@@ -287,7 +287,14 @@ function buildSearchIndex() {
   (H.utils || []).forEach(u => idx.push({ type: '工具', title: u.title, sub: u.en, href: u.file, kw: u.en }));
   (H.topics || []).forEach(t => idx.push({ type: '小节', title: t.title, sub: '', href: t.page, kw: t.kw }));
   (H.glossary || []).forEach(g => idx.push({ type: '术语', title: g.term, sub: g.def, href: 'glossary.html#term-' + g.id, kw: (g.aliases || []).join(' ') + ' ' + g.cat }));
-  (H.ingredients || []).forEach(i => idx.push({ type: '食材', title: i.name, sub: i.note, href: 'ingredients.html#ing-' + i.id, kw: i.type + ' ' + (i.props || []).join(' ') + ' ' + (i.best || []).join(' ') }));
+  (H.foodGuide || []).forEach(cat => (cat.groups || []).forEach(grp => {
+    idx.push({ type: '食材', title: grp.name, sub: grp.lead || '', href: 'ingredients.html#grp-' + grp.id, kw: cat.name + ' ' + (grp.items || []).map(it => it.n).join(' ') });
+    (grp.items || []).forEach(it => idx.push({ type: '食材', title: it.n, sub: it.note || '', href: 'ingredients.html#grp-' + grp.id, kw: cat.name + ' ' + grp.name + ' ' + (it.t || []).join(' ') + ' ' + (it.m || []).join(' ') + ' ' + (it.d || []).join(' ') }));
+  }));
+  (H.gear || []).forEach(cat => (cat.groups || []).forEach(grp => {
+    idx.push({ type: '厨具', title: grp.name, sub: grp.lead || '', href: 'gear.html#grp-' + grp.id, kw: cat.name + ' ' + (grp.items || []).map(it => it.n).join(' ') });
+    (grp.items || []).forEach(it => idx.push({ type: '厨具', title: it.n, sub: it.note || '', href: 'gear.html#grp-' + grp.id, kw: cat.name + ' ' + grp.name + ' ' + (it.t || []).join(' ') + ' ' + (it.use || []).join(' ') }));
+  }));
   (H.dishes || []).forEach(d => idx.push({ type: '菜谱', title: d.name, sub: d.summary, href: 'dishes.html#dish-' + d.id, kw: d.taste.map(x => x[0]).join(' ') + ' ' + d.tech.map(x => x[0]).join(' ') }));
   return idx;
 }
@@ -314,7 +321,7 @@ function setupSearch() {
   const results = overlay.querySelector('[data-results]');
   let active = -1, current = [];
 
-  const typeOrder = { '篇章': 0, '工具': 1, '菜谱': 2, '术语': 3, '食材': 4, '小节': 5 };
+  const typeOrder = { '篇章': 0, '工具': 1, '菜谱': 2, '术语': 3, '食材': 4, '厨具': 5, '小节': 6 };
   function score(item, q) {
     const t = item.title.toLowerCase(), k = (item.kw || '').toLowerCase(), s = (item.sub || '').toLowerCase();
     if (t.includes(q)) return 3;

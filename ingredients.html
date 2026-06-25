@@ -2,10 +2,10 @@
 <html lang="zh-CN">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
   <script>(function(){try{var t=localStorage.getItem('hcl-theme');if(t==='dark')document.documentElement.setAttribute('data-theme','dark');}catch(e){}})();</script>
-  <title>食材档案 | 家常菜实验室</title>
-  <meta name="description" content="常见食材特性档案：蛋白、胶原、含水、淀粉等关键属性，决定它适合哪种技法。懂约束，才能放心替换变量、做创新。" />
+  <title>食材百科 | 家常菜实验室</title>
+  <meta name="description" content="系统梳理常见食材：猪牛鸡羊不同部位的特点与适用菜系、蔬菜种类与对应烹饪方式，以及水产、蛋奶豆、主食淀粉、干货调味基底。懂约束，才能放心创新。" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@500;700;900&display=swap" rel="stylesheet" />
@@ -16,59 +16,283 @@
 
   <header class="page-head" style="--accent:#8B5E3C">
     <div class="container">
-      <div class="crumbs"><a href="index.html">首页</a> / 工具箱 / 食材档案</div>
-      <span class="num-chip">🥩 食材</span>
-      <h1>食材特性档案</h1>
-      <div class="en">Ingredients</div>
+      <div class="crumbs"><a href="index.html">首页</a> / 工具箱 / 食材百科</div>
+      <span class="num-chip">🥩 食材百科</span>
+      <h1>食材百科</h1>
+      <div class="en">Ingredient Encyclopedia</div>
       <p class="intro">
-        为什么牛腩要炖、里脊要快炒？因为食材的<strong>蛋白、胶原、含水、淀粉</strong>决定了它适合哪种热处理。
+        为什么牛腩要炖、里脊要快炒？因为食材的<strong>部位、蛋白、胶原、含水、淀粉</strong>决定了它适合哪种热处理。
+        这里按大类系统梳理：肉类讲<strong>部位—特点—适用菜系</strong>，蔬菜讲<strong>种类—对应烹饪方式</strong>，再到水产、蛋奶豆、主食淀粉与调味基底。
         先认识约束，创新时才知道哪些变量能换、怎么换。
       </p>
     </div>
   </header>
 
+  <nav class="cat-nav" data-catnav aria-label="食材分类导航"></nav>
+
   <div class="container section-tight">
-    <div class="filter-bar" data-filter></div>
-    <div class="ing-grid" data-ingredients></div>
+    <div class="food-guide" data-guide></div>
   </div>
 
   <script src="assets/js/data.js"></script>
   <script src="assets/js/main.js"></script>
   <script>
   (function () {
-    const I = window.HCL.ingredients;
+    const FG = window.HCL.foodGuide || [];
     const G = Object.fromEntries(window.HCL.glossary.map(g => [g.id, g]));
-    const types = ['全部', ...[...new Set(I.map(i => i.type))]];
-    const filterEl = document.querySelector('[data-filter]');
-    const gridEl = document.querySelector('[data-ingredients]');
-    let active = '全部';
+    const navEl = document.querySelector('[data-catnav]');
+    const guideEl = document.querySelector('[data-guide]');
 
-    filterEl.innerHTML = types.map((t, i) =>
-      `<button class="chip${i === 0 ? ' active' : ''}" data-type="${t}">${t}</button>`).join('');
+    const esc = s => String(s).replace(/[&<>]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;' }[c]));
 
-    function render() {
-      const list = I.filter(i => active === '全部' || i.type === active);
-      gridEl.innerHTML = list.map(i => `
-        <article class="card ing-card reveal" id="ing-${i.id}">
-          <div class="ih">
-            <span class="iemoji">${i.emoji}</span>
-            <h3>${i.name}</h3>
-            <span class="itype">${i.type}</span>
-          </div>
-          <div class="props">${i.props.map(p => `<span>${p}</span>`).join('')}</div>
-          <p class="inote">${i.note}</p>
-          <div class="best">适合：${i.best.join(' · ')}</div>
-          ${i.terms && i.terms.length ? `<div class="xref" style="margin-top:10px">${i.terms.map(id => G[id] ? `<a href="glossary.html#term-${id}">${G[id].term}</a>` : '').join('')}</div>` : ''}
-        </article>`).join('');
-      if (window.setupReveal) window.setupReveal();
-    }
-    filterEl.addEventListener('click', e => {
-      const b = e.target.closest('.chip'); if (!b) return;
-      active = b.dataset.type;
-      filterEl.querySelectorAll('.chip').forEach(c => c.classList.toggle('active', c === b));
-      render();
+    // —— 分类导航（点击平滑滚动到对应大类）——
+    navEl.innerHTML =
+      '<div class="cat-nav-inner">' +
+      FG.map(c => `<a class="cat-chip" href="#cat-${c.id}"><span>${c.emoji}</span>${esc(c.name)}</a>`).join('') +
+      '</div>';
+
+    // —— 部位地图（肉类）：手绘动物轮廓“切割图”——
+    const mapLegend =
+      '<div class="cut-map-legend">' +
+      '<span><i class="k-tender"></i>嫩 · 快炒/煎</span>' +
+      '<span><i class="k-mid"></i>两可 · 看刀工火候</span>' +
+      '<span><i class="k-stew"></i>耐火 · 炖/卤/烧</span>' +
+      '</div>';
+
+    // 圆角“腿”路径（x 起点 / 顶 / 底 / 宽）
+    const leg = (x, top, bot, w) => `M${x},${top} h${w} v${bot - top - 9} q0,9 ${-w / 2},9 q${-w / 2},0 ${-w / 2},-9 Z`;
+
+    // 各动物侧面轮廓 + 分区几何（坐标即 viewBox 内单位）。
+    const SIL = {
+      pork: {
+        vb: '0 0 470 300', aria: '猪部位手绘切割图',
+        cap: '把猪身按嫩→耐火分区：运动多、胶原多的部位越耐炖。',
+        body: 'M36,168 C30,150 44,132 70,126 C80,123 86,118 93,112 L108,80 L136,108 C215,86 322,84 400,102 C426,108 442,120 442,144 C442,166 436,188 416,202 C388,220 300,226 208,224 C150,223 112,218 88,210 C66,203 52,192 46,180 C42,175 38,171 36,168 Z',
+        legs: [
+          { x: 92, top: 198, bot: 258, w: 20, k: 'stew' }, { x: 120, top: 200, bot: 260, w: 20, k: 'stew' },
+          { x: 352, top: 198, bot: 260, w: 20, k: 'stew' }, { x: 392, top: 196, bot: 258, w: 20, k: 'stew' },
+        ],
+        regions: [
+          { k: 'tender', d: 'M20,55 H150 V255 H20 Z', label: '梅花', lx: 96, ly: 162, match: '梅花' },
+          { k: 'tender', d: 'M150,55 H352 V142 H150 Z', label: '里脊', lx: 250, ly: 110, match: '里脊' },
+          { k: 'mid', d: 'M150,142 H352 V182 H150 Z', label: '排骨', lx: 250, ly: 163, match: '排骨' },
+          { k: 'stew', d: 'M150,182 H352 V255 H150 Z', label: '五花', lx: 250, ly: 204, match: '五花' },
+          { k: 'mid', d: 'M352,55 H470 V255 H352 Z', label: '前后腿', lx: 400, ly: 150, match: '后腿' },
+        ],
+        tags: [{ k: 'stew', label: '蹄髈', lx: 106, ly: 284, match: '蹄髈' }],
+        dividers: ['M150,86 V222', 'M352,90 V224', 'M150,142 H352', 'M150,182 H352'],
+        details: [
+          '<circle class="cut-ink" cx="80" cy="138" r="3.4"/>',
+          '<circle class="cut-ink" cx="42" cy="158" r="1.8"/><circle class="cut-ink" cx="42" cy="166" r="1.8"/>',
+          '<path class="cut-stroke" d="M37,172 q12,7 24,3"/>',
+          '<path class="cut-stroke" d="M104,72 L118,102"/>',
+          '<path class="cut-stroke" d="M440,132 c16,-7 23,7 11,16 c-7,5 -17,1 -14,-8"/>',
+        ],
+      },
+      beef: {
+        vb: '0 0 480 300', aria: '牛部位手绘切割图',
+        cap: '牛部位差异最大：腰背雪花嫩部煎涮，运动多的腩腱尾必须久炖。',
+        body: 'M34,150 C28,138 30,124 46,118 C56,114 62,110 68,104 C74,92 86,86 98,90 C108,93 112,98 116,104 C160,90 320,86 402,98 C426,103 444,112 446,134 C448,156 442,180 424,194 C396,212 300,216 206,214 C150,213 116,208 92,200 C70,192 56,178 48,162 C44,157 38,153 34,150 Z',
+        legs: [
+          { x: 96, top: 196, bot: 272, w: 18, k: 'stew' }, { x: 126, top: 198, bot: 274, w: 18, k: 'stew' },
+          { x: 356, top: 196, bot: 272, w: 18, k: 'stew' }, { x: 390, top: 194, bot: 270, w: 18, k: 'stew' },
+        ],
+        regions: [
+          { k: 'tender', d: 'M40,50 H210 V150 H40 Z', label: ['上脑', '眼肉'], lx: 120, ly: 120, match: '眼肉' },
+          { k: 'tender', d: 'M210,50 H360 V150 H210 Z', label: '里脊', lx: 286, ly: 120, match: '里脊' },
+          { k: 'mid', d: 'M20,150 H150 V248 H20 Z', label: ['肩', '胸'], lx: 90, ly: 184, match: '肩' },
+          { k: 'stew', d: 'M150,150 H360 V248 H150 Z', label: '牛腩', lx: 255, ly: 186, match: '牛腩' },
+          { k: 'stew', d: 'M360,50 H480 V248 H360 Z', label: '尾', lx: 414, ly: 148, match: '牛尾' },
+        ],
+        tags: [{ k: 'stew', label: '腱子', lx: 112, ly: 252, match: '腱' }],
+        dividers: ['M40,150 H360', 'M210,52 V150', 'M150,150 V246', 'M360,55 V246'],
+        details: [
+          '<path class="cut-stroke" d="M90,90 C82,78 84,68 92,66"/><path class="cut-stroke" d="M106,92 C110,80 118,76 124,80"/>',
+          '<path class="cut-part" d="M112,98 q20,-6 26,6 q-13,8 -26,0 Z"/>',
+          '<circle class="cut-ink" cx="62" cy="132" r="3.4"/>',
+          '<circle class="cut-ink" cx="40" cy="140" r="2"/>',
+          '<path class="cut-stroke" d="M34,150 q12,8 24,4"/>',
+          '<path class="cut-stroke" d="M446,128 C462,150 460,186 452,206"/>',
+          '<path class="cut-ink" d="M452,200 c8,4 8,18 0,22 c-8,-4 -8,-18 0,-22 Z"/>',
+        ],
+      },
+      chicken: {
+        vb: '0 0 440 320', aria: '鸡部位手绘切割图',
+        cap: '鸡胸最瘦最难做，鸡腿最宽容；老土鸡耐炖出鲜。',
+        body: 'M96,104 C128,84 198,80 250,88 C296,94 330,72 410,58 L430,98 C404,110 384,122 376,142 C370,162 372,182 360,208 C344,238 298,254 238,256 C178,258 128,248 106,224 C90,206 84,180 84,150 C84,128 88,114 96,104 Z',
+        regions: [
+          { k: 'stew', d: 'M84,70 H440 V160 H84 Z', label: ['整鸡', '土鸡'], lx: 168, ly: 116, match: '整鸡' },
+          { k: 'tender', d: 'M70,160 H232 V262 H70 Z', label: '鸡胸', lx: 148, ly: 210, match: '鸡胸' },
+          { k: 'mid', d: 'M232,160 H400 V262 H232 Z', label: '腿', lx: 320, ly: 212, match: '腿' },
+        ],
+        overlays: [
+          { k: 'mid', d: 'M228,132 C284,122 332,134 348,158 C356,172 348,186 326,190 C292,196 248,186 230,170 C220,160 220,138 228,132 Z', label: '翅', lx: 286, ly: 160, match: '翅' },
+        ],
+        tags: [{ k: 'stew', label: '爪/杂', lx: 206, ly: 294, match: '爪' }],
+        dividers: ['M84,160 H400', 'M232,160 V260'],
+        parts: [
+          '<circle class="cut-part" cx="86" cy="74" r="27"/>',
+          '<path class="cut-comb" d="M66,52 q4,-15 15,-7 q5,-13 16,-4 q9,-7 14,4 q-3,10 -14,7 q-8,7 -16,-1 q-10,4 -16,1 Z"/>',
+          '<path class="cut-beak" d="M60,74 L36,80 L60,88 Z"/>',
+          '<path class="cut-comb" d="M64,92 q-7,12 1,19 q9,-2 9,-15 Z"/>',
+          '<path class="cut-stroke" d="M192,250 L188,296 M188,296 l-11,8 M188,296 l0,12 M188,296 l11,8"/>',
+          '<path class="cut-stroke" d="M252,250 L256,296 M256,296 l-11,8 M256,296 l0,12 M256,296 l11,8"/>',
+          '<circle class="cut-ink" cx="93" cy="68" r="3.2"/>',
+        ],
+        details: [
+          '<path class="cut-stroke" d="M300,96 C340,74 366,74 416,60 M312,110 C348,92 372,92 426,82"/>',
+        ],
+      },
+      lamb: {
+        vb: '0 0 480 300', aria: '羊部位手绘切割图',
+        cap: '羊嫩部（上脑里脊）爆炒涮，带骨多胶的蝎子腩排靠炖煮去膻。',
+        body: 'M36,152 C30,140 34,126 50,122 C58,119 62,114 68,108 C74,98 84,94 96,98 C108,86 120,98 134,90 C150,80 164,96 180,88 C198,80 212,96 230,88 C250,80 264,96 282,88 C302,80 322,94 344,90 C372,88 400,88 426,104 C440,116 444,132 442,152 C440,174 432,192 414,202 C388,216 300,218 210,216 C150,215 110,212 84,204 C64,197 50,182 44,168 C40,162 38,156 36,152 Z',
+        legs: [
+          { x: 96, top: 200, bot: 256, w: 18, k: 'mid' }, { x: 124, top: 202, bot: 258, w: 18, k: 'mid' },
+          { x: 352, top: 200, bot: 256, w: 18, k: 'mid' }, { x: 388, top: 198, bot: 254, w: 18, k: 'mid' },
+        ],
+        regions: [
+          { k: 'tender', d: 'M22,55 H230 V145 H22 Z', label: ['上脑', '里脊'], lx: 124, ly: 120, match: '里脊' },
+          { k: 'stew', d: 'M230,55 H330 V145 H230 Z', label: '脊骨', lx: 278, ly: 118, match: '蝎' },
+          { k: 'mid', d: 'M22,145 H330 V180 H22 Z', label: '羊排', lx: 176, ly: 164, match: '羊排' },
+          { k: 'stew', d: 'M22,180 H330 V255 H22 Z', label: '羊腩', lx: 176, ly: 198, match: '腩' },
+          { k: 'mid', d: 'M330,55 H480 V255 H330 Z', label: '腿', lx: 392, ly: 150, match: '腿' },
+        ],
+        dividers: ['M230,57 V145', 'M40,145 H330', 'M40,180 H330', 'M330,57 V253'],
+        details: [
+          '<path class="cut-stroke" d="M92,98 C80,96 74,84 84,78 C92,74 100,80 96,88"/>',
+          '<path class="cut-part" d="M98,104 q18,-2 22,10 q-12,6 -22,-2 Z"/>',
+          '<circle class="cut-ink" cx="74" cy="138" r="3.2"/>',
+          '<circle class="cut-ink" cx="40" cy="146" r="1.8"/>',
+          '<path class="cut-stroke" d="M36,154 q10,7 22,4"/>',
+          '<path class="cut-stroke" d="M440,150 q14,6 8,22"/>',
+        ],
+      },
+    };
+
+    const cutLabel = (r) => {
+      const lines = Array.isArray(r.label) ? r.label : [r.label];
+      const y0 = r.ly - (lines.length - 1) * 7;
+      const tspans = lines.map((ln, i) => `<tspan x="${r.lx}" dy="${i === 0 ? 0 : 14}">${esc(ln)}</tspan>`).join('');
+      const extra = r._tag ? ' cut-tag' : '';
+      const link = r.match ? ' is-link' : '';
+      const dm = r.match ? ` data-match="${esc(r.match)}"` : '';
+      return `<text class="cut-label ${r.k}${extra}${link}" x="${r.lx}" y="${y0}"${dm}>${tspans}</text>`;
+    };
+
+    const renderSilhouette = (id) => {
+      const s = SIL[id]; if (!s) return '';
+      const cid = 'cutclip-' + id;
+      const legAll = (s.legs || []);
+      const region = s.regions.map(r => `<path class="cut-region ${r.k}${r.match ? ' is-link' : ''}" d="${r.d}"${r.match ? ` data-match="${esc(r.match)}"` : ''}/>`).join('');
+      const legFill = legAll.map(l => `<path class="cut-region ${l.k || 'stew'}" d="${leg(l.x, l.top, l.bot, l.w)}"/>`).join('');
+      const legLine = legAll.map(l => `<path class="cut-outline" d="${leg(l.x, l.top, l.bot, l.w)}" filter="url(#rough)"/>`).join('');
+      const legClip = legAll.map(l => `<path d="${leg(l.x, l.top, l.bot, l.w)}"/>`).join('');
+      const divs = (s.dividers || []).map(d => `<path class="cut-divider" d="${d}" filter="url(#rough)"/>`).join('');
+      const overlay = (s.overlays || []).map(o => `<path class="cut-region ${o.k}${o.match ? ' is-link' : ''}" d="${o.d}"${o.match ? ` data-match="${esc(o.match)}"` : ''}/><path class="cut-outline" d="${o.d}" filter="url(#rough)"/>`).join('');
+      const parts = (s.parts || []).join('');
+      const details = (s.details || []).join('');
+      const labels = s.regions.concat(s.overlays || [], (s.tags || []).map(t => ({ ...t, _tag: true }))).map(cutLabel).join('');
+      return `
+      <div class="cut-figure">
+        <svg class="cut-svg" viewBox="${s.vb}" role="img" aria-label="${esc(s.aria)}">
+          <defs><clipPath id="${cid}"><path d="${s.body}"/>${legClip}</clipPath></defs>
+          <g clip-path="url(#${cid})">
+            <rect class="cut-base" x="-300" y="-300" width="2000" height="2000"/>
+            ${region}
+            ${legFill}
+            ${divs}
+          </g>
+          <path class="cut-outline" d="${s.body}" filter="url(#rough)"/>
+          ${legLine}
+          ${overlay}
+          <g filter="url(#rough)">${parts}</g>
+          <g filter="url(#rough)">${details}</g>
+          <g class="cut-labels">${labels}</g>
+        </svg>
+        ${mapLegend}
+        ${s.cap ? `<figcaption>${esc(s.cap)}</figcaption>` : ''}
+      </div>`;
+    };
+
+    const renderMap = (map, id) => {
+      if (SIL[id]) return renderSilhouette(id);
+      return map ? `
+      <div class="cut-map" role="img" aria-label="部位嫩度地图">
+        <div class="cut-map-axis"><span>前 / 上</span><span>后 / 下</span></div>
+        <div class="cut-map-track">
+          ${map.map(s => `<span class="cut-seg ${s.k}">${esc(s.l)}</span>`).join('')}
+        </div>
+        ${mapLegend}
+      </div>` : '';
+    };
+
+    // —— 单个条目（部位 / 食材）——
+    const renderItem = (it) => `
+      <article class="food-item reveal">
+        <div class="fi-main">
+          <h4 class="fi-name">${esc(it.n)}</h4>
+          <div class="fi-tags">${(it.t || []).map(x => `<span class="fi-tag">${esc(x)}</span>`).join('')}</div>
+        </div>
+        <div class="fi-meta">
+          <p class="fi-line"><span class="fi-key">适合</span>${(it.m || []).map(x => `<b>${esc(x)}</b>`).join('<i>·</i>')}</p>
+          <p class="fi-line"><span class="fi-key">代表</span>${(it.d || []).map(esc).join(' / ')}</p>
+          ${it.note ? `<p class="fi-note">${esc(it.note)}</p>` : ''}
+        </div>
+      </article>`;
+
+    // —— 渲染全部 ——
+    guideEl.innerHTML = FG.map(cat => `
+      <section class="food-cat" id="cat-${cat.id}">
+        <div class="food-cat-head reveal">
+          <h2><span class="fc-emoji">${cat.emoji}</span>${esc(cat.name)} <em class="fc-en">${esc(cat.en || '')}</em></h2>
+          <p class="fc-lead">${esc(cat.lead || '')}</p>
+        </div>
+        ${cat.groups.map(grp => `
+          <section class="food-group" id="grp-${grp.id}">
+            <div class="fg-head reveal">
+              <h3><span class="fg-emoji">${grp.emoji || ''}</span>${esc(grp.name)}</h3>
+              ${grp.lead ? `<p class="fg-lead">${esc(grp.lead)}</p>` : ''}
+            </div>
+            ${renderMap(grp.map, grp.id)}
+            <div class="food-items">
+              ${grp.items.map(renderItem).join('')}
+            </div>
+          </section>`).join('')}
+      </section>`).join('');
+
+    // 点击切割图分区 → 滚动并高亮对应部位条目（同组内按名称包含匹配）
+    guideEl.addEventListener('click', e => {
+      const el = e.target.closest('[data-match]'); if (!el) return;
+      const sec = el.closest('.food-group'); if (!sec) return;
+      const m = el.getAttribute('data-match');
+      const hit = [...sec.querySelectorAll('.fi-name')].find(n => n.textContent.includes(m));
+      if (!hit) return;
+      const card = hit.closest('.food-item');
+      card.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      card.classList.remove('fi-flash'); void card.offsetWidth; card.classList.add('fi-flash');
     });
-    render();
+
+    // 平滑滚动 + 高亮当前分类
+    navEl.addEventListener('click', e => {
+      const a = e.target.closest('.cat-chip'); if (!a) return;
+      e.preventDefault();
+      const t = document.querySelector(a.getAttribute('href'));
+      if (t) t.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    });
+    const chips = [...navEl.querySelectorAll('.cat-chip')];
+    const cats = [...document.querySelectorAll('.food-cat')];
+    const spy = new IntersectionObserver((ents) => {
+      ents.forEach(en => {
+        if (en.isIntersecting) {
+          const id = en.target.id;
+          chips.forEach(c => c.classList.toggle('active', c.getAttribute('href') === '#' + id));
+        }
+      });
+    }, { rootMargin: '-45% 0px -50% 0px' });
+    cats.forEach(c => spy.observe(c));
+
+    if (window.setupReveal) window.setupReveal();
   })();
   </script>
 </body>
