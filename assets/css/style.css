@@ -185,7 +185,13 @@ h1, h2, h3, h4 { font-family: var(--serif); color: var(--soy); line-height: 1.25
 }
 
 /* ---------- 5. Hero ---------- */
-.hero { position: relative; padding-block: clamp(54px, 9vw, 110px); overflow: hidden; }
+.hero {
+  position: relative; padding-block: clamp(54px, 9vw, 110px); overflow: hidden;
+  /* 暖光只铺在上半区（题图一侧），到达底边前已完全淡出 → 与下一区块平滑衔接 */
+  background-image:
+    radial-gradient(680px 480px at 86% 4%, color-mix(in srgb, var(--ginger) 22%, transparent), transparent 60%),
+    radial-gradient(460px 380px at 60% 26%, color-mix(in srgb, var(--brick) 9%, transparent), transparent 64%);
+}
 .hero > .container { position: relative; z-index: 1; }
 .hero .eyebrow {
   display: inline-flex; align-items: center; gap: 8px;
@@ -853,10 +859,16 @@ tbody tr:hover { background: var(--card-soft); }
 /* 分类快捷导航（吸顶在站点头下方） */
 .cat-nav {
   position: sticky; top: 64px; z-index: 60;
-  background: var(--glass-fill);
-  -webkit-backdrop-filter: saturate(1.3) blur(var(--glass-blur));
-  backdrop-filter: saturate(1.3) blur(var(--glass-blur));
+  /* 用偏暖的半透明纸色，避免在暖色页头上方出现一条偏白的色带 */
+  background: color-mix(in srgb, var(--paper) 80%, transparent);
+  -webkit-backdrop-filter: saturate(1.2) blur(12px);
+  backdrop-filter: saturate(1.2) blur(12px);
   border-bottom: 1px solid var(--line);
+}
+/* 滚动吸顶后再强化阴影/底色，平时与页头自然相连 */
+.cat-nav.is-stuck {
+  background: color-mix(in srgb, var(--paper) 88%, transparent);
+  box-shadow: 0 10px 24px -20px rgba(90,50,20,.55);
 }
 .cat-nav-inner {
   max-width: 1180px; margin: 0 auto; padding: 10px var(--space);
@@ -949,7 +961,7 @@ tbody tr:hover { background: var(--card-soft); }
 /* 条目（部位 / 食材） */
 .food-items { display: grid; gap: 12px; margin-top: 16px; }
 .food-item {
-  display: grid; grid-template-columns: minmax(180px, 230px) 1fr; gap: 8px 24px;
+  display: grid; grid-template-columns: minmax(240px, 340px) minmax(0, 1fr); gap: 8px 24px;
   background: var(--card); border: 1px solid var(--line); border-radius: var(--r-md);
   padding: 16px 20px; box-shadow: var(--shadow-sm);
   transition: transform .15s, box-shadow .15s, border-color .15s;
@@ -1662,11 +1674,12 @@ input[type="range"] { accent-color: var(--brick); width: 100%; }
 .hairline { height: 1px; border: 0; background: linear-gradient(90deg, transparent, var(--line-strong) 18%, var(--line-strong) 82%, transparent); margin: 0; }
 
 /* ---- section 节奏：交替底色 / 顶部 spotlight ---- */
-.section--tint { background: linear-gradient(180deg, transparent, color-mix(in srgb, var(--paper-2) 70%, transparent) 50%, transparent); }
+.section--tint { background: linear-gradient(180deg, transparent, color-mix(in srgb, var(--paper-2) 60%, transparent) 50%, transparent); }
 .section--spotlight { position: relative; isolation: isolate; }
+/* 柔光跨越区块边界淡入淡出（上下都透明），避免在分界处出现硬色带 */
 .section--spotlight::before {
-  content: ""; position: absolute; inset: -1px 0 auto 0; height: 420px; z-index: -1; pointer-events: none;
-  background: radial-gradient(680px 320px at 50% -4%, color-mix(in srgb, var(--ginger) 16%, transparent), transparent 70%);
+  content: ""; position: absolute; left: 0; right: 0; top: -150px; height: 500px; z-index: -1; pointer-events: none;
+  background: radial-gradient(900px 50% at 50% 50%, color-mix(in srgb, var(--ginger) 11%, transparent), transparent 70%);
 }
 
 /* ---- 装饰色块（柔焦光斑），给 hero/区块加氛围 ---- */
@@ -1749,8 +1762,9 @@ input[type="range"] { accent-color: var(--brick); width: 100%; }
   position: relative; z-index: 1;
 }
 .feature-card::after {
-  content: ""; position: absolute; right: -10px; bottom: -18px; width: 120px; height: 120px; z-index: 0;
-  background: radial-gradient(circle at 70% 30%, color-mix(in srgb, var(--fc, var(--brick)) 16%, transparent), transparent 70%);
+  content: ""; position: absolute; inset: auto 0 0 auto; width: 180px; height: 160px; z-index: 0;
+  /* 亮心落在卡片圆角处、向内自然淡出，避免在边界处被硬切 */
+  background: radial-gradient(150px 140px at 100% 100%, color-mix(in srgb, var(--fc, var(--brick)) 13%, transparent), transparent 72%);
   pointer-events: none;
 }
 .feature-card h3, .feature-card p, .feature-card .fc-go { position: relative; z-index: 1; }

@@ -301,6 +301,11 @@
     }, { rootMargin: '-45% 0px -50% 0px' });
     cats.forEach(c => spy.observe(c));
 
+    // 吸顶后切换 is-stuck，平时与页头底色自然相连
+    const onCatScroll = () => navEl.classList.toggle('is-stuck', navEl.getBoundingClientRect().top <= 64.5);
+    document.addEventListener('scroll', onCatScroll, { passive: true });
+    onCatScroll();
+
     if (window.setupReveal) window.setupReveal();
   })();
   </script>
