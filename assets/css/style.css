@@ -1862,3 +1862,108 @@ input[type="range"] { accent-color: var(--brick); width: 100%; }
 /* 点击切割图分区定位的高亮：改为底色闪烁（适配无边框行） */
 .food-item.fi-flash { background: var(--card-soft); border-radius: var(--r-md); }
 @media (hover: none) { .food-item:hover { background: none; border-radius: 0; } }
+
+/* =========================================================
+   29. 菜系详情页（cuisine.html）+ 菜系地图“深入了解”入口
+   复用 .page-head / .doc-layout / .cuisine-hero / .note / 既有令牌
+   ========================================================= */
+
+/* 菜系地图卡片底部的“深入了解”按钮（仅有详情的菜系出现） */
+.cu-more {
+  display: inline-flex; align-items: center; gap: 6px; align-self: flex-start;
+  margin-top: 14px; padding: 8px 16px; border-radius: var(--r-pill);
+  font-family: var(--sans); font-size: .86rem; font-weight: 700;
+  color: #fff; background: var(--cu, var(--brick)); border: 1px solid transparent;
+  box-shadow: var(--shadow-sm); transition: transform .15s, box-shadow .15s, filter .15s;
+}
+.cu-more:hover { transform: translateY(-1px); filter: brightness(1.06); box-shadow: var(--shadow-md); }
+
+/* 兜底/无详情时：单栏（隐藏侧栏目录） */
+.doc-layout.no-toc { grid-template-columns: 1fr; }
+.doc-layout.no-toc .toc { display: none; }
+
+/* 详情页 hero 用菜系色描边 */
+.cuisine-hero img { border-color: var(--cu, var(--line)); }
+
+/* 地域细分：左色条卡片网格 */
+.cd-areas {
+  display: grid; gap: 14px; margin: 18px 0 4px;
+  grid-template-columns: repeat(auto-fill, minmax(258px, 1fr));
+}
+.cd-area {
+  background: var(--card); border: 1px solid var(--line);
+  border-left: 3px solid var(--cu, var(--brick)); border-radius: var(--r-md);
+  padding: 14px 16px 15px; box-shadow: var(--shadow-sm);
+}
+.cd-a-top { display: flex; align-items: center; flex-wrap: wrap; gap: 8px; }
+.cd-area h3 { margin: 0; font-size: 1.08rem; color: var(--soy); line-height: 1.25; }
+.cd-tag {
+  font-family: var(--sans); font-size: .68rem; font-weight: 800; letter-spacing: .3px;
+  color: #fff; background: var(--cu, var(--brick)); padding: 2px 9px; border-radius: var(--r-pill);
+}
+.cd-area p { margin: 9px 0 0; font-size: .9rem; color: var(--ink-soft); line-height: 1.66; }
+
+/* 图卡画廊：代表菜 / 特色食材通用（emoji 垫底，有图覆盖） */
+.cd-gallery {
+  display: grid; gap: 16px; margin: 18px 0 4px;
+  grid-template-columns: repeat(auto-fill, minmax(190px, 1fr));
+}
+.cd-card {
+  display: flex; flex-direction: column; overflow: hidden;
+  background: var(--card); border: 1px solid var(--line); border-radius: var(--r-md);
+  box-shadow: var(--shadow-sm); text-decoration: none; color: inherit;
+  transition: transform .18s, box-shadow .18s, border-color .18s;
+}
+.cd-card:hover { transform: translateY(-3px); box-shadow: var(--shadow-md); border-color: var(--cu, var(--line-strong)); }
+.cd-fig {
+  position: relative; margin: 0; aspect-ratio: 4 / 3; overflow: hidden;
+  background: var(--card-soft); display: grid; place-items: center; border-bottom: 1px solid var(--line);
+}
+.cd-fig-emoji { font-size: clamp(2.2rem, 6vw, 3rem); line-height: 1; opacity: .92; }
+.cd-fig img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; display: block; }
+.cd-c-body { padding: 11px 14px 14px; }
+.cd-c-body h3 { margin: 0; font-size: 1.02rem; color: var(--soy); line-height: 1.3; }
+.cd-c-body p { margin: 6px 0 0; font-size: .85rem; color: var(--ink-soft); line-height: 1.6; }
+.cd-card.is-link .cd-c-body h3::after { content: " ↗"; font-size: .82em; color: var(--ink-faint); }
+.cd-card.is-link:hover .cd-c-body h3 { color: var(--cu, var(--soy)); }
+
+/* 风味与蘸料清单 */
+.cd-flavor { margin: 12px 0 4px; padding-left: 1.2em; }
+.cd-flavor li { margin: 8px 0; line-height: 1.72; color: var(--ink); }
+.cd-flavor li::marker { color: var(--brick); }
+
+/* 收尾“继续逛” + 返回 */
+.cd-foot { margin-top: 30px; }
+.cd-back { margin-top: 10px; }
+.cd-back a { font-weight: 700; }
+
+/* 兜底：菜系选择器 */
+.cd-picker {
+  display: grid; gap: 14px; margin-top: 8px;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+}
+.cd-pick {
+  display: flex; align-items: center; gap: 12px; padding: 14px 16px;
+  background: var(--card); border: 1px solid var(--line); border-top: 3px solid var(--cu, var(--brick));
+  border-radius: var(--r-md); box-shadow: var(--shadow-sm); text-decoration: none; color: inherit;
+  transition: transform .18s, box-shadow .18s, border-color .18s;
+}
+.cd-pick:hover { transform: translateY(-2px); box-shadow: var(--shadow-md); border-color: var(--cu, var(--line-strong)); }
+.cd-pick-emoji {
+  flex: none; width: 44px; height: 44px; display: grid; place-items: center; font-size: 1.5rem;
+  background: var(--card-soft); border: 1.5px solid var(--cu, var(--line-strong)); border-radius: 12px;
+}
+.cd-pick-tx { flex: 1 1 auto; min-width: 0; display: flex; flex-direction: column; }
+.cd-pick-tx b { font-family: var(--serif); color: var(--soy); font-size: 1.06rem; }
+.cd-pick-tx small { color: var(--ink-faint); font-size: .82rem; }
+.cd-pick-go { flex: none; font-size: .8rem; font-weight: 700; color: var(--cu, var(--brick)); }
+
+@media (max-width: 560px) {
+  .cd-gallery { grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 12px; }
+  .cd-areas { grid-template-columns: 1fr; }
+}
+
+/* 触摸设备：取消上浮 */
+@media (hover: none) {
+  .cd-card:hover, .cd-pick:hover, .cu-more:hover { transform: none; }
+}

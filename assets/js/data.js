@@ -1255,5 +1255,75 @@
       borrow: ['白切浸煮＋余温焖，锁住本味与嫩度', '椰子水代水炖鸡，清甜不腻', '海鲜简单蒸煮，蘸料里见功夫'] },
   ];
 
-  window.HCL = { utils, utilGroups, glossary, ingredients, dishes, creators, tastes, combo, topics, videos, foodGuide, gear, troubleshoot, cuisines };
+  /* =========================================================
+     菜系详情（cuisine.html?id=xxx 渲染用）
+     - 基础字段（name/region/emoji/accent/why/borrow/see）复用上面的 cuisines 同 id 记录，这里不重复。
+     - 所有 img 选填：缺图时图卡自动回退到 emoji，加图只需把对应文件放进 assets/img/cuisine/<id>/。
+     - 新增一个菜系 = 往这里加一条；cuisines.html 的“深入了解”入口与本页会自动生效。
+     ========================================================= */
+  const cuisineDetails = {
+    hainan: {
+      en: 'Hainan Cuisine',
+      lead: '热带海岛的清爽本味——一只鸡、一颗椰、一片海。海南菜把“不抢食材本味”做到了极致：功夫不在调料，而在火候与那一碟蘸料。',
+      hero: 'assets/img/cuisine/hainan.webp',
+      heroCaption: '海南菜的招牌画面：白切文昌鸡、整颗椰子与提味的蘸碟——清淡见真章。',
+
+      story: [
+        '海南地处<strong>热带</strong>，长夏无冬、湿热多雨。天太热，重油重辣的吃法身体吃不消，于是海南人把“<strong>清淡、清爽、原汁原味</strong>”刻进了日常——白切、清补凉、椰子炖品，几乎都是给身体降火解暑的智慧。',
+        '四面环海加上热带沃土，<strong>海鲜、椰子、家禽、热带瓜果</strong>四季不断。靠海吃海，和乐蟹、马鲛鱼鲜甜；椰子从椰水到椰肉全身入菜；本地走地鸡、黑猪、东山羊、嘉积鸭则轮番做主角。物产够丰，自然不必靠重味取胜。',
+        '食材够鲜，就不需要重调料去盖味。海南菜的功夫几乎都在“<strong>减法</strong>”——把食材做到刚熟、锁住本味，再用一碟亮眼的蘸料把鲜味“提”起来。所谓清淡，其实是对食材新鲜度的高度自信。',
+      ],
+
+      areasLead: '海南不大，风味却各有脾气。从省会市井到渔港山区，一方水土养出一方招牌。',
+      areas: [
+        { name: '海口 · 琼山', tag: '市井 · 老爸茶', desc: '省会与老城，街头小吃与“老爸茶”文化的大本营。海南粉、辣汤饭、斋菜煲是这里的市井底色，一碗腌粉就能见功夫。' },
+        { name: '文昌', tag: '文昌鸡之乡', desc: '海南四大名菜之首的原产地，也是全岛椰子最密的地方。走地鸡配椰糠花生喂养，皮黄肉紧；椰香顺势入菜，鸡与椰是这里的双主角。' },
+        { name: '琼海 · 万宁', tag: '名鸭 · 膏蟹 · 东山羊', desc: '嘉积鸭（加积鸭）肉厚脂润，和乐蟹蟹膏金黄；万宁东山岭散养的东山羊膻味轻，红焖、椰汁焖都出彩。' },
+        { name: '儋州 · 临高', tag: '西部渔港', desc: '西线沿海，临高乳猪皮脆肉香、儋州米烂、海头牛肉远近闻名，海鲜做法朴实直接，重在一个“鲜”字。' },
+        { name: '三亚 · 陵水', tag: '最南 · 黎家海味', desc: '岛屿最南端，热带海鲜与黎家风味在此交汇。港门粉、陵水酸粉当家，清蒸海鲜最见本味。' },
+        { name: '五指山 · 黎苗山区', tag: '山林味', desc: '中部山地，山兰米（旱稻）酿的山兰酒、雷公笋、五脚猪与各色野菜，是黎苗同胞的山林味道，质朴而有野趣。' },
+      ],
+
+      dishesLead: '从“海南四大名菜”到街头粉食与消暑甜品，这些是认识海南味最好的入口。',
+      dishes: [
+        { name: '文昌鸡', emoji: '🐔', img: 'assets/img/cuisine/hainan/dish-wenchang-chicken.webp', desc: '海南四大名菜之首。走地鸡浸煮至刚熟、靠余温焖透，皮爽肉滑，蘸金桔蒜泥酱提鲜。' },
+        { name: '加积鸭', emoji: '🦆', img: 'assets/img/cuisine/hainan/dish-jiaji-duck.webp', desc: '琼海嘉积名鸭，肉厚脂润，多做白切或炖煮，皮下脂肪丰腴却不腻口。' },
+        { name: '东山羊', emoji: '🐐', img: 'assets/img/cuisine/hainan/dish-dongshan-lamb.webp', desc: '万宁东山岭散养，膻味轻、肉质细，红焖、椰汁焖、白切皆宜。' },
+        { name: '和乐蟹', emoji: '🦀', img: 'assets/img/cuisine/hainan/dish-hele-crab.webp', desc: '万宁和乐镇膏蟹，蟹膏金黄丰腴，清蒸最能保住那口海洋鲜甜。' },
+        { name: '椰子鸡', emoji: '🥥', img: 'assets/img/cuisine/hainan/dish-coconut-chicken.webp', desc: '用整颗椰子的椰水代水炖鸡，汤色清亮、清甜不腻，是椰子入菜的代表。' },
+        { name: '清补凉', emoji: '🍧', img: 'assets/img/cuisine/hainan/dish-qingbuliang.webp', desc: '椰奶或椰水打底，配薏米、红豆、西瓜、芋头等十余样，热带消暑甜品的天花板。' },
+        { name: '海南粉', emoji: '🍜', img: 'assets/img/cuisine/hainan/dish-hainan-noodles.webp', desc: '海口经典腌（拌）粉：细米粉拌上浓稠卤汁、花生、酸菜，咸鲜微酸、层次丰富。' },
+        { name: '抱罗粉', emoji: '🥣', img: 'assets/img/cuisine/hainan/dish-baoluo-noodles.webp', desc: '文昌抱罗镇汤粉，粉条爽滑、汤头清鲜带甜，是早餐桌上的常客。' },
+        { name: '椰子饭', emoji: '🍚', img: 'assets/img/cuisine/hainan/dish-coconut-rice.webp', desc: '又称椰子船：糯米塞进椰壳同蒸，吸饱椰香，软糯清甜，主食甜点两相宜。' },
+      ],
+
+      ingredientsLead: '这些是海南风味的“原材料密码”，认全了，做法自然就懂了。',
+      ingredients: [
+        { name: '椰子', emoji: '🥥', img: 'assets/img/cuisine/hainan/ing-coconut.webp', desc: '从椰水、椰肉到椰浆全身是宝：椰水入菜增清甜，椰肉炖汤添椰香，是海南菜的灵魂底味。' },
+        { name: '走地鸡（文昌鸡）', emoji: '🐔', img: 'assets/img/cuisine/hainan/ing-free-range-chicken.webp', desc: '散养、椰糠花生喂养，皮黄肉紧、皮下脂肪薄而香，是白切类菜式的灵魂主角。' },
+        { name: '黄灯笼椒', emoji: '🌶️', img: 'assets/img/cuisine/hainan/ing-yellow-chili.webp', desc: '海南特产辣椒，香辣中带果香。做成“黄灯笼辣椒酱”是本地餐桌雷打不动的标配蘸料。' },
+        { name: '山兰米', emoji: '🌾', img: 'assets/img/cuisine/hainan/ing-shanlan-rice.webp', desc: '黎族在山地旱种的山兰稻，米香浓郁，可煮饭、做糕，也用来酿香甜的山兰酒。' },
+        { name: '马鲛鱼', emoji: '🐟', img: 'assets/img/cuisine/hainan/ing-mackerel.webp', desc: '近海当家鲜鱼，肉质细嫩，煎、蒸或做成鱼饭都好；新鲜度决定一切。' },
+        { name: '酸桔 / 金桔', emoji: '🍊', img: 'assets/img/cuisine/hainan/ing-calamansi.webp', desc: '蘸料的灵魂：挤汁增酸提香、解腻去腥，一勺就把清淡的白切“点亮”。' },
+        { name: '斑斓叶（香兰叶）', emoji: '🌿', img: 'assets/img/cuisine/hainan/ing-pandan.webp', desc: '东南亚风的香料叶，染绿增香，多用于清补凉、椰糕等甜品糕点。' },
+      ],
+
+      flavor: {
+        intro: '海南菜主菜清淡，真正的味觉戏份往往在那一小碟蘸料里——<strong>主菜负责“鲜”，蘸料负责“提”</strong>。',
+        list: [
+          '<strong>文昌鸡配</strong>：金桔汁 + 蒜泥 + 姜蓉 + 少许鸡油，酸香开胃、突出鸡本鲜。',
+          '<strong>海鲜配</strong>：黄灯笼椒酱 + 蒜末 + 酱油，果香辣香压腥提鲜。',
+          '<strong>白切肉 / 鸭配</strong>：蒜泥 + 酱油 + 小米辣，简单直接，咸鲜带辣。',
+          '<strong>通用思路</strong>：本味做减法、蘸料做加法——清淡不等于寡淡，靠蘸碟找平衡。',
+        ],
+      },
+
+      see: [
+        { t: '火候与锅气', href: 'techniques.html' },
+        { t: '味型与蘸料', href: 'sauces.html' },
+      ],
+    },
+  };
+
+  window.HCL = { utils, utilGroups, glossary, ingredients, dishes, creators, tastes, combo, topics, videos, foodGuide, gear, troubleshoot, cuisines, cuisineDetails };
 })();

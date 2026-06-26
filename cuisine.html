@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <script>(function(){try{var t=localStorage.getItem('hcl-theme');if(t==='dark')document.documentElement.setAttribute('data-theme','dark');}catch(e){}})();</script>
+  <title>菜系详情 | 家常菜实验室</title>
+  <meta name="description" content="菜系详情页：在菜系地图的缩略简介之上，进一步细化每个菜系——地域细分、代表菜式、特色食材与风味蘸料，配手绘插图逐一展开。" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@500;700;900&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="assets/css/style.css" />
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Ctext y='20' font-size='20'%3E%F0%9F%8D%B2%3C/text%3E%3C/svg%3E" />
+</head>
+<body data-page="cuisines">
+
+  <header class="page-head" data-cuisine-head style="--accent:#4F8C86">
+    <div class="container"></div>
+  </header>
+
+  <div class="container section-tight">
+    <div class="doc-layout" data-doc-layout>
+      <aside class="toc" data-toc></aside>
+      <article class="prose" data-detail></article>
+    </div>
+  </div>
+
+  <script src="assets/js/data.js"></script>
+  <script src="assets/js/main.js"></script>
+  <script>
+  (function () {
+    const H = window.HCL || {};
+    const CUS = H.cuisines || [];
+    const DET = H.cuisineDetails || {};
+    const BY = Object.fromEntries(CUS.map(c => [c.id, c]));
+    const DISH = Object.fromEntries((H.dishes || []).map(d => [d.name, d.id]));
+
+    const esc = s => String(s == null ? '' : s).replace(/[&<>"]/g, c =>
+      ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+
+    const headHost = document.querySelector('[data-cuisine-head] .container');
+    const headEl = document.querySelector('[data-cuisine-head]');
+    const host = document.querySelector('[data-detail]');
+    const layout = document.querySelector('[data-doc-layout]');
+
+    const id = (new URLSearchParams(location.search).get('id') || '').trim();
+    const base = BY[id];
+    const det = DET[id];
+
+    /* ---------- 兜底：无 id / 未知 id / 暂无详情 → 列出可深入的菜系 ---------- */
+    if (!base || !det) {
+      headEl.style.setProperty('--accent', '#4F8C86');
+      headHost.innerHTML = `
+        <div class="crumbs"><a href="index.html">首页</a> / <a href="cuisines.html">菜系地图</a> / 菜系详情</div>
+        <span class="num-chip">🗺️ 菜系详情</span>
+        <h1>选择一个菜系</h1>
+        <div class="en">Regional Cuisines · Detail</div>
+        <p class="intro">下面是已经做了详情页的菜系，点开看地域细分、代表菜式与特色食材。没有列出的菜系可以先在 <a href="cuisines.html">菜系地图</a> 上看缩略简介。</p>`;
+      layout.classList.add('no-toc');
+      const haveDetail = CUS.filter(c => DET[c.id]);
+      const cards = (haveDetail.length ? haveDetail : CUS).map(c => {
+        const has = !!DET[c.id];
+        const href = has ? `cuisine.html?id=${encodeURIComponent(c.id)}` : `cuisines.html#cuisine-${c.id}`;
+        return `<a class="cd-pick" href="${href}" style="--cu:${c.accent || 'var(--brick)'}">
+          <span class="cd-pick-emoji">${c.emoji || '🍴'}</span>
+          <span class="cd-pick-tx"><b>${esc(c.name)}</b><small>${esc(c.region || '')}</small></span>
+          <span class="cd-pick-go">${has ? '深入了解 →' : '看简介 →'}</span>
+        </a>`;
+      }).join('');
+      host.innerHTML = `<div class="cd-picker reveal">${cards}</div>`;
+      if (window.setupReveal) window.setupReveal();
+      return;
+    }
+
+    /* ---------- 正常：渲染该菜系详情 ---------- */
+    document.title = `${base.name} · 菜系详情 | 家常菜实验室`;
+    const metaDesc = document.querySelector('meta[name="description"]');
+    if (metaDesc) metaDesc.setAttribute('content',
+      `${base.name}（${base.region}）详情：${det.lead || ''}地域细分、代表菜式、特色食材与风味蘸料，配手绘插图逐一展开。`);
+    headEl.style.setProperty('--accent', base.accent || 'var(--brick)');
+
+    const areaPills = (det.areas || []).map(a => `<span class="pill">${esc(a.name)}</span>`).join('');
+    headHost.innerHTML = `
+      <div class="crumbs"><a href="index.html">首页</a> / <a href="cuisines.html">菜系地图</a> / ${esc(base.name)}</div>
+      <span class="num-chip">${base.emoji || '🍴'} ${esc(base.name)}</span>
+      <h1>${esc(base.name)}</h1>
+      <div class="en">${esc(det.en || '')}</div>
+      <p class="intro">${det.lead || ''}</p>
+      ${areaPills ? `<div class="tag-row">${areaPills}</div>` : ''}`;
+
+    // 媒体位：emoji 垫底，有图则用图覆盖；图加载失败自动退回 emoji
+    const media = (item) => {
+      const e = `<span class="cd-fig-emoji">${item.emoji || base.emoji || '🍴'}</span>`;
+      const i = item.img
+        ? `<img src="${esc(item.img)}" alt="${esc(item.name)}手绘插图" loading="lazy" width="800" height="600" onerror="this.remove()">`
+        : '';
+      return `<figure class="cd-fig">${e}${i}</figure>`;
+    };
+
+    // 代表菜命中案例菜库则做成深链（与菜系地图一致）
+    const dishLink = (d) => {
+      const did = DISH[d.name];
+      const body = `${media(d)}<div class="cd-c-body"><h3>${esc(d.name)}</h3>${d.desc ? `<p>${esc(d.desc)}</p>` : ''}</div>`;
+      return did
+        ? `<a class="cd-card is-link" href="dishes.html#dish-${did}">${body}</a>`
+        : `<div class="cd-card">${body}</div>`;
+    };
+
+    const ingCard = (it) => `<div class="cd-card">
+        ${media(it)}
+        <div class="cd-c-body"><h3>${esc(it.name)}</h3>${it.desc ? `<p>${esc(it.desc)}</p>` : ''}</div>
+      </div>`;
+
+    const areaCard = (a) => `<div class="cd-area">
+        <div class="cd-a-top"><h3>${esc(a.name)}</h3>${a.tag ? `<span class="cd-tag">${esc(a.tag)}</span>` : ''}</div>
+        ${a.desc ? `<p>${esc(a.desc)}</p>` : ''}
+      </div>`;
+
+    let html = '';
+
+    // hero 横幅（复用菜系地图的 .cuisine-hero）
+    const hero = det.hero || `assets/img/cuisine/${base.id}.webp`;
+    html += `<figure class="cuisine-hero reveal" style="--cu:${base.accent}">
+      <img src="${esc(hero)}" alt="${esc(base.name)}代表菜手绘插图" onerror="this.closest('figure').remove()">
+      ${det.heroCaption ? `<figcaption>${det.heroCaption}</figcaption>` : ''}
+    </figure>`;
+
+    // 这一方水土
+    if ((det.story || []).length) {
+      html += `<h2 data-toc="这一方水土"><span class="idx">🌏</span>这一方水土</h2>`;
+      html += det.story.map(p => `<p>${p}</p>`).join('');
+    }
+
+    // 地域细分
+    if ((det.areas || []).length) {
+      html += `<h2 data-toc="地域细分"><span class="idx">📍</span>地域细分</h2>`;
+      if (det.areasLead) html += `<p class="cuisine-section-lead">${det.areasLead}</p>`;
+      html += `<div class="cd-areas reveal" style="--cu:${base.accent}">${det.areas.map(areaCard).join('')}</div>`;
+    }
+
+    // 代表菜式
+    if ((det.dishes || []).length) {
+      html += `<h2 data-toc="代表菜式"><span class="idx">🍽️</span>代表菜式</h2>`;
+      if (det.dishesLead) html += `<p class="cuisine-section-lead">${det.dishesLead}</p>`;
+      html += `<div class="cd-gallery reveal" style="--cu:${base.accent}">${det.dishes.map(dishLink).join('')}</div>`;
+    }
+
+    // 特色食材
+    if ((det.ingredients || []).length) {
+      html += `<h2 data-toc="特色食材"><span class="idx">🧺</span>特色食材</h2>`;
+      if (det.ingredientsLead) html += `<p class="cuisine-section-lead">${det.ingredientsLead}</p>`;
+      html += `<div class="cd-gallery reveal" style="--cu:${base.accent}">${det.ingredients.map(ingCard).join('')}</div>`;
+    }
+
+    // 风味与蘸料
+    if (det.flavor) {
+      html += `<h2 data-toc="风味与蘸料"><span class="idx">🥢</span>风味与蘸料</h2>`;
+      if (det.flavor.intro) html += `<p>${det.flavor.intro}</p>`;
+      if ((det.flavor.list || []).length)
+        html += `<ul class="cd-flavor">${det.flavor.list.map(x => `<li>${x}</li>`).join('')}</ul>`;
+    }
+
+    // 家常可借鉴（复用菜系地图里已有的 borrow，绿色可执行框）
+    const borrow = det.borrow || base.borrow || [];
+    if (borrow.length) {
+      html += `<h2 data-toc="家常可借鉴"><span class="idx">🍳</span>家常可借鉴</h2>`;
+      html += `<section class="cu-block cu-borrow" style="--cu:${base.accent}">
+        <ul>${borrow.map(x => `<li>${esc(x)}</li>`).join('')}</ul>
+      </section>`;
+    }
+
+    // 延伸 + 返回
+    const see = det.see || base.see || [];
+    const seeLinks = see.map(s => `<a href="${esc(s.href)}">${esc(s.t)}</a>`).join('');
+    html += `<div class="note tip cd-foot">
+      <span class="badge">→</span>
+      <div>
+        <h4>继续逛</h4>
+        <p>想照着练，去 <a href="dishes.html">案例菜库</a>；想搞懂味型，看 <a href="sauces.html">调味与酱料</a>；火候门道在 <a href="techniques.html">火候与技法</a>。${seeLinks ? '相关篇章：' + seeLinks : ''}</p>
+        <p class="cd-back"><a href="cuisines.html">← 返回菜系地图</a></p>
+      </div>
+    </div>`;
+
+    host.innerHTML = html;
+    if (window.setupReveal) window.setupReveal();
+  })();
+  </script>
+</body>
+</html>

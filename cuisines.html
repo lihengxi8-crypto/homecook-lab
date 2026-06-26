@@ -91,6 +91,7 @@
   (function () {
     const H = window.HCL || {};
     const CUS = H.cuisines || [];
+    const DET = H.cuisineDetails || {};
     const G = Object.fromEntries((H.glossary || []).map(g => [g.id, g]));
     const DISH = Object.fromEntries((H.dishes || []).map(d => [d.name, d.id]));
 
@@ -140,6 +141,11 @@
       return `<div class="cu-see"><span class="cu-see-k">延伸</span>${items.join('')}</div>`;
     };
 
+    // 有详情页的菜系，给一个“深入了解”入口（无详情则不显示，向后兼容）
+    const detailCta = (c) => DET[c.id]
+      ? `<a class="cu-more" href="cuisine.html?id=${encodeURIComponent(c.id)}">深入了解 ${esc(c.name)} →</a>`
+      : '';
+
     const img = (c) =>
       `<img src="assets/img/cuisine/${c.id}.webp" alt="${esc(c.name)}代表菜手绘插图"
             loading="lazy" width="900" height="600"
@@ -177,7 +183,8 @@
         <ul>${liList(c.borrow)}</ul>
       </section>
 
-      ${seeRow(c)}`;
+      ${seeRow(c)}
+      ${detailCta(c)}`;
 
     // 八大菜系：左右交错的大图文（奇偶交替图片在左/右）
     const renderFeature = (c, i) => `
