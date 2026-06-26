@@ -1868,15 +1868,34 @@ input[type="range"] { accent-color: var(--brick); width: 100%; }
    复用 .page-head / .doc-layout / .cuisine-hero / .note / 既有令牌
    ========================================================= */
 
-/* 菜系地图卡片底部的“深入了解”按钮（仅有详情的菜系出现） */
-.cu-more {
-  display: inline-flex; align-items: center; gap: 6px; align-self: flex-start;
-  margin-top: 14px; padding: 8px 16px; border-radius: var(--r-pill);
-  font-family: var(--sans); font-size: .86rem; font-weight: 700;
-  color: #fff; background: var(--cu, var(--brick)); border: 1px solid transparent;
-  box-shadow: var(--shadow-sm); transition: transform .15s, box-shadow .15s, filter .15s;
+/* 菜系地图：缩略卡（八大菜系 / 地方菜统一为可点击的小卡，完整内容在详情页） */
+.cu-cards {
+  display: grid; gap: 18px; margin-top: 24px;
+  grid-template-columns: repeat(auto-fill, minmax(248px, 1fr));
 }
-.cu-more:hover { transform: translateY(-1px); filter: brightness(1.06); box-shadow: var(--shadow-md); }
+.cu-card {
+  display: flex; flex-direction: column; overflow: hidden; scroll-margin-top: 88px;
+  background: var(--card); border: 1px solid var(--line); border-top: 3px solid var(--cu, var(--brick));
+  border-radius: var(--r-md); box-shadow: var(--shadow-sm); text-decoration: none; color: inherit;
+  transition: transform .18s, box-shadow .18s, border-color .18s;
+}
+.cu-card:hover { transform: translateY(-3px); box-shadow: var(--shadow-md); border-color: var(--cu, var(--line-strong)); }
+.cu-card-fig {
+  position: relative; margin: 0; aspect-ratio: 3 / 2; overflow: hidden;
+  background: var(--card-soft); display: grid; place-items: center;
+}
+.cu-card-emoji { font-size: 2.6rem; line-height: 1; opacity: .9; }
+.cu-card-fig img {
+  position: absolute; inset: 0; width: 100%; height: 100%;
+  object-fit: cover; object-position: center 45%; display: block; transition: transform .35s ease;
+}
+.cu-card:hover .cu-card-fig img { transform: scale(1.04); }
+.cu-card-body { padding: 13px 16px 16px; display: flex; flex-direction: column; gap: 5px; flex: 1 1 auto; }
+.cu-card-top { display: flex; align-items: baseline; gap: 8px; flex-wrap: wrap; }
+.cu-card-top h3 { margin: 0; font-size: 1.2rem; color: var(--soy); line-height: 1.2; }
+.cu-card-region { font-size: .8rem; color: var(--ink-faint); }
+.cu-card-traits { margin: 0; font-size: .9rem; color: var(--ink-soft); line-height: 1.55; flex: 1 1 auto; }
+.cu-card-go { margin-top: 6px; font-family: var(--sans); font-size: .82rem; font-weight: 700; color: var(--cu, var(--brick)); }
 
 /* 兜底/无详情时：单栏（隐藏侧栏目录） */
 .doc-layout.no-toc { grid-template-columns: 1fr; }
@@ -1884,6 +1903,26 @@ input[type="range"] { accent-color: var(--brick); width: 100%; }
 
 /* 详情页 hero 用菜系色描边 */
 .cuisine-hero img { border-color: var(--cu, var(--line)); }
+
+/* 特点：紧跟 hero 的小标签行 */
+.cd-traits-row { display: flex; flex-wrap: wrap; gap: 8px; margin: 16px 0 2px; }
+.cd-trait {
+  font-family: var(--sans); font-size: .82rem; padding: 5px 13px; border-radius: var(--r-pill);
+  background: var(--card-soft); border: 1px solid var(--line); color: var(--ink-soft);
+}
+
+/* 分组小标题（代表菜式 / 特色食材 下的子分类，不进目录） */
+.cd-subhead {
+  display: flex; align-items: center; gap: 9px; margin: 26px 0 2px;
+  font-family: var(--serif); font-weight: 700; font-size: 1.16rem; color: var(--wood);
+}
+.cd-subhead::before {
+  content: ""; flex: none; width: 11px; height: 11px; border-radius: 3px;
+  background: var(--cu, var(--brick));
+}
+
+/* 基础版收尾的轻提示 */
+.cd-note-soft { margin: 8px 0 0; font-size: .86rem; color: var(--ink-faint); }
 
 /* 地域细分：左色条卡片网格 */
 .cd-areas {
@@ -1965,5 +2004,6 @@ input[type="range"] { accent-color: var(--brick); width: 100%; }
 
 /* 触摸设备：取消上浮 */
 @media (hover: none) {
-  .cd-card:hover, .cd-pick:hover, .cu-more:hover { transform: none; }
+  .cd-card:hover, .cd-pick:hover, .cu-card:hover { transform: none; }
+  .cu-card:hover .cu-card-fig img { transform: none; }
 }

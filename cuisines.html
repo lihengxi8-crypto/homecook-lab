@@ -55,7 +55,7 @@
 
         <h2 data-toc="为什么不同"><span class="idx">🧭</span>为什么不同：六把尺子</h2>
         <p>
-          各地口味的差异，背后几乎都能归到下面这六个原因上。读每张菜系卡片时，
+          各地口味的差异，背后几乎都能归到下面这六个原因上。点进每个菜系的详情页，
           留意「为什么这样」一段标注的小尺子标签——它告诉你这个菜系主要被哪几股力量塑造。
           口味从来不是凭空“爱重口”或“爱清淡”，而是一方水土、一段历史共同算出来的结果。
         </p>
@@ -65,13 +65,13 @@
         <p class="cuisine-section-lead">
           公认的八大菜系，是历史上影响最广、体系最完整的八支。它们大多对应一个文化与物产高度集中的核心区域。
         </p>
-        <div class="cuisine-features" data-cuisines="八大菜系" data-layout="feature"></div>
+        <div class="cu-cards" data-cuisines="八大菜系"></div>
 
-        <h2 data-toc="地方菜"><span class="idx">🍲</span>地方菜（含海南）</h2>
+        <h2 data-toc="地方菜"><span class="idx">🍲</span>地方菜</h2>
         <p class="cuisine-section-lead">
           八大之外，还有许多个性鲜明的地方风味。它们或自成一派、或交融而生，同样是“一方水土养一方菜”的好例子。
         </p>
-        <div class="cuisine-minis" data-cuisines="地方菜" data-layout="mini"></div>
+        <div class="cu-cards" data-cuisines="地方菜"></div>
 
         <div class="note tip">
           <span class="badge">→</span>
@@ -91,9 +91,6 @@
   (function () {
     const H = window.HCL || {};
     const CUS = H.cuisines || [];
-    const DET = H.cuisineDetails || {};
-    const G = Object.fromEntries((H.glossary || []).map(g => [g.id, g]));
-    const DISH = Object.fromEntries((H.dishes || []).map(d => [d.name, d.id]));
 
     const esc = s => String(s).replace(/[&<>]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;' }[c]));
 
@@ -119,93 +116,26 @@
       }).join('');
     }
 
-    // 渲染：代表菜（命中案例菜库则做成深链）
-    const dishChips = (arr) => (arr || []).map(name => {
-      const id = DISH[name];
-      return id
-        ? `<a class="cu-dish is-link" href="dishes.html#dish-${id}">${esc(name)}</a>`
-        : `<span class="cu-dish">${esc(name)}</span>`;
-    }).join('');
-
-    const liList = (arr) => (arr || []).map(x => `<li>${esc(x)}</li>`).join('');
-
-    const lensChips = (arr) => (arr || []).filter(k => LENS[k]).map(k =>
-      `<span class="cu-lens" title="${esc(LENS[k].label)}">${LENS[k].emoji}<i>${esc(LENS[k].label)}</i></span>`
-    ).join('');
-
-    const seeRow = (c) => {
-      const items = [];
-      (c.see || []).forEach(s => items.push(`<a href="${s.href}">${esc(s.t)}</a>`));
-      (c.terms || []).filter(t => G[t]).forEach(t => items.push(`<a href="glossary.html#term-${t}">${esc(G[t].term)}</a>`));
-      if (!items.length) return '';
-      return `<div class="cu-see"><span class="cu-see-k">延伸</span>${items.join('')}</div>`;
-    };
-
-    // 有详情页的菜系，给一个“深入了解”入口（无详情则不显示，向后兼容）
-    const detailCta = (c) => DET[c.id]
-      ? `<a class="cu-more" href="cuisine.html?id=${encodeURIComponent(c.id)}">深入了解 ${esc(c.name)} →</a>`
-      : '';
-
-    const img = (c) =>
-      `<img src="assets/img/cuisine/${c.id}.webp" alt="${esc(c.name)}代表菜手绘插图"
-            loading="lazy" width="900" height="600"
-            onerror="this.closest('figure')?.remove()">`;
-
-    // 四段正文（特点 / 代表菜 / 为什么这样 / 家常可借鉴 + 延伸），两种布局共用
-    const innerBlocks = (c) => `
-      <header class="cu-head">
-        <span class="cu-emoji">${c.emoji || '🍴'}</span>
-        <div class="cu-id">
-          <h3>${esc(c.name)}</h3>
-          <span class="cu-region">${esc(c.region || '')}</span>
+    // 缩略卡：插图 + 名称 + 地区 + 一句话特点 + 深入了解；完整内容都在详情页
+    const teaser = (c) => `
+      <a class="cu-card reveal" id="cuisine-${c.id}" href="cuisine.html?id=${encodeURIComponent(c.id)}" style="--cu:${c.accent || 'var(--brick)'}">
+        <figure class="cu-card-fig">
+          <span class="cu-card-emoji" aria-hidden="true">${c.emoji || '🍴'}</span>
+          <img src="assets/img/cuisine/${c.id}.webp" alt="${esc(c.name)}手绘插图" loading="lazy" width="900" height="600" onerror="this.remove()">
+        </figure>
+        <div class="cu-card-body">
+          <div class="cu-card-top">
+            <h3>${esc(c.name)}</h3>
+            <span class="cu-card-region">${esc(c.region || '')}</span>
+          </div>
+          <p class="cu-card-traits">${esc((c.traits || []).slice(0, 2).join(' · '))}</p>
+          <span class="cu-card-go">深入了解 →</span>
         </div>
-        <span class="cu-kind">${esc(c.kind || '')}</span>
-      </header>
-
-      <section class="cu-block cu-traits">
-        <h4 class="cu-label">特点</h4>
-        <ul>${liList(c.traits)}</ul>
-      </section>
-
-      <section class="cu-block cu-dishes">
-        <h4 class="cu-label">代表菜</h4>
-        <div class="cu-dish-row">${dishChips(c.dishes)}</div>
-      </section>
-
-      <section class="cu-block cu-why">
-        <h4 class="cu-label">为什么这样</h4>
-        <div class="cu-lens-row">${lensChips(c.lenses)}</div>
-        <p>${esc(c.why || '')}</p>
-      </section>
-
-      <section class="cu-block cu-borrow">
-        <h4 class="cu-label">家常可借鉴</h4>
-        <ul>${liList(c.borrow)}</ul>
-      </section>
-
-      ${seeRow(c)}
-      ${detailCta(c)}`;
-
-    // 八大菜系：左右交错的大图文（奇偶交替图片在左/右）
-    const renderFeature = (c, i) => `
-      <article class="cuisine-feature reveal${i % 2 ? ' is-rev' : ''}" id="cuisine-${c.id}" style="--cu:${c.accent || 'var(--brick)'}">
-        <figure class="cu-figure">${img(c)}</figure>
-        <div class="cu-body">${innerBlocks(c)}</div>
-      </article>`;
-
-    // 地方菜：紧凑图卡（顶部插图横幅）
-    const renderMini = (c) => `
-      <article class="cuisine-mini reveal" id="cuisine-${c.id}" style="--cu:${c.accent || 'var(--brick)'}">
-        <figure class="cu-banner">${img(c)}</figure>
-        <div class="cu-mini-body">${innerBlocks(c)}</div>
-      </article>`;
+      </a>`;
 
     document.querySelectorAll('[data-cuisines]').forEach(host => {
       const kind = host.getAttribute('data-cuisines');
-      const list = CUS.filter(c => c.kind === kind);
-      host.innerHTML = host.getAttribute('data-layout') === 'feature'
-        ? list.map(renderFeature).join('')
-        : list.map(renderMini).join('');
+      host.innerHTML = CUS.filter(c => c.kind === kind).map(teaser).join('');
     });
 
     // 渲染：可点击图例（跳到对应卡片并高亮）
