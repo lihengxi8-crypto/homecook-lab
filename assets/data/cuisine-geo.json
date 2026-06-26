@@ -48,6 +48,7 @@
     "xiang": "#CC6B3A",
     "hui": "#8E7A3C",
     "jing": "#B98A55",
+    "tianjin": "#6B8F7A",
     "dongbei": "#6FA08E",
     "xibei": "#CE9248",
     "yungui": "#94A24E",
@@ -325,6 +326,22 @@
       }
     },
     {
+      "id": "tianjin",
+      "name": "天津菜",
+      "type": "point",
+      "color": "#6B8F7A",
+      "label": {
+        "lngLat": [
+          117.2,
+          39.1
+        ],
+        "svg": [
+          692.9,
+          298
+        ]
+      }
+    },
+    {
       "id": "bun",
       "name": "本帮菜",
       "type": "point",
@@ -393,8 +410,8 @@
     "天津市": {
       "pinyin": "tianjin",
       "adcode": 120000,
-      "cuisine": null,
-      "fill": "#F1E4C9",
+      "cuisine": "tianjin",
+      "fill": "#6B8F7A",
       "centroid": {
         "lngLat": [
           117.347043,

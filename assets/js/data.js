@@ -1212,6 +1212,14 @@
       borrow: ['一碗炸酱：黄酱、甜面酱小火炒香', '葱爆是快手又出香的家常技法', '清汤涮煮，蘸料决定风味'],
       see: [{ t: '葱爆与火候', href: 'techniques.html' }] },
 
+    { id: 'tianjin', name: '天津菜', region: '天津', emoji: '🥟', kind: '地方菜', accent: '#6B8F7A',
+      lenses: ['hist', 'move', 'crop'],
+      traits: ['河海两鲜、咸鲜适口', '扒、爆、大翻勺见长', '早点小吃与回民菜并重'],
+      dishes: ['八珍豆腐', '煎饼果子', '爆三样'],
+      why: '天津是漕运枢纽与近代商埠，“九河下梢”河海交汇，物产让津菜天然以两鲜见长；烹饪底子来自鲁菜，清末御厨与胶东厨子流入，又叠上盐商公馆菜与开埠后的多元输入，于是形成“鲁菜为骨、河鲜为魂、技法更细”的津味。与相邻的京菜比，津菜更偏河海鲜与扒烧；与山东比，口味略甜、更讲大翻勺与汁芡；与河北比，因盐商消费而更显精致。',
+      borrow: ['八珍豆腐：嫩豆腐托底，什锦快炒后整体滑熘', '爆三样：肝腰肉片大火快爆，碗汁现兑现淋', '煎饼果子：纯绿豆面摊皮，夹棒槌馃子最正宗'],
+      see: [{ t: '勾芡与碗汁', href: 'sauces.html' }, { t: '大翻勺与扒', href: 'techniques.html' }] },
+
     { id: 'dongbei', name: '东北菜', region: '黑 · 吉 · 辽', emoji: '🍲', kind: '地方菜', accent: '#6FA08E',
       lenses: ['geo', 'keep', 'crop'],
       traits: ['量大味浓、扎实管饱', '炖菜、乱炖见长', '酸菜是灵魂'],
@@ -1378,6 +1386,116 @@
       see: [
         { t: '火候与锅气', href: 'techniques.html' },
         { t: '味型与蘸料', href: 'sauces.html' },
+      ],
+    },
+
+    tianjin: {
+      en: 'Tianjin Cuisine · Jin Cuisine',
+      lead: '漕运码头上的“卫嘴子”——河海两鲜打底、鲁菜为骨、扒爆见长。天津菜一边有煎饼果子、嘎巴菜、麻花这样的早点江湖，一边有八珍豆腐、罾蹦鲤鱼这样的公馆大菜，还有西北角一脉传承的回民清真风味。',
+      hero: 'assets/img/cuisine/tianjin.webp',
+      heroCaption: '津味的两极：河海鲜与扒烧大菜，以及绿豆面摊出来的早点江湖。',
+
+      story: [
+        '天津菜（津菜）不是八大菜系之一，却是北方最成体系的地方风味之一。它的形成，离不开<strong>地理</strong>与<strong>历史</strong>两条线：地理上，天津地处华北平原东缘，<strong>“九河下梢”</strong>汇流渤海，咸淡水交错，河鱼、海蟹、对虾、比目鱼四季轮转——民间有“当当吃海货，不算不会过”的老话；历史上，自隋代大运河贯通，天津便是漕粮北上的枢纽，船工需要<strong>重口、耐饱、出餐快</strong>的早点，于是煎饼馃子、嘎巴菜、包子、大饼夹一切在码头边长出来。',
+        '烹饪技法上，津菜普遍被认为以<strong>鲁菜为底色</strong>。清末民初，清宫解纽，大量胶东籍御厨、鲁菜师傅流散津门；本地“八大成”等老字号本就在运河商埠里吸收淮扬、川鲁各路手艺。学界与业内常把津菜称作<strong>“鲁菜的升华版”</strong>——不是简单复制山东味，而是在鲁菜“咸鲜、火功、吊汤”的骨架上，因河海鲜更丰、公馆消费更细，把<strong>扒、熘、爆、大翻勺</strong>做得更精，刀工与汁芡也更讲究。与纯鲁菜比，津菜整体<strong>略偏甜</strong>，擅用<strong>嫩糖色、花椒油</strong>提亮；与京菜比，少了宫廷烤鸭涮肉的排场，多了河海鲜与早点小吃；与河北腹地比，盐商“八大家”与开埠后的寓公消费，把菜做得更细、更讲排场。',
+        '1860 年天津开埠后，九国租界、华洋杂处，西餐调味（蚝油、番茄、西柠等）也悄悄渗入，但主线仍是<strong>汉民菜 + 回民清真菜 + 早点小吃</strong>三足鼎立。汉民菜有八大碗、四大扒、罾蹦鲤鱼、锅塌里脊；回民区（西北角、天穆一带）则自成系统——<strong>爆、黄焖、烧、熅</strong>处理牛舌尾、牛窝骨、肚仁，讲究“见汤不见油”；早点里麻花、炸糕、耳朵眼与“津门三绝”名头在外。理解津菜，最好同时看<strong>码头早点</strong>与<strong>河海鲜大菜</strong>这两极——它们和相声一样，长进天津人的日常里。',
+      ],
+
+      areasLead: '天津不大，风味却分片：老城早点、回民清真、塘沽海货、租界公馆，各有一块招牌。',
+      areas: [
+        { name: '老城 · 鼓楼南市', tag: '早点 · 小吃', desc: '煎饼馃子、嘎巴菜、老豆腐、浆子、棒槌馃子的主场。重口、耐饱、出餐快，是漕运码头逻辑的早餐延伸。' },
+        { name: '西北角 · 天穆', tag: '回民清真', desc: '天津回民菜核心区。爆三样、黄焖、红烧牛舌尾、水爆肚等，强调“爆”的脆嫩与“黄焖”的软烂，忌猪、重牛羊。' },
+        { name: '塘沽 · 北塘', tag: '海货', desc: '靠渤海湾，对虾、梭子蟹、鳎目鱼、银鱼应季而食。“齁甜”是老天津人对本地海味的形容——低盐度海域出产的鲜甜。' },
+        { name: '租界 · 公馆', tag: '津鲁大菜', desc: '开埠后寓公、盐商推动的精细官府菜：扒、熘、大翻勺、吊双套汤，代表菜如八珍豆腐、罾蹦鲤鱼、四大扒。' },
+      ],
+
+      dishesLead: '从早点到河海鲜，再到回民硬菜——按这三条线吃，基本就把津味摸清了。',
+      dishGroups: [
+        {
+          title: '津门经典 · 河海鲜',
+          lead: '河海两鲜是津菜区别于京冀的底气；技法上多见扒、熘、煎烹与“大酸大甜”的浇汁。',
+          items: [
+            { name: '八珍豆腐', emoji: '🧈', img: 'assets/img/cuisine/tianjin/dish-bazhen-tofu.webp', desc: '津菜头号名片。嫩豆腐托底，虾仁、干贝、海参、鸡丁等“八珍”快炒后整体滑熘覆上，豆腐吸饱鲜汁却保持完整，考的是勺功与芡汁。' },
+            { name: '罾蹦鲤鱼', emoji: '🐟', img: 'assets/img/cuisine/tianjin/dish-zengbeng-carp.webp', desc: '留鳞炸酥、浇热汁“吱吱”作响，酸甜各半、红亮透明。刀工要鱼身翘尾，芡汁靠嫩糖色与花椒油提香——典型津式“见明油不见汤”。' },
+            { name: '锅塌里脊', emoji: '🥩', img: 'assets/img/cuisine/tianjin/dish-guota-tenderloin.webp', desc: '鲁津共有名技：里脊挂蛋液两面煎塌，再入碗汁小火㸆至入味，外香里嫩、汁浓挂肉。' },
+            { name: '煎烹大虾', emoji: '🦐', img: 'assets/img/cuisine/tianjin/dish-jianpeng-prawn.webp', desc: '渤海湾对虾，原油原汤、葱姜丝提鲜，壳酥肉弹。讲究虾须虾枪处理干净，火候宁脆勿老。' },
+            { name: '老爆三', emoji: '🥘', img: 'assets/img/cuisine/tianjin/dish-laobaosan.webp', desc: '汉民版“三样”：猪里脊、猪肝、猪腰（或加虾仁）旺火爆炒，蒜片、碗汁一淋即出，与回民“爆三样”同名不同料。' },
+          ],
+        },
+        {
+          title: '早点 · 小吃',
+          lead: '天津早点自成体系——绿豆面、麻酱、酱豆腐、棒槌馃子，是理解“卫嘴子”的入口。',
+          items: [
+            { name: '煎饼果子', emoji: '🥞', img: 'assets/img/cuisine/tianjin/dish-jianbing-guozi.webp', desc: '天津版必须用纯绿豆面摊皮，夹棒槌馃子（油条）；加鸡蛋叫“一套”。与北京煎饼不同，讲究绿豆清香与馃子酥脆，忌面太多发黏。' },
+            { name: '嘎巴菜', emoji: '🍜', img: 'assets/img/cuisine/tianjin/dish-gabacai.webp', desc: '天津独一份：绿豆小米煎饼切柳叶条，浇卤汁，配麻酱、酱豆腐、香菜、辣油。名字来自方言“嘎巴”，不是“锅巴菜”。' },
+            { name: '天津麻花', emoji: '🥨', img: 'assets/img/cuisine/tianjin/dish-mahua.webp', desc: '十八街麻花为代表：酥脆分层、入口即化，与北方别处麻花偏硬韧不同。常作伴手礼，也可配早点。' },
+            { name: '耳朵眼炸糕', emoji: '🍩', img: 'assets/img/cuisine/tianjin/dish-erduoyan-zhagao.webp', desc: '津门三绝之一：糯米皮包红豆沙，油炸外脆里糯。与366街、南市食品街的老字号名头相连。' },
+            { name: '狗不理包子', emoji: '🥟', img: 'assets/img/cuisine/tianjin/dish-goubuli-baozi.webp', desc: '半发面“水破皮”技法，面为容器、馅含汤汁——虽今日常被游客化，其包法对天津包子体系影响深远。' },
+          ],
+        },
+        {
+          title: '回民清真菜',
+          lead: '天津回民菜与汉民菜并行数百年，擅爆、黄焖、烧、熅，牛羊为主，见汤不见油。',
+          items: [
+            { name: '爆三样', emoji: '🔥', img: 'assets/img/cuisine/tianjin/dish-bao-sanyang.webp', desc: '回民经典：牛（或羊）肝、腰、里脊等三样，旺火快爆，蒜片、碗汁一淋，脆嫩无腥。与汉民“老爆三”同名异料，是天津双轨饮食的缩影。' },
+            { name: '红烧牛舌尾', emoji: '🐂', img: 'assets/img/cuisine/tianjin/dish-beef-tongue-tail.webp', desc: '牛舌尾筋肉相间，先焯后烧，酱油、糖色、香料慢㸆至软烂脱骨。回民馆压桌硬菜，讲究“熅”的火候——烂而不散。' },
+            { name: '红烧牛窝骨', emoji: '🦴', img: 'assets/img/cuisine/tianjin/dish-beef-knuckle.webp', desc: '带筋带骨的牛窝骨，红烧至胶质析出、汤汁浓稠。贴骨肉的香与筋的弹，是下饭菜里的“重器”。' },
+            { name: '水爆肚', emoji: '🥢', img: 'assets/img/cuisine/tianjin/dish-shui-baodu.webp', desc: '肚仁（或肚尖）沸水速烫，蘸麻酱、酱豆腐、香菜调成的料碟。烫老了发硬，烫嫩了发腥——全凭秒数与水温。' },
+            { name: '黄焖牛肉条', emoji: '🍲', img: 'assets/img/cuisine/tianjin/dish-huangmen-beef.webp', desc: '牛肉切条，黄酱、酱油、糖色黄焖至软烂，汤汁收浓挂肉。天津回民“黄焖”系列的代表，与“爆”的爽脆形成对照。' },
+            { name: '黄焖两样', emoji: '🥬', img: 'assets/img/cuisine/tianjin/dish-huangmen-liangyang.webp', desc: '常见为牛肉条与面筋（或豆腐、白菜）同焖，一荤一素、汤汁互渗。家常馆与清真馆都常见，是“黄焖”技法的变体。' },
+          ],
+        },
+      ],
+
+      ingredientsLead: '认津味，先认这三样物产与调味——河海鲜、绿豆面、麻酱面酱。',
+      ingredientGroups: [
+        {
+          title: '河海两鲜',
+          items: [
+            { name: '渤海湾对虾', emoji: '🦐', img: 'assets/img/cuisine/tianjin/ing-bohai-prawn.webp', desc: '春虾满黄、秋虾体壮，煎烹、油焖、白灼皆宜。老天津人讲本地海货“齁甜”，与辽东、山东同种海味因水质差异而风味不同。' },
+            { name: '鳎目鱼（比目鱼）', emoji: '🐟', img: 'assets/img/cuisine/tianjin/ing-sole-fish.webp', desc: '“伏吃鳎目，冬吃鲤”——夏季最肥。可做干烧、清熘，或整条扒制。' },
+            { name: '梭子蟹 · 海蟹', emoji: '🦀', img: 'assets/img/cuisine/tianjin/ing-swimming-crab.webp', desc: '惊蛰后母蟹抱卵称“老虎”，可熬白菜、清蒸。天津海蟹因低盐度海域而偏甜鲜。' },
+          ],
+        },
+        {
+          title: '早点底子',
+          items: [
+            { name: '纯绿豆面', emoji: '🫘', img: 'assets/img/cuisine/tianjin/ing-mung-bean-flour.webp', desc: '煎饼馃子与嘎巴菜的灵魂。天津讲究去皮纯绿豆磨浆，清香不黏；与北京掺面、山东不同。' },
+            { name: '棒槌馃子', emoji: '🥖', img: 'assets/img/cuisine/tianjin/ing-youtiao.webp', desc: '即油条，但常与煎饼成套。天津早点“大饼、馃子、嘎巴菜、浆子”四件套里的核心碳水。' },
+          ],
+        },
+        {
+          title: '调味与汤头',
+          items: [
+            { name: '麻酱 · 酱豆腐', emoji: '🫙', img: 'assets/img/cuisine/tianjin/ing-sesame-paste.webp', desc: '早点与爆肚蘸料的双子星：麻酱调稀、酱豆腐（腐乳）增咸鲜，加香菜、辣油即成天津味。' },
+            { name: '面酱 · 黄酱', emoji: '🍯', img: 'assets/img/cuisine/tianjin/ing-yellow-bean-paste.webp', desc: '黄焖、炸酱、爆菜的基础。天津口味整体偏咸鲜，黄酱比单纯酱油更能出“酱香”。' },
+            { name: '双套吊汤', emoji: '🥣', img: 'assets/img/cuisine/tianjin/ing-shuangtao-stock.webp', desc: '津鲁大菜的隐形主角：毛汤再套成清亮浓汤，用于扒、熘高级菜。家常可简化为骨汤 + 少许鸡架提鲜。' },
+          ],
+        },
+      ],
+
+      flavor: {
+        intro: '津菜调味总纲是<strong>咸鲜为主、略偏甜、见明油不见汤</strong>——与粤闽“荔枝口”（先酸后甜）不同，天津大菜常<strong>酸甜同口、咸鲜托底</strong>。',
+        list: [
+          '<strong>扒 · 熘 · 大翻勺</strong>：整鱼、整豆腐、整肘要形整味透，靠勺功与芡汁；不会大翻勺，很多津菜做不地道。',
+          '<strong>嫩糖色 + 花椒油</strong>：罾蹦鲤鱼、四大扒等靠糖色上色、花椒油提香，汁色红亮透明。',
+          '<strong>爆 vs 黄焖</strong>：回民菜“爆”求脆嫩秒出，“黄焖”求软烂入味——同一馆子里两种节奏并存。',
+          '<strong>早点蘸料</strong>：嘎巴菜、爆肚不靠主味取胜，麻酱、酱豆腐、辣油调出的碟子才是点睛。',
+          '<strong>与鲁菜</strong>：同根，但津菜更偏河海鲜、更细、略甜；<strong>与京菜</strong>：少宫廷排场，多码头早点与两鲜；<strong>与河北</strong>：更精致、更讲扒烧与吊汤。',
+        ],
+      },
+
+      borrow: [
+        '八珍豆腐：豆腐整块过油或煎封，什锦快炒后勾芡整体滑熘，别铲碎豆腐',
+        '爆三样：肝腰切薄片，大火快爆，碗汁提前兑好，出锅前淋一圈',
+        '煎饼果子：纯绿豆面摊薄，夹刚出锅棒槌馃子，忌皮太厚发黏',
+        '嘎巴菜：煎饼切条，卤汁要宽，麻酱、酱豆腐、香菜缺一不可',
+        '黄焖牛肉：黄酱、酱油、糖色先炒香再下肉，小火焖至软烂收汁',
+      ],
+
+      see: [
+        { t: '勾芡与碗汁', href: 'sauces.html' },
+        { t: '大翻勺与扒', href: 'techniques.html' },
       ],
     },
   };

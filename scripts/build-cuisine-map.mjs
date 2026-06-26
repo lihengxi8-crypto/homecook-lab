@@ -212,6 +212,7 @@ const COL = {
   xiang: '#CC6B3A',     // 湘 · 赤陶
   hui: '#8E7A3C',       // 徽 · 陈酱橄榄
   jing: '#B98A55',      // 京 · 焦糖
+  tianjin: '#6B8F7A',   // 津 · 河海松
   dongbei: '#6FA08E',   // 东北 · 松绿
   xibei: '#CE9248',     // 西北/新疆 · 沙漠孜然
   yungui: '#94A24E',    // 云贵 · 山野
@@ -239,6 +240,7 @@ const PROV_FILL = {
   '湖南省': 'xiang',
   '安徽省': 'hui',
   '北京市': 'jing',
+  '天津市': 'tianjin',
   '黑龙江省': 'dongbei', '吉林省': 'dongbei', '辽宁省': 'dongbei',
   '新疆维吾尔自治区': 'xibei',
   '云南省': 'yungui', '贵州省': 'yungui',
@@ -284,6 +286,7 @@ const REGION = [
 // 标签：点标记（小号文字 + 引线点）。dx/dy 为像素级文字偏移。
 const POINTS = [
   { key: 'jing',  name: '京菜',  anchor: [116.4, 40.0], dx: 4,  dy: -8, align: 'start' },
+  { key: 'tianjin', name: '天津菜', anchor: [117.2, 39.1], dx: 6, dy: 4, align: 'start' },
   { key: 'bun',   name: '本帮菜', anchor: [121.47, 31.23], dx: 7, dy: 4, align: 'start' },
   { key: 'chaoshan', name: '潮汕菜', anchor: [116.6, 23.4], dx: 6, dy: 4, align: 'start', color: COL.yue },
   { key: 'kejia', name: '客家菜', anchor: [115.0, 24.5], dx: -6, dy: -6, align: 'end', color: COL.min },
