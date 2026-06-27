@@ -547,6 +547,27 @@ tbody tr:hover { background: var(--card-soft); }
 .fc-go i { font-style: normal; transition: transform .18s; }
 .feature-card:hover .fc-go i { transform: translateX(5px); }
 
+/* 首页菜系地图独立展示 */
+.home-cuisine {
+  display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.15fr);
+  gap: 36px; align-items: center;
+}
+.home-cuisine-copy p {
+  margin: 14px 0 0; font-size: .98rem; color: var(--ink-soft); line-height: 1.75; max-width: 38ch;
+}
+.home-cuisine-copy .btn { margin-top: 22px; }
+.home-cuisine-map {
+  display: block; border-radius: var(--r-md); overflow: hidden;
+  border: 1px solid var(--line); background: var(--card);
+  box-shadow: var(--shadow-md); transition: transform .18s, box-shadow .18s, border-color .18s;
+}
+.home-cuisine-map:hover { transform: translateY(-4px); box-shadow: var(--shadow-lg); border-color: var(--line-strong); }
+.home-cuisine-map img { width: 100%; height: auto; display: block; }
+@media (max-width: 820px) {
+  .home-cuisine { grid-template-columns: 1fr; }
+  .home-cuisine-copy p { max-width: none; }
+}
+
 @media (max-width: 1000px) { .why-grid, .feature-wall { grid-template-columns: repeat(2, 1fr); } }
 @media (max-width: 640px) { .why-grid, .feature-wall { grid-template-columns: 1fr; } }
 
@@ -572,7 +593,7 @@ tbody tr:hover { background: var(--card-soft); }
   padding-block: 44px max(28px, env(safe-area-inset-bottom));
 }
 .site-footer a { color: var(--ginger-soft); }
-.site-footer .foot-grid { display: grid; grid-template-columns: 1.6fr repeat(3, 1fr); gap: 28px; }
+.site-footer .foot-grid { display: grid; grid-template-columns: 1.6fr repeat(4, 1fr); gap: 28px; }
 @media (max-width: 1000px) { .site-footer .foot-grid { grid-template-columns: 1fr 1fr 1fr; } }
 @media (max-width: 760px) { .site-footer .foot-grid { grid-template-columns: 1fr 1fr; } }
 @media (max-width: 460px) { .site-footer .foot-grid { grid-template-columns: 1fr; } }

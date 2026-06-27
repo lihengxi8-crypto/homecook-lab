@@ -188,13 +188,18 @@
     </div>
   </section>
 
+  <!-- 菜系地图（独立入口，与导航并列） -->
+  <section class="section section--spotlight" id="cuisines">
+    <div class="container" data-cuisine-spot></div>
+  </section>
+
   <!-- 工具箱亮点 -->
   <section class="section section--tint" id="toolbox">
     <div class="container">
       <div class="center">
         <span class="eyebrow-line">Toolbox</span>
         <h2 class="section-title">不只有文章，还能用、能查、能玩</h2>
-        <p class="section-sub" style="margin-inline:auto">配套页面分两类：<strong>百科</strong> 是可浏览查阅的内容库——对照案例、看懂地域与高手、随手查食材厨具术语；<strong>工具</strong> 能算能排查——配比计算与翻车诊断。</p>
+        <p class="section-sub" style="margin-inline:auto">上方 <strong>菜系地图</strong> 单独成块；下方 <strong>百科</strong> 是可浏览查阅的内容库，<strong>工具</strong> 能算能排查。</p>
         <div class="lead-divider" style="margin-inline:auto"></div>
       </div>
       <div class="toolbox-wall" data-toolbox style="margin-top:40px"></div>
@@ -243,6 +248,6 @@
 
   <script src="assets/js/data.js"></script>
   <script src="assets/js/main.js"></script>
-  <script>renderChapterCards('[data-chapters]'); renderToolbox('[data-toolbox]');</script>
+  <script>renderPrimarySpotlight('[data-cuisine-spot]'); renderChapterCards('[data-chapters]'); renderToolbox('[data-toolbox]');</script>
 </body>
 </html>

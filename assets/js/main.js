@@ -160,9 +160,16 @@ function injectFooter() {
   const links = SITE.chapters.map(c => `<li><a href="${c.file}">${c.num} · ${c.title}</a></li>`).join('');
   const utils = (window.HCL && window.HCL.utils) || [];
   const menus = (window.HCL && window.HCL.utilMenus) || [];
-  const groups = utilGroupsWith(utils);
+  const primaryUtils = utils.filter(u => u.nav === 'primary');
+  const menuUtils = utils.filter(u => u.nav !== 'primary');
+  const groups = utilGroupsWith(menuUtils);
   const groupById = Object.fromEntries(groups.map(g => [g.id, g]));
   const item = (u) => `<li><a href="${u.file}">${u.icon} ${u.title}</a></li>`;
+  const primaryCols = primaryUtils.map(u => `
+    <div>
+      <h4>${u.title}</h4>
+      <ul>${item(u)}</ul>
+    </div>`).join('');
   const menuCols = menus.map(m => {
     const mgroups = m.groups.map(id => groupById[id]).filter(g => g && g.items.length);
     if (!mgroups.length) return '';
@@ -188,6 +195,7 @@ function injectFooter() {
           <h4>学习篇章</h4>
           <ul>${links}</ul>
         </div>
+        ${primaryCols}
         ${menuCols}
       </div>
       <div class="container foot-bottom" style="padding-inline:0">
@@ -541,14 +549,36 @@ function renderChapterCards(selector) {
   setupReveal();
 }
 
-/* ---------- 首页工具箱（与导航一致：按「百科 / 工具」两大类渲染） ---------- */
+/* ---------- 首页独立入口（nav:primary，如菜系地图） ---------- */
+function renderPrimarySpotlight(selector) {
+  const host = document.querySelector(selector);
+  if (!host) return;
+  const utils = (window.HCL && window.HCL.utils) || [];
+  const primary = utils.filter(u => u.nav === 'primary');
+  if (!primary.length) { host.innerHTML = ''; return; }
+  host.innerHTML = primary.map(u => `
+    <div class="home-cuisine reveal">
+      <div class="home-cuisine-copy">
+        <span class="eyebrow-line">${u.en || 'Featured'}</span>
+        <h2 class="section-title">${u.icon} ${u.title}</h2>
+        <p>${u.blurb || ''}</p>
+        <a class="btn btn-primary" href="${u.file}">${u.cta || '进入'} →</a>
+      </div>
+      <a class="home-cuisine-map" href="${u.file}" aria-label="进入${u.title}">
+        <img src="assets/img/cuisines-map.svg" alt="中国菜系分布地图：八大菜系与代表性地方菜（含台湾省与南海诸岛）" loading="lazy" width="840" height="520" />
+      </a>
+    </div>`).join('');
+  setupReveal();
+}
+
+/* ---------- 首页工具箱（与导航一致：百科 / 工具；不含已提升的独立入口） ---------- */
 function renderToolbox(selector) {
   const host = document.querySelector(selector);
   if (!host) return;
   const utils = (window.HCL && window.HCL.utils) || [];
   const menus = (window.HCL && window.HCL.utilMenus) || [];
-  // 首页是完整索引：含被提升的菜系地图（作为补充入口归入其原分组）
-  const groups = utilGroupsWith(utils);
+  const menuUtils = utils.filter(u => u.nav !== 'primary');
+  const groups = utilGroupsWith(menuUtils);
   const groupById = Object.fromEntries(groups.map(g => [g.id, g]));
   const accents = ['#C0492B', '#8B5E3C', '#6F9A4C'];
   let ai = 0;
