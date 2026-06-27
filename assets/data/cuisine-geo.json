@@ -356,38 +356,6 @@
           444.6
         ]
       }
-    },
-    {
-      "id": "chaoshan",
-      "name": "潮汕菜",
-      "type": "point",
-      "color": "#5F9148",
-      "label": {
-        "lngLat": [
-          116.6,
-          23.4
-        ],
-        "svg": [
-          683.7,
-          590.4
-        ]
-      }
-    },
-    {
-      "id": "kejia",
-      "name": "客家菜",
-      "type": "point",
-      "color": "#5F9148",
-      "label": {
-        "lngLat": [
-          115,
-          24.5
-        ],
-        "svg": [
-          659.3,
-          570
-        ]
-      }
     }
   ],
   "provinces": {

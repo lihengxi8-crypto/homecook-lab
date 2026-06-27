@@ -284,14 +284,10 @@ const REGION = [
 ];
 
 // 标签：点标记（小号文字 + 引线点）。dx/dy 为像素级文字偏移。
-// 注：潮汕、客家是「粤菜」三大流派之一（连同广府菜），并非独立地方菜，
-//     故统一用粤菜配色（COL.yue），在广东省内作为流派标注。
 const POINTS = [
-  { key: 'jing',  name: '京菜',  anchor: [116.4, 40.0], dx: 4,  dy: -8, align: 'start' },
-  { key: 'tianjin', name: '天津菜', anchor: [117.2, 39.1], dx: 6, dy: 4, align: 'start' },
-  { key: 'bun',   name: '本帮菜', anchor: [121.47, 31.23], dx: 7, dy: 4, align: 'start' },
-  { key: 'chaoshan', name: '潮汕菜', anchor: [116.6, 23.4], dx: 6, dy: 4, align: 'start', color: COL.yue },
-  { key: 'kejia', name: '客家菜', anchor: [115.0, 24.5], dx: -6, dy: -6, align: 'end', color: COL.yue },
+  { key: 'jing',    name: '京菜',   anchor: [116.4, 40.0],  dx: 5, dy: -9, align: 'start' },
+  { key: 'tianjin', name: '天津菜', anchor: [117.2, 39.1],  dx: 7, dy: 5,  align: 'start' },
+  { key: 'bun',     name: '本帮菜', anchor: [121.47, 31.23], dx: 8, dy: 5,  align: 'start' },
 ];
 
 /* ----------------------------------------------------------------------- */
@@ -365,17 +361,17 @@ function build(geo) {
   for (const g of GREAT) {
     const a = g.anchor;
     const [x, y] = projMain(a[0], a[1]);
-    const fs = 30, padX = 10, dotR = 5, gap = 9;
+    const fs = 26, padX = 12, dotR = 4.5, gap = 10;
     const txt = g.name;
-    const textW = txt.length * fs;             // 中文 ~1em/字
+    const textW = txt.length * fs * 0.94;
     const chipW = padX * 2 + dotR * 2 + gap + textW;
-    const chipH = 38;
+    const chipH = 34;
     const rx = r1(x - chipW / 2), ry = r1(y - chipH / 2);
     const dotCx = r1(rx + padX + dotR), dotCy = r1(ry + chipH / 2);
     const tx = r1(dotCx + dotR + gap);
     labelEls.push(
       `<g class="lab great" data-cuisine="${g.key}">` +
-      `<rect x="${rx}" y="${ry}" width="${r1(chipW)}" height="${chipH}" rx="9" class="chip"/>` +
+      `<rect x="${rx}" y="${ry}" width="${r1(chipW)}" height="${chipH}" rx="10" class="chip"/>` +
       `<circle cx="${dotCx}" cy="${dotCy}" r="${dotR}" fill="${COL[g.key]}"/>` +
       `<text x="${tx}" y="${dotCy}" class="t-great">${txt}</text>` +
       `</g>`
@@ -385,9 +381,10 @@ function build(geo) {
   for (const g of REGION) {
     const a = g.anchor;
     const [x, y] = projMain(a[0], a[1]);
+    const dotOff = g.name.length * 11 + 8;
     labelEls.push(
       `<g class="lab region" data-cuisine="${g.key}">` +
-      `<circle cx="${r1(x - (g.name.length * 13))}" cy="${y}" r="4" fill="${darken(COL[g.key], 0.85)}"/>` +
+      `<circle cx="${r1(x - dotOff)}" cy="${y}" r="3.5" fill="${darken(COL[g.key], 0.85)}"/>` +
       `<text x="${x}" y="${y}" class="t-region" fill="${darken(COL[g.key], 0.6)}">${g.name}</text>` +
       `</g>`
     );
@@ -400,7 +397,7 @@ function build(geo) {
     const tx = r1(x + p.dx), ty = r1(y + p.dy);
     labelEls.push(
       `<g class="lab point" data-cuisine="${p.key}">` +
-      `<circle cx="${x}" cy="${y}" r="4" fill="${col}" stroke="#FFF8EC" stroke-width="1.4"/>` +
+      `<circle cx="${x}" cy="${y}" r="3.5" fill="${col}" stroke="#FFF8EC" stroke-width="1.6"/>` +
       `<text x="${tx}" y="${ty}" class="t-point" text-anchor="${p.align}">${p.name}</text>` +
       `</g>`
     );
@@ -409,8 +406,7 @@ function build(geo) {
   // ---- 标题 ----
   const titleEls =
     `<g class="title-block">` +
-    `<text x="${PAD + 6}" y="${PAD + 34}" class="t-title">中国八大菜系 · 地方风味</text>` +
-    `<text x="${PAD + 8}" y="${PAD + 60}" class="t-sub">底图：阿里 DataV · 标准省级行政区划（含台湾 · 南海诸岛）</text>` +
+    `<text x="${PAD + 8}" y="${PAD + 32}" class="t-title">中国八大菜系 · 地方风味</text>` +
     `</g>`;
 
   // ---- 小窗外框 + 内容 ----
@@ -437,18 +433,18 @@ function build(geo) {
   .inset-box{ fill:#F7EEDD; stroke:#C9B188; stroke-width:1; }
   .jiuduan{ fill:none; stroke:#9C3A22; stroke-width:1.6; stroke-linejoin:round; stroke-linecap:round; }
   .islands circle{ fill:#9C3A22; }
-  text{ font-family:"PingFang SC","Noto Sans SC","Hiragino Sans GB","Microsoft YaHei",system-ui,-apple-system,"Segoe UI",sans-serif; }
-  .t-title{ font-size:30px; font-weight:800; fill:#5A3A2A; letter-spacing:1px;
-            font-family:"Songti SC","STSong","Noto Serif SC",Georgia,serif; }
-  .t-sub{ font-size:15px; fill:#9A8775; }
-  .chip{ fill:var(--chip); stroke:var(--line); stroke-width:1; }
-  .t-great{ font-size:30px; font-weight:800; fill:#4A3526; dominant-baseline:central; }
+  text{ font-family:"Noto Sans SC","PingFang SC","Hiragino Sans GB","Microsoft YaHei",system-ui,sans-serif; }
+  .t-title{ font-size:26px; font-weight:700; fill:#5A3A2A; letter-spacing:2px;
+            font-family:"Noto Serif SC","Songti SC","STSong",Georgia,serif; }
+  .t-sub{ font-size:12.5px; fill:#9A8775; letter-spacing:0.4px; }
+  .chip{ fill:var(--chip); stroke:var(--line); stroke-width:1.1; }
+  .t-great{ font-size:26px; font-weight:700; fill:#4A3526; dominant-baseline:central; letter-spacing:0.6px; }
   .lab.great .chip{ filter:url(#chipShadow); }
-  .t-region{ font-size:26px; font-weight:700; dominant-baseline:central; text-anchor:middle;
-             paint-order:stroke; stroke:#FBF4E9; stroke-width:5px; stroke-linejoin:round; }
-  .t-point{ font-size:23px; font-weight:600; fill:#4A3526; dominant-baseline:central;
-            paint-order:stroke; stroke:#FBF4E9; stroke-width:4.5px; stroke-linejoin:round; }
-  .t-inset{ font-size:15px; font-weight:700; fill:#7A5A3A; text-anchor:middle; }
+  .t-region{ font-size:21px; font-weight:600; dominant-baseline:central; text-anchor:middle;
+             paint-order:stroke; stroke:#FBF4E9; stroke-width:4px; stroke-linejoin:round; letter-spacing:0.3px; }
+  .t-point{ font-size:19px; font-weight:600; fill:#4A3526; dominant-baseline:central;
+            paint-order:stroke; stroke:#FBF4E9; stroke-width:3.5px; stroke-linejoin:round; letter-spacing:0.2px; }
+  .t-inset{ font-size:13px; font-weight:600; fill:#7A5A3A; text-anchor:middle; letter-spacing:0.5px; }
   `;
 
   const svg =
