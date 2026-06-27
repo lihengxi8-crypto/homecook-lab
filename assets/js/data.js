@@ -16,16 +16,28 @@
        apply  学以致用：把原理落到一锅菜、看懂地域、跟高手学
        lookup 速查百科：随手查食材 / 厨具 / 术语
        tools  动手工具：能算能查的小工具与按症状排查
-     blurb 用于首页工具箱卡片文案；改一处全站同步。 */
+     blurb 用于首页工具箱卡片文案；改一处全站同步。
+     nav: 'primary' 的条目会被「提升」到顶部导航做独立入口（不再藏进下拉），
+     适合体量大、带二级详情页、属于独立浏览维度的板块（如菜系地图）；
+     页脚 / 首页工具箱仍按 group 完整展示，作为补充入口。 */
   const utilGroups = [
     { id: 'apply',  title: '学以致用', en: 'Apply',     desc: '把原理落到一锅菜：对照案例、看懂地域、跟高手学' },
     { id: 'lookup', title: '速查百科', en: 'Reference', desc: '随手查：食材、厨具、术语' },
     { id: 'tools',  title: '动手工具', en: 'Tools',     desc: '能算能查的小工具与按症状排查' },
   ];
+  /* ---------- 顶部「百科 / 工具」两个下拉 ----------
+     把上面的 group 归到两个顶级下拉，区分「可浏览查阅的内容库」与「动手交互的小工具」：
+       百科  内容/查阅型：案例菜库 · 博主库（学以致用）+ 食材 · 厨具 · 术语（速查百科）
+       工具  动手交互型：厨房工具 · 翻车诊断
+     groups 内的 group 顺序即下拉内分组顺序；nav:'primary' 的条目已提升、不计入。 */
+  const utilMenus = [
+    { id: 'refs',  title: '百科', en: 'Library', groups: ['apply', 'lookup'] },
+    { id: 'tools', title: '工具', en: 'Tools',   groups: ['tools'] },
+  ];
   const utils = [
     { id: 'dishes',      file: 'dishes.html',       title: '案例菜库', en: 'Recipes',         icon: '🍲', group: 'apply',
       blurb: '每道菜拆成「原理 / 预处理 / 技法 / 味型」标签，点标签直接跳回对应原理。', cta: '对照学' },
-    { id: 'cuisines',    file: 'cuisines.html',     title: '菜系地图', en: 'Cuisines',        icon: '🗺️', group: 'apply',
+    { id: 'cuisines',    file: 'cuisines.html',     title: '菜系地图', en: 'Cuisines',        icon: '🗺️', group: 'apply', nav: 'primary',
       blurb: '八大菜系 + 地方菜，用「特点 / 代表菜 / 为什么这样 / 家常可借鉴」看懂地域差异。', cta: '看地图' },
     { id: 'creators',    file: 'creators.html',     title: '博主库',   en: 'Creators',        icon: '📺', group: 'apply',
       blurb: '收集做得好的家常菜博主，标注风格与擅长方向，一键跳到原视频看演示。', cta: '学高手' },
@@ -1928,5 +1940,5 @@
     },
   };
 
-  window.HCL = { utils, utilGroups, glossary, ingredients, dishes, creators, tastes, combo, topics, videos, foodGuide, gear, troubleshoot, cuisines, cuisineDetails };
+  window.HCL = { utils, utilGroups, utilMenus, glossary, ingredients, dishes, creators, tastes, combo, topics, videos, foodGuide, gear, troubleshoot, cuisines, cuisineDetails };
 })();

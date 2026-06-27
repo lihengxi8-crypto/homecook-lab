@@ -69,24 +69,43 @@ function utilGroupsWith(utils) {
 function injectHeader() {
   const current = document.body.dataset.page || '';
   const utils = (window.HCL && window.HCL.utils) || [];
-  const groups = utilGroupsWith(utils);
+  // nav:'primary' 的条目提升为顶部独立入口；其余进「百科 / 工具」两个下拉
+  const primaryUtils = utils.filter(u => u.nav === 'primary');
+  const menuUtils = utils.filter(u => u.nav !== 'primary');
+  const groups = utilGroupsWith(menuUtils);
 
   const chapterLinks = SITE.chapters.map(c =>
     `<li><a href="${c.file}" data-id="${c.id}" class="${c.id === current ? 'active' : ''}">
        <span class="n">${c.num}</span>${c.short || c.title}</a></li>`
   ).join('');
 
-  const utilActive = utils.some(u => u.id === current);
-  // 按分组渲染「工具箱」超级菜单：每组一个小标题 + 该组链接
-  const utilGroupsHtml = groups.map(g => `
-    <div class="nav-grp">
+  // 提升到顶部的独立入口（如菜系地图）：用图标代替章节序号，和篇章做区分
+  const primaryLinks = primaryUtils.map(u =>
+    `<li><a href="${u.file}" data-id="${u.id}" class="nav-feature ${u.id === current ? 'active' : ''}">
+       <span class="emoji">${u.icon}</span>${u.title}</a></li>`
+  ).join('');
+
+  // 顶部下拉：按 utilMenus 把分组归到「百科 / 工具」两个下拉
+  const menus = (window.HCL && window.HCL.utilMenus) || [];
+  const groupById = Object.fromEntries(groups.map(g => [g.id, g]));
+  const itemHtml = (u) =>
+    `<li><a href="${u.file}" data-id="${u.id}" class="${u.id === current ? 'active' : ''}">
+       <span class="emoji">${u.icon}</span>${u.title}</a></li>`;
+  const grpHtml = (g) =>
+    `<div class="nav-grp">
       <p class="nav-grp-h">${g.title}<span>${g.en}</span></p>
-      <ul class="nav-grp-list">
-        ${g.items.map(u =>
-          `<li><a href="${u.file}" data-id="${u.id}" class="${u.id === current ? 'active' : ''}">
-             <span class="emoji">${u.icon}</span>${u.title}</a></li>`).join('')}
-      </ul>
-    </div>`).join('');
+      <ul class="nav-grp-list">${g.items.map(itemHtml).join('')}</ul>
+    </div>`;
+  const menusHtml = menus.map(m => {
+    const mgroups = m.groups.map(id => groupById[id]).filter(g => g && g.items.length);
+    if (!mgroups.length) return '';
+    const active = mgroups.some(g => g.items.some(u => u.id === current));
+    // 统一用「超级菜单」：每个 group 一列带小标题，桌面右对齐展开、移动端平铺均有标签
+    return `<li class="nav-more${active ? ' active' : ''}">
+      <button class="nav-more-btn" aria-haspopup="true" aria-expanded="false">${m.title} ${ICONS.chevron}</button>
+      <div class="nav-dropdown mega">${mgroups.map(grpHtml).join('')}</div>
+    </li>`;
+  }).join('');
 
   const header = document.createElement('header');
   header.className = 'site-header';
@@ -98,10 +117,8 @@ function injectHeader() {
       </a>
       <ul class="nav-links">
         ${chapterLinks}
-        <li class="nav-more${utilActive ? ' active' : ''}">
-          <button class="nav-more-btn" aria-haspopup="true" aria-expanded="false">工具箱 ${ICONS.chevron}</button>
-          <div class="nav-dropdown mega">${utilGroupsHtml}</div>
-        </li>
+        ${primaryLinks}
+        ${menusHtml}
       </ul>
       <div class="nav-actions">
         <button class="icon-btn" data-search aria-label="搜索（按 / 打开）" title="搜索  /">${ICONS.search}</button>
@@ -118,29 +135,46 @@ function injectHeader() {
     toggle.setAttribute('aria-expanded', String(open));
   });
 
-  // 工具箱下拉（桌面端点击展开，移动端始终平铺）
-  const more = header.querySelector('.nav-more');
-  const moreBtn = header.querySelector('.nav-more-btn');
-  moreBtn.addEventListener('click', (e) => {
-    e.stopPropagation();
-    const open = more.classList.toggle('open');
-    moreBtn.setAttribute('aria-expanded', String(open));
+  // 顶部下拉（桌面端点击展开、彼此互斥；移动端始终平铺）
+  const mores = [...header.querySelectorAll('.nav-more')];
+  const closeMores = (except) => mores.forEach(m => {
+    if (m === except) return;
+    m.classList.remove('open');
+    const b = m.querySelector('.nav-more-btn');
+    if (b) b.setAttribute('aria-expanded', 'false');
   });
-  document.addEventListener('click', () => {
-    more.classList.remove('open');
-    moreBtn.setAttribute('aria-expanded', 'false');
+  mores.forEach(m => {
+    const btn = m.querySelector('.nav-more-btn');
+    btn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const willOpen = !m.classList.contains('open');
+      closeMores(m);
+      m.classList.toggle('open', willOpen);
+      btn.setAttribute('aria-expanded', String(willOpen));
+    });
   });
+  document.addEventListener('click', () => closeMores(null));
 }
 
 function injectFooter() {
   const links = SITE.chapters.map(c => `<li><a href="${c.file}">${c.num} · ${c.title}</a></li>`).join('');
   const utils = (window.HCL && window.HCL.utils) || [];
+  const menus = (window.HCL && window.HCL.utilMenus) || [];
   const groups = utilGroupsWith(utils);
-  const groupCols = groups.map(g => `
-    <div>
-      <h4>${g.title}</h4>
-      <ul>${g.items.map(u => `<li><a href="${u.file}">${u.icon} ${u.title}</a></li>`).join('')}</ul>
-    </div>`).join('');
+  const groupById = Object.fromEntries(groups.map(g => [g.id, g]));
+  const item = (u) => `<li><a href="${u.file}">${u.icon} ${u.title}</a></li>`;
+  const menuCols = menus.map(m => {
+    const mgroups = m.groups.map(id => groupById[id]).filter(g => g && g.items.length);
+    if (!mgroups.length) return '';
+    const body = mgroups.length === 1
+      ? `<ul>${mgroups[0].items.map(item).join('')}</ul>`
+      : mgroups.map(g => `
+          <div class="foot-sub">
+            <h5>${g.title}</h5>
+            <ul>${g.items.map(item).join('')}</ul>
+          </div>`).join('');
+    return `<div><h4>${m.title}</h4>${body}</div>`;
+  }).join('');
   const footer = document.createElement('footer');
   footer.className = 'site-footer';
   footer.innerHTML = `
@@ -154,7 +188,7 @@ function injectFooter() {
           <h4>学习篇章</h4>
           <ul>${links}</ul>
         </div>
-        ${groupCols}
+        ${menuCols}
       </div>
       <div class="container foot-bottom" style="padding-inline:0">
         <span>© ${new Date().getFullYear()} 家常菜实验室 · 自用学习项目</span>
@@ -507,29 +541,40 @@ function renderChapterCards(selector) {
   setupReveal();
 }
 
-/* ---------- 首页工具箱（按分组数据驱动渲染） ---------- */
+/* ---------- 首页工具箱（与导航一致：按「百科 / 工具」两大类渲染） ---------- */
 function renderToolbox(selector) {
   const host = document.querySelector(selector);
   if (!host) return;
   const utils = (window.HCL && window.HCL.utils) || [];
+  const menus = (window.HCL && window.HCL.utilMenus) || [];
+  // 首页是完整索引：含被提升的菜系地图（作为补充入口归入其原分组）
   const groups = utilGroupsWith(utils);
+  const groupById = Object.fromEntries(groups.map(g => [g.id, g]));
   const accents = ['#C0492B', '#8B5E3C', '#6F9A4C'];
-  host.innerHTML = groups.map((g, gi) => `
-    <div class="toolbox-group reveal">
-      <div class="tg-head">
-        <h3>${g.title}<span class="tg-en">${g.en}</span></h3>
-        ${g.desc ? `<p>${g.desc}</p>` : ''}
-      </div>
-      <div class="feature-wall">
-        ${g.items.map((u, i) => `
-          <a class="feature-card reveal" href="${u.file}" style="--fc:${accents[(gi + i) % accents.length]}">
-            <span class="fc-ic">${u.icon}</span>
-            <h3>${u.title}</h3>
-            <p>${u.blurb || u.en || ''}</p>
-            <span class="fc-go">${u.cta || '进入'} <i>→</i></span>
-          </a>`).join('')}
-      </div>
-    </div>`).join('');
+  let ai = 0;
+  const card = (u) => `
+    <a class="feature-card reveal" href="${u.file}" style="--fc:${accents[ai++ % accents.length]}">
+      <span class="fc-ic">${u.icon}</span>
+      <h3>${u.title}</h3>
+      <p>${u.blurb || u.en || ''}</p>
+      <span class="fc-go">${u.cta || '进入'} <i>→</i></span>
+    </a>`;
+  const wall = (items) => `<div class="feature-wall">${items.map(card).join('')}</div>`;
+  host.innerHTML = menus.map(m => {
+    const mgroups = m.groups.map(id => groupById[id]).filter(g => g && g.items.length);
+    if (!mgroups.length) return '';
+    // 单分组（工具）直接平铺并借用该组描述；多分组（百科）保留学以致用 / 速查百科小标题
+    const single = mgroups.length === 1;
+    const head = `<div class="tm-head"><h3>${m.title}<span class="tm-en">${m.en}</span></h3>${single && mgroups[0].desc ? `<p>${mgroups[0].desc}</p>` : ''}</div>`;
+    const body = single
+      ? wall(mgroups[0].items)
+      : mgroups.map(g => `
+          <div class="toolbox-group">
+            <div class="tg-head"><h3>${g.title}<span class="tg-en">${g.en}</span></h3>${g.desc ? `<p>${g.desc}</p>` : ''}</div>
+            ${wall(g.items)}
+          </div>`).join('');
+    return `<section class="toolbox-menu reveal">${head}${body}</section>`;
+  }).join('');
   setupReveal();
 }
 
