@@ -284,12 +284,14 @@ const REGION = [
 ];
 
 // 标签：点标记（小号文字 + 引线点）。dx/dy 为像素级文字偏移。
+// 注：潮汕、客家是「粤菜」三大流派之一（连同广府菜），并非独立地方菜，
+//     故统一用粤菜配色（COL.yue），在广东省内作为流派标注。
 const POINTS = [
   { key: 'jing',  name: '京菜',  anchor: [116.4, 40.0], dx: 4,  dy: -8, align: 'start' },
   { key: 'tianjin', name: '天津菜', anchor: [117.2, 39.1], dx: 6, dy: 4, align: 'start' },
   { key: 'bun',   name: '本帮菜', anchor: [121.47, 31.23], dx: 7, dy: 4, align: 'start' },
   { key: 'chaoshan', name: '潮汕菜', anchor: [116.6, 23.4], dx: 6, dy: 4, align: 'start', color: COL.yue },
-  { key: 'kejia', name: '客家菜', anchor: [115.0, 24.5], dx: -6, dy: -6, align: 'end', color: COL.min },
+  { key: 'kejia', name: '客家菜', anchor: [115.0, 24.5], dx: -6, dy: -6, align: 'end', color: COL.yue },
 ];
 
 /* ----------------------------------------------------------------------- */

@@ -208,7 +208,9 @@ function setupTOC() {
   const heads = [...prose.querySelectorAll('h2')];
   const slug = (t) => t.trim().replace(/\s+/g, '-').replace(/[^\w\u4e00-\u9fa5-]/g, '');
   const items = heads.map((h, i) => {
-    if (!h.id) h.id = 'sec-' + (i + 1) + '-' + slug(h.textContent).slice(0, 12);
+    // 稳定锚点：优先用 data-toc 生成 topic-* id，便于全站术语/技法深链到小节；
+    // 没有 data-toc 的标题才回退到旧的按序号 + 文本方案。
+    if (!h.id) h.id = h.dataset.toc ? 'topic-' + slug(h.dataset.toc) : 'sec-' + (i + 1) + '-' + slug(h.textContent).slice(0, 12);
     return `<li><a href="#${h.id}">${h.dataset.toc || h.textContent.replace(/^[\d\.\s]+/, '')}</a></li>`;
   }).join('');
   toc.innerHTML = `<div class="toc-title">本页目录</div><ul>${items}</ul>`;
@@ -306,7 +308,7 @@ function buildSearchIndex() {
   SITE.chapters.forEach(c => idx.push({ type: '篇章', title: `${c.num} · ${c.title}`, sub: c.desc, href: c.file, kw: c.tags.join(' ') + ' ' + c.en }));
   const groupTitle = Object.fromEntries((H.utilGroups || []).map(g => [g.id, g.title]));
   (H.utils || []).forEach(u => idx.push({ type: '工具', title: u.title, sub: groupTitle[u.group] ? `${groupTitle[u.group]} · ${u.en}` : u.en, href: u.file, kw: (u.en || '') + ' ' + (groupTitle[u.group] || '') + ' ' + (u.blurb || '') }));
-  (H.topics || []).forEach(t => idx.push({ type: '小节', title: t.title, sub: '', href: t.page, kw: t.kw }));
+  (H.topics || []).forEach(t => idx.push({ type: '小节', title: t.title, sub: '', href: t.page + (t.anchor ? '#' + t.anchor : ''), kw: t.kw }));
   (H.glossary || []).forEach(g => idx.push({ type: '术语', title: g.term, sub: g.def, href: 'glossary.html#term-' + g.id, kw: (g.aliases || []).join(' ') + ' ' + g.cat }));
   (H.foodGuide || []).forEach(cat => (cat.groups || []).forEach(grp => {
     idx.push({ type: '食材', title: grp.name, sub: grp.lead || '', href: 'ingredients.html#grp-' + grp.id, kw: cat.name + ' ' + (grp.items || []).map(it => it.n).join(' ') });
@@ -455,16 +457,16 @@ function setupGlossary() {
   const tip = document.createElement('div');
   tip.className = 'hcl-tip';
   document.body.appendChild(tip);
-  let hideTimer, currentG = null;
+  let hideTimer;
   const byId = Object.fromEntries(H.glossary.map(g => [g.id, g]));
-  const goTo = (g) => { if (g) location.href = 'glossary.html#term-' + g.id; };
-  tip.addEventListener('click', () => goTo(currentG));
   function show(el) {
     clearTimeout(hideTimer);
     const g = byId[el.dataset.term];
     if (!g) return;
-    currentG = g;
-    tip.innerHTML = `<b>${g.term}<span class="cat">${g.cat}</span></b><p>${g.def}</p><span class="more">点击查看术语表 →</span>`;
+    // 两个出口：①术语表看完整释义 ②直达对应篇章小节学原理（连接“术语/技法 ↔ 篇章”）
+    const links = [`<a class="more" href="glossary.html#term-${g.id}">术语表释义 →</a>`];
+    if (g.chapter) links.push(`<a class="more more-chapter" href="${g.chapter}${g.anchor ? '#' + g.anchor : ''}">去篇章学这一节 →</a>`);
+    tip.innerHTML = `<b>${g.term}<span class="cat">${g.cat}</span></b><p>${g.def}</p><span class="tip-links">${links.join('')}</span>`;
     tip.classList.add('show');
     const r = el.getBoundingClientRect();
     const tw = tip.offsetWidth, th = tip.offsetHeight;
@@ -587,4 +589,46 @@ document.addEventListener('DOMContentLoaded', () => {
   setupSearch();
   setupReveal();
   injectFooter();
+  // 深链支持：小节 id 由 setupTOC 在此刻才赋好，浏览器初次按 #锚点 滚动会落空，这里接管。
+  // 难点：网页字体（Noto Serif SC）换字、懒加载题图入场都会改变布局高度，
+  // 单次滚动常常落点偏移，看起来像“只跳到了这一页”。所以分多次校正，并高亮目标小节。
+  setupHashTarget();
 });
+
+/* ---------- 深链：精准滚到小节并高亮“你在这里” ---------- */
+function setupHashTarget() {
+  if (!location.hash) return;
+  const id = decodeURIComponent(location.hash.slice(1));
+  // 关掉浏览器自带的“滚动位置恢复”：刷新 / 前进后退到带 #锚点 的页面时，
+  // 浏览器会在我们滚到小节之后，又把滚动位置抢回上次记忆的位置（常是顶部），
+  // 于是深链表现为“只跳到了这一页”。设为 manual 后由我们独占接管。
+  if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+  let userMoved = false;
+  const cancel = () => { userMoved = true; };
+  window.addEventListener('wheel', cancel, { passive: true, once: true });
+  window.addEventListener('touchmove', cancel, { passive: true, once: true });
+  window.addEventListener('keydown', (e) => {
+    if (['ArrowDown', 'ArrowUp', 'PageDown', 'PageUp', 'Home', 'End', ' '].includes(e.key)) cancel();
+  }, { once: true });
+
+  let flashed = false;
+  const go = (withFlash) => {
+    const el = document.getElementById(id);
+    if (!el || userMoved) return;
+    // 即时滚动：绕开全站的 CSS scroll-behavior: smooth。
+    // 否则深链落点会以“平滑动画”进行，长距离动画途中又被字体换字 / 题图懒加载
+    // 改变的布局高度打断、归零，表现为“只跳到了这一页”。instant 一步到位，最稳。
+    el.scrollIntoView({ block: 'start', behavior: 'instant' });
+    if (withFlash && !flashed) {
+      flashed = true;
+      el.classList.add('hcl-target');
+      setTimeout(() => el.classList.remove('hcl-target'), 2600);
+    }
+  };
+
+  requestAnimationFrame(() => requestAnimationFrame(() => go(false))); // 首帧：id 已就绪，先就位
+  window.addEventListener('load', () => setTimeout(() => go(true), 60));  // 图片/题图入场后校正并点亮“你在这里”
+  if (document.fonts && document.fonts.ready) {
+    document.fonts.ready.then(() => setTimeout(() => go(true), 60));      // 字体换字后再校正一次
+  }
+}

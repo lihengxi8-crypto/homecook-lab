@@ -116,7 +116,7 @@
         : `<div class="cd-card">${body}</div>`;
     };
     const ingCard = (it) => `<div class="cd-card">${media(it)}<div class="cd-c-body"><h3>${esc(it.name)}</h3>${it.desc ? `<p>${esc(it.desc)}</p>` : ''}</div></div>`;
-    const areaCard = (a) => `<div class="cd-area"><div class="cd-a-top"><h3>${esc(a.name)}</h3>${a.tag ? `<span class="cd-tag">${esc(a.tag)}</span>` : ''}</div>${a.desc ? `<p>${esc(a.desc)}</p>` : ''}</div>`;
+    const areaCard = (a) => `<div class="cd-area"><div class="cd-a-top"><h3>${esc(a.name)}</h3>${a.tag ? `<span class="cd-tag">${esc(a.tag)}</span>` : ''}</div>${a.desc ? `<p>${a.desc}</p>` : ''}</div>`;
     const gallery = (items, fn) => `<div class="cd-gallery reveal" style="--cu:${accent}">${(items || []).map(fn).join('')}</div>`;
     // 分组：每组小标题 + 可选导语 + 图卡网格
     const groupBlocks = (groups, fn) => (groups || []).map(g => {
@@ -128,7 +128,7 @@
     let html = '';
 
     // hero 横幅（复用菜系地图的 .cuisine-hero）
-    const hero = (det && det.hero) || `assets/img/cuisine/${base.id}.webp`;
+    const hero = ((det && det.hero) || `assets/img/cuisine/${base.id}.webp`) + '?v=2';
     html += `<figure class="cuisine-hero reveal" style="--cu:${accent}">
       <img src="${esc(hero)}" alt="${esc(base.name)}代表菜手绘插图" onerror="this.closest('figure').remove()">
       ${det && det.heroCaption ? `<figcaption>${det.heroCaption}</figcaption>` : ''}
@@ -156,9 +156,10 @@
         if (det.dishesLead) html += `<p class="cuisine-section-lead">${det.dishesLead}</p>`;
         html += (det.dishGroups || []).length ? groupBlocks(det.dishGroups, dishLink) : gallery(det.dishes, dishLink);
       }
-      // 海鲜
+      // 海鲜 / 江河湖鲜（标题可由 det.seafoodTitle 覆盖，默认“海鲜”）
       if ((det.seafood || []).length) {
-        html += `<h2 data-toc="海鲜"><span class="idx">🌊</span>海鲜</h2>`;
+        const seaTitle = det.seafoodTitle || '海鲜';
+        html += `<h2 data-toc="${esc(seaTitle)}"><span class="idx">🌊</span>${esc(seaTitle)}</h2>`;
         if (det.seafoodLead) html += `<p class="cuisine-section-lead">${det.seafoodLead}</p>`;
         html += gallery(det.seafood, ingCard);
       }
@@ -174,6 +175,17 @@
         if (det.flavor.intro) html += `<p>${det.flavor.intro}</p>`;
         if ((det.flavor.list || []).length)
           html += `<ul class="cd-flavor">${det.flavor.list.map(x => `<li>${x}</li>`).join('')}</ul>`;
+      }
+      // 看家技法：把本菜系代表技法深链到「预处理 / 火候与技法 / 原理」对应小节
+      if ((det.craft || []).length) {
+        html += `<h2 data-toc="看家技法"><span class="idx">🔧</span>看家技法</h2>`;
+        if (det.craftLead) html += `<p class="cuisine-section-lead">${det.craftLead}</p>`;
+        html += `<div class="cd-craft reveal" style="--cu:${accent}">${det.craft.map(c => `
+          <a class="cd-craft-card" href="${esc(c.href)}">
+            <span class="cd-craft-name">${esc(c.name)}</span>
+            ${c.note ? `<span class="cd-craft-note">${esc(c.note)}</span>` : ''}
+            <span class="cd-craft-go">去篇章学 →</span>
+          </a>`).join('')}</div>`;
       }
     } else {
       /* ===== 基础版（任意菜系自动生成） ===== */

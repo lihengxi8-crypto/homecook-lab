@@ -32,7 +32,7 @@
         <span class="pill">苏</span><span class="pill">闽</span><span class="pill">浙</span>
         <span class="pill">湘</span><span class="pill">徽</span>
         <span class="pill">京 · 津 · 东北 · 西北</span><span class="pill">云贵 · 本帮</span>
-        <span class="pill">潮汕 · 客家 · 海南</span>
+        <span class="pill">海南</span>
       </div>
     </div>
   </header>
@@ -121,7 +121,7 @@
       <a class="cu-card reveal" id="cuisine-${c.id}" href="cuisine.html?id=${encodeURIComponent(c.id)}" style="--cu:${c.accent || 'var(--brick)'}">
         <figure class="cu-card-fig">
           <span class="cu-card-emoji" aria-hidden="true">${c.emoji || '🍴'}</span>
-          <img src="assets/img/cuisine/${c.id}.webp" alt="${esc(c.name)}手绘插图" loading="lazy" width="900" height="600" onerror="this.remove()">
+          <img src="assets/img/cuisine/${c.id}.webp?v=2" alt="${esc(c.name)}手绘插图" loading="lazy" width="900" height="600" onerror="this.remove()">
         </figure>
         <div class="cu-card-body">
           <div class="cu-card-top">

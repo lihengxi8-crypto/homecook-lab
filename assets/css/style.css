@@ -760,7 +760,7 @@ tbody tr:hover { background: var(--card-soft); }
 [data-theme="dark"] .hcl-term:hover { background: #243022; }
 
 .hcl-tip {
-  position: fixed; z-index: 320; max-width: 320px; pointer-events: auto; cursor: pointer;
+  position: fixed; z-index: 320; max-width: 320px; pointer-events: auto; cursor: default;
   background: var(--glass-fill); color: var(--ink); border: 1px solid var(--glass-border);
   -webkit-backdrop-filter: saturate(1.3) blur(var(--glass-blur)); backdrop-filter: saturate(1.3) blur(var(--glass-blur));
   border-radius: var(--r-md); box-shadow: var(--shadow-lg); padding: 14px 16px;
@@ -772,7 +772,31 @@ tbody tr:hover { background: var(--card-soft); }
 .hcl-tip .cat { font-family: var(--sans); font-size: .68rem; font-weight: 700; color: var(--scallion-dk); background: #EEF4E6; border-radius: var(--r-pill); padding: 1px 8px; }
 [data-theme="dark"] .hcl-tip .cat { background: #243022; }
 .hcl-tip p { margin: 8px 0 0; font-size: .9rem; color: var(--ink-soft); line-height: 1.6; }
-.hcl-tip .more { display: block; margin-top: 8px; font-size: .8rem; color: var(--brick); font-weight: 700; }
+.hcl-tip .tip-links { display: flex; flex-wrap: wrap; gap: 6px 14px; margin-top: 10px; }
+.hcl-tip .more { font-size: .8rem; color: var(--brick); font-weight: 700; text-decoration: none; }
+.hcl-tip .more:hover { text-decoration: underline; }
+.hcl-tip .more-chapter { color: var(--scallion-dk); }
+
+/* ---------- 深链落点：滚到的小节标题留出余量并短暂高亮 ---------- */
+h2[id], h3[id], [id^="topic-"], [id^="term-"] { scroll-margin-top: 24px; }
+
+.hcl-target {
+  border-radius: var(--r-sm);
+  animation: hclTargetFlash 2.6s ease-out;
+}
+@keyframes hclTargetFlash {
+  0%, 12% {
+    background: rgba(226, 160, 63, .22);
+    box-shadow: 0 0 0 8px rgba(226, 160, 63, .12), -10px 0 0 0 var(--ginger);
+  }
+  100% {
+    background: transparent;
+    box-shadow: 0 0 0 8px transparent, -10px 0 0 0 transparent;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .hcl-target { animation: none; }
+}
 
 /* =========================================================
    20. “已掌握”标记
@@ -1971,6 +1995,26 @@ input[type="range"] { accent-color: var(--brick); width: 100%; }
 .cd-flavor li { margin: 8px 0; line-height: 1.72; color: var(--ink); }
 .cd-flavor li::marker { color: var(--brick); }
 
+/* 看家技法：把代表技法深链到「原理 / 预处理 / 技法」篇章的小节 */
+.cd-craft {
+  display: grid; gap: 12px; margin: 12px 0 4px;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+}
+.cd-craft-card {
+  display: flex; flex-direction: column; gap: 4px; padding: 13px 15px;
+  background: var(--card); border: 1px solid var(--line);
+  border-left: 3px solid var(--cu, var(--brick));
+  border-radius: var(--r-md); box-shadow: var(--shadow-sm);
+  text-decoration: none; color: inherit;
+  transition: transform .18s, box-shadow .18s, border-color .18s;
+}
+.cd-craft-card:hover { transform: translateY(-2px); box-shadow: var(--shadow-md); border-color: var(--cu, var(--line-strong)); }
+.cd-craft-name { font-family: var(--serif); color: var(--soy); font-size: 1.02rem; font-weight: 700; }
+.cd-craft-name::after { content: " →"; font-size: .82em; color: var(--ink-faint); font-weight: 400; }
+.cd-craft-card:hover .cd-craft-name { color: var(--cu, var(--soy)); }
+.cd-craft-note { font-size: .84rem; color: var(--ink-soft); line-height: 1.6; }
+.cd-craft-go { margin-top: 2px; font-size: .8rem; font-weight: 700; color: var(--cu, var(--brick)); }
+
 /* 收尾“继续逛” + 返回 */
 .cd-foot { margin-top: 30px; }
 .cd-back { margin-top: 10px; }
@@ -2004,6 +2048,6 @@ input[type="range"] { accent-color: var(--brick); width: 100%; }
 
 /* 触摸设备：取消上浮 */
 @media (hover: none) {
-  .cd-card:hover, .cd-pick:hover, .cu-card:hover { transform: none; }
+  .cd-card:hover, .cd-pick:hover, .cu-card:hover, .cd-craft-card:hover { transform: none; }
   .cu-card:hover .cu-card-fig img { transform: none; }
 }
